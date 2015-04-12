@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{64C1733E-14D2-4DA4-940A-AAB4AB3A4688}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Binder_App</RootNamespace>
+    <AssemblyName>Binder App</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="background.js" />
+    <Content Include="Colorpicker\css\colorpicker.css" />
+    <Content Include="Colorpicker\css\layout.css" />
+    <Content Include="Colorpicker\images\blank.gif" />
+    <Content Include="Colorpicker\images\colorpicker_background.png" />
+    <Content Include="Colorpicker\images\colorpicker_hex.png" />
+    <Content Include="Colorpicker\images\colorpicker_hsb_b.png" />
+    <Content Include="Colorpicker\images\colorpicker_hsb_h.png" />
+    <Content Include="Colorpicker\images\colorpicker_hsb_s.png" />
+    <Content Include="Colorpicker\images\colorpicker_indic.gif" />
+    <Content Include="Colorpicker\images\colorpicker_overlay.png" />
+    <Content Include="Colorpicker\images\colorpicker_rgb_b.png" />
+    <Content Include="Colorpicker\images\colorpicker_rgb_g.png" />
+    <Content Include="Colorpicker\images\colorpicker_rgb_r.png" />
+    <Content Include="Colorpicker\images\colorpicker_select.gif" />
+    <Content Include="Colorpicker\images\colorpicker_submit.png" />
+    <Content Include="Colorpicker\images\custom_background.png" />
+    <Content Include="Colorpicker\images\custom_hex.png" />
+    <Content Include="Colorpicker\images\custom_hsb_b.png" />
+    <Content Include="Colorpicker\images\custom_hsb_h.png" />
+    <Content Include="Colorpicker\images\custom_hsb_s.png" />
+    <Content Include="Colorpicker\images\custom_indic.gif" />
+    <Content Include="Colorpicker\images\custom_rgb_b.png" />
+    <Content Include="Colorpicker\images\custom_rgb_g.png" />
+    <Content Include="Colorpicker\images\custom_rgb_r.png" />
+    <Content Include="Colorpicker\images\custom_submit.png" />
+    <Content Include="Colorpicker\images\select.png" />
+    <Content Include="Colorpicker\images\select2.png" />
+    <Content Include="Colorpicker\images\slider.png" />
+    <Content Include="Colorpicker\js\colorpicker.js" />
+    <Content Include="Colorpicker\js\eye.js" />
+    <Content Include="Colorpicker\js\jquery.js" />
+    <Content Include="Colorpicker\js\layout.js" />
+    <Content Include="Colorpicker\js\utils.js" />
+    <Content Include="contentscript.js" />
+    <Content Include="icon-large.png" />
+    <Content Include="icon-small.png" />
+    <Content Include="icon-supersmall.png" />
+    <Content Include="Images\arrowbackgroundstuff.png" />
+    <Content Include="Images\boom.gif" />
+    <Content Include="Images\close.png" />
+    <Content Include="Images\hidebutton.png" />
+    <Content Include="Images\hidebuttonhover.png" />
+    <Content Include="Images\minimize.png" />
+    <Content Include="Images\optionsimg.png" />
+    <Content Include="Images\questionmark.png" />
+    <Content Include="Images\waiting.gif" />
+    <Content Include="js.js" />
+    <Content Include="Scripts\jquery-2.0.3.min.js" />
+    <Content Include="Scripts\jquery.color-2.1.2.min.js" />
+    <Content Include="Scripts\SmoothScroll.js" />
+    <Content Include="window.html" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" Condition="false" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="false and '$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <PropertyGroup>
+    <AppFolder Condition=" '$(AppFolder)'=='' ">app\</AppFolder>
+    <AppFileName Condition=" '$(AppFileName)'=='' ">$(AssemblyName).zip</AppFileName>
+    <BuildFolder Condition=" '$(BuildFolder)'=='' ">$(MSBuildProjectDirectory)\properties\build\</BuildFolder>
+    <BuildLib Condition=" '$(BuildLib)'=='' ">$(BuildFolder)Lib\</BuildLib>
+    <ScriptsFolder Condition=" '$(ScriptsFolder)'=='' ">scripts\</ScriptsFolder>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppFileNameItem Include="$(OutputPath)$(AppFilename)" />
+    <AppFolderItem Include="$(AppFolder)" />
+    <ScriptsFolderItem Include="$(ScriptsFolder)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="manifest.json" />
+    <Content Include="Scripts\jquery-2.0.3.min.map" />
+    <Content Include="Segoe_UI.ttf" />
+  </ItemGroup>
+  <PropertyGroup>
+    <LigerSharkChromeTargetsPath>$(BuildFolder)\ligershark.chrome.targets</LigerSharkChromeTargetsPath>
+  </PropertyGroup>
+  <Import Project="$(LigerSharkChromeTargetsPath)" Condition="Exists($(LigerSharkChromeTargetsPath))" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>44856</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:44856/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

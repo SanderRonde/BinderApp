@@ -1,0 +1,457 @@
+@font-face {
+	font-family: 'Segoe UI';
+	src: url('Segoe_UI.ttf');
+}
+
+html {
+	font-family: 'Segoe UI';
+	font-size: 19px;
+	-webkit-user-select: none;
+}
+
+body {
+	background-color: #3C92FF;
+	margin-top: 0;
+	margin-left: 0;
+	margin-right: 0;
+	font-family: 'Segoe UI';
+	color: white;
+}
+
+	body:hover {
+		cursor: default;
+	}
+
+#optionsthing {
+	margin-left: 93%;
+}
+
+#optionsimg {
+	position: absolute;
+}
+
+#otheroptionsimg {
+	position: absolute;
+	display: none;
+}
+
+#imgcontainer {
+	width: 30px;
+	height: 30px;
+}
+
+#backbutton {
+	margin-left: -160px;
+	margin-top: 7px;
+	position: absolute;
+}
+
+#hidebutton {
+	display: none;
+	opacity: 0;
+}
+
+#hidebuttonhover {
+	display: none;
+}
+
+
+.removething {
+	margin-left: 96%;
+}
+
+	.removething:hover {
+		cursor: hand;
+	}
+
+.scrollable {
+	overflow-y: scroll;
+	margin-left: 5px;
+	margin-top: 100px;
+	height: 650px;
+}
+
+.listitem {
+	float: left;
+}
+
+#leftli {
+	width: 50%;
+}
+
+.row {
+	float: left;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+	border-radius: 5px;
+	background: none;
+}
+
+::-webkit-scrollbar-track:vertical {
+	background: none;
+}
+
+::-webkit-scrollbar-thumb {
+	width: 8px;
+	height: 20px;
+	background: #555;
+	border-radius: 5px;
+}
+
+#topbar {
+	width: 100%;
+	height: 20px;
+	float: left;
+	background-color: white;
+}
+
+#optionsbutton {
+	margin-left: 420px;
+	cursor: hand;
+	-webkit-app-region: no-drag;
+	position: absolute;
+}
+
+#helpbutton {
+	margin-left: 440px;
+	cursor: hand;
+	-webkit-app-region: no-drag;
+	position: absolute;
+}
+
+#minimizebutton {
+	margin-left: 460px;
+	cursor: hand;
+	-webkit-app-region: no-drag;
+	position: absolute;
+}
+
+#closebutton {
+	background-color: #FF5F5F;
+	margin-left: 480px;
+	cursor: hand;
+	-webkit-app-region: no-drag;
+	position: absolute;
+}
+
+#bottompart {
+	margin-top: 35px;
+}
+
+#uparrow {
+	position: absolute;
+	margin-top: -15px;
+}
+
+	#uparrow:hover {
+		cursor: hand;
+	}
+
+#downarrow {
+	position: absolute;
+}
+
+	#downarrow:hover {
+		cursor: hand;
+	}
+
+#overlay {
+	position: absolute;
+	background-color: black;
+	width: 100%;
+	margin-top: 20px;
+	z-index: 90;
+	opacity: 0;
+	display: none;
+	height: 80px;
+}
+
+.fixed {
+	width: 100%;
+	position: fixed;
+	height: 115px;
+}
+
+.warning {
+	width: 300px;
+	height: 20px;
+	background-color: red;
+	margin-left: 250px;
+	display: none;
+}
+
+.url {
+	border: 3px solid rgba(0,0,0,0);
+}
+
+.binding {
+	border: 3px solid rgba(0,0,0,0);
+}
+
+.add:hover {
+	cursor: hand;
+}
+
+.hide:hover {
+	cursor: hand;
+}
+
+.otherwarning {
+	width: 220px;
+	height: 20px;
+	margin-left: 21px;
+	display: none;
+}
+
+.helpconflict:hover {
+	cursor: hand;
+}
+
+#helpconflict {
+	width: 970px;
+	height: 598px;
+	margin-top: 2px;
+	color: white;
+	position: absolute;
+	margin-left: -5px;
+	padding-left: 10px;
+	padding-top: 5px;
+	padding-right: 20px;
+	display: none;
+}
+
+#updatemessage {
+	margin-left: 12.5px;
+	margin-top: 40px;
+	position: absolute;
+	background-color: red;
+	color: white;
+	font-size: 12px;
+	display: none;
+}
+
+#checkupdate:hover {
+	cursor: pointer;
+}
+
+#checkupdate {
+	font-size: 12.5px;
+}
+
+#hideupdatething:hover {
+	cursor: pointer;
+}
+
+#hideupdatething {
+	font-size: 12.5px;
+}
+
+.exitpage {
+	background-color: red;
+	width: 38px;
+	border: 2px solid white;
+	border-radius: 10px;
+	margin-left: 900px;
+	cursor: pointer;
+}
+
+#boomgif {
+	width: 1000px;
+	height: 700px;
+	display: none;
+	position: absolute;
+}
+
+.addsb {
+	border-radius: 5px;
+	border: 2px solid rgba(0,0,0,0);
+	cursor: pointer;
+	padding-bottom: 2px;
+}
+
+.greentext {
+	color: rgb(0, 255, 102);
+}
+
+.progressbar {
+	background-color: red;
+	border: 2px solid white;
+	height: 3px;
+	width: 0;
+	border-radius: 5px;
+	opacity: 0;
+}
+
+
+
+
+
+
+/*New*/
+.inputAreaCont {
+	width:700px;
+	height:62px;
+}
+
+.inputArea {
+	width:700px;
+	margin-top:32px;
+	margin-left:30px;
+}
+
+.inputTxt {
+	margin-left:12px;
+}
+
+.inputTxt, .inputCont, .submitButton {
+	display:inline-block;
+}
+
+html, body {
+	overflow:hidden;
+	height:775px;
+	width:700px;
+}
+
+.closeButton {
+	background-color:red;
+}
+
+.optionsButton, .minimizeButton, .closeButton {
+	display:inline-block;
+	cursor: hand;
+	-webkit-app-region: no-drag;
+}
+	
+.optionsButton, .minimizeButton {
+	opacity:0.6;
+}
+
+	.optionsButton:hover, .minimizeButton:hover {
+		opacity:1;
+	}
+
+.draggablearea {
+	-webkit-app-region: drag;
+	display:inline-block;
+	width: 424px;
+	height: 20px;
+}
+
+.firstTimeContainer {
+	display:none;
+}
+
+.firstTimeTitle {
+	font-size:250%;
+	font-weight:bold;
+	text-align: center;
+}
+
+.firstTimeTxt {
+	padding: 0 10px;
+	font-size:130%;
+}
+
+.bindingTxt, .URLTxt {
+	font-size:250%;
+	font-weight:bold;
+	display:inline-block;
+}
+
+.firstTimeInputs {
+	padding: 0 10px;
+}
+
+.URLTxt {
+	margin-left:170px;
+}
+
+.navFromFirstTime {
+	width:100%;
+	text-align: center;
+}
+
+input {
+	border:3px solid transparent;
+	margin:3px;
+}
+
+.firstTimeContainer {
+	height:638px;
+	overflow-y:scroll;
+}
+
+.removeField {
+	cursor: pointer;
+	display: inline-block;
+	font-size: 175%;
+	position: absolute;
+	margin-top: -6px;
+	margin-left: 5px;
+}
+
+.removeField:hover {
+	font-weight:bold;
+}
+
+.options {
+	padding:10px;
+	height: 633px;
+	overflow-y: scroll;
+}
+
+.colorPickInput {
+	border:2px solid white;
+}
+
+.hideSettings {
+	margin-left:20px;
+}
+
+.inputCont, .unfocused-underline {
+	width:350px;
+}
+
+paper-input {
+	float: inherit;
+}
+
+.goButton {
+	margin-left:20px;
+}
+
+paper-checkbox {
+	padding-right: 5px;
+  	padding-left: 5px;
+  	margin-bottom: -2px
+}
+
+.checkboxtext {
+	display:inline;
+}
+
+.bindingInput, .rightInput {
+	border: 3px solid transparent;
+}
+
+.firstTimeInput, .firstTimeInput .unfocused-underline, .bindingsContainer .inputCont, .bindingsContainer .unfocused-underline {
+	width: 300px;
+}
+
+.addInputs {
+	margin-top: 5px;
+	margin-bottom: 15px;
+}
+
+.removeInput {
+	min-width: 3em;
+	margin-left: 20px;
+}
+
+.settingsInput .actualinput {
+	border: 3px solid transparent;
+}

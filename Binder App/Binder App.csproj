@@ -77,6 +77,7 @@
     <Content Include="Colorpicker\js\layout.js" />
     <Content Include="Colorpicker\js\utils.js" />
     <Content Include="contentscript.js" />
+    <Content Include="css.css" />
     <Content Include="icon-large.png" />
     <Content Include="icon-small.png" />
     <Content Include="icon-supersmall.png" />
@@ -90,8 +91,10 @@
     <Content Include="Images\questionmark.png" />
     <Content Include="Images\waiting.gif" />
     <Content Include="js.js" />
+    <Content Include="polymer.css" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery.color-2.1.2.min.js" />
+    <Content Include="Scripts\polymer.js" />
     <Content Include="Scripts\SmoothScroll.js" />
     <Content Include="window.html" />
   </ItemGroup>
@@ -106,7 +109,6 @@
     <ScriptsFolder Condition=" '$(ScriptsFolder)'=='' ">scripts\</ScriptsFolder>
   </PropertyGroup>
   <ItemGroup>
-    <AppFileNameItem Include="$(OutputPath)$(AppFilename)" />
     <AppFolderItem Include="$(AppFolder)" />
     <ScriptsFolderItem Include="$(ScriptsFolder)" />
   </ItemGroup>

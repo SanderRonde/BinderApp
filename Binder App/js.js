@@ -357,13 +357,18 @@ function saveColors(change, color) {
 }
 
 function showGoButton(){
-
+	$(".goButton").css("display", "inline-block");
+	$(".input .inputCont, .input .unfocused-underline").css("width", "350px");
+	$(".hideSettings").css("margin-left", "20px");
 }
 
 function hideGoButton() {
-	$(".goButton").css("display","none");
-	$(".input .inputCont, .input .unfocused-underline").css("width","442px");
-	$(".hideSettings").css("margin-left","32px");
+	console.log(" hidden");
+	$(".goButton").css("display", "none");
+	$(".inputCont").css("width", "442px");
+	console.log($(".input").find(".unfocused-underline"));
+	$(".inputCont .unfocused-underline").css("width","442px");
+	$(".hideSettings").css("margin-left","36px");
 }
 
 function updateInputs() {

@@ -22,6 +22,7 @@ function updateSettings(key, data) {
 		obj[key] = data;
 		storage.set(obj);
 		settings[key] = data;
+		console.log(settings);
 	}
 }
 
@@ -75,18 +76,51 @@ function animateGreenBorder(element) {
 	window.requestAnimationFrame(step);
 }
 
+function checkBindingsForErrors(bindings, websites, bindingElements, websiteElements) {
+	var binding;
+	if (settings.superSearch) {
+		for (var i = 0; i < bindings.length; i++) {
+			binding = bindings[i];
+			for (var j = 0; j < bindings.length; j++) {
+				if (binding.indexOf(bindings[j]) === 0 && i !== j) {
+					console.log(binding);
+					console.log(bindings[j]);
+					console.log(bindingElements[j]);
+					bindingElements[j].children("paper-input-decorator").children(".footer").remove();
+					$('<div class="footer" layout="" horizontal="" end-justified=""><div class="error" flex="" layout="" horizontal="" center=""><div class="error-text" flex="" auto="" role="alert"\
+aria-hidden="false">Binding will never be triggered</div><core-icon id="errorIcon" class="error-icon" icon="warning" aria-label="warning" role="img"><svg\
+viewBox="0 0 24 24" height="100%" width="100%"\
+preserveAspectRatio="xMidYMid meet" fit="" style="pointer-events: none; display: block;"><g><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"></path></g></svg></core-icon>\
+</div><div aria-hidden="true"><content select=".counter"></content></div></div>')
+						.appendTo(bindingElements[j].children("paper-input-decorator"));
+				}
+			}
+		}
+	}
+}
+
 function saveInputs(sourceElement) {
 	var bindings = [];
 	var websites = [];
+	var bindingElements = [];
+	var websiteElements = [];
 	sourceElement
-		.children(".bindingInput")
-		.each(function() {
-			bindings.push($(this).val());
+		.parent()
+		.children(".inputsField").each(function() {
+			$(this).find(".bindingInput")
+				.each(function() {
+					bindings.push($(this).val());
+					bindingElements.push($(this).parent().parent());
+				});
 		});
 	sourceElement
-		.children(".rightInput")
-		.each(function() {
-			websites.push($(this).val());
+		.parent()
+		.children(".inputsField").each(function () {
+			$(this).find(".rightInput")
+				.each(function () {
+					websites.push($(this).val());
+					websiteElements.push($(this).parent().parent());
+				});
 		});
 	updateSettings("bindings",bindings);
 	updateSettings("websites",websites);
@@ -94,10 +128,11 @@ function saveInputs(sourceElement) {
 		loadBindings();
 	}
 	sourceElement
-		.children(".bindingInput, .rightInput")
+		.find(".bindingInput, .rightInput")
 		.each(function() {
 			animateGreenBorder(this);
 		});
+	checkBindingsForErrors(bindings, websites, bindingElements, websiteElements);
 }
 
 function removeField(element) {
@@ -137,7 +172,7 @@ function addInputField(sourceElement, dontAddNew, noRemoveButton, firstInputVal,
 	leftInput
 		.find(".actualinput")
 		.blur(function() {
-			saveInputs($(this).parent());
+			saveInputs($(this).parent().parent().parent());
 		});
 
 	var rightInput = $('<paper-input class="settingsInput inputCont"><paper-input-decorator><input class="actualinput rightInput"' + ((secondInputVal !== undefined) ? (' value="' + secondInputVal + '"') : "") + ' />\
@@ -149,7 +184,7 @@ function addInputField(sourceElement, dontAddNew, noRemoveButton, firstInputVal,
 	rightInput
 		.find(".actualinput")
 		.blur(function() {
-			saveInputs($(this).parent());
+			saveInputs($(this).parent().parent().parent());
 		});
 
 	if (noRemoveButton === false || noRemoveButton === undefined) {
@@ -358,16 +393,16 @@ function saveColors(change, color) {
 
 function showGoButton(){
 	$(".goButton").css("display", "inline-block");
-	$(".input .inputCont, .input .unfocused-underline").css("width", "350px");
+	$(".mainInputCont").css("width", "350px");
+	$(".mainInputCont .unfocused-underline").css("width", "350px");
 	$(".hideSettings").css("margin-left", "20px");
 }
 
 function hideGoButton() {
 	console.log(" hidden");
 	$(".goButton").css("display", "none");
-	$(".inputCont").css("width", "442px");
-	console.log($(".input").find(".unfocused-underline"));
-	$(".inputCont .unfocused-underline").css("width","442px");
+	$(".mainInputCont").css("width", "442px");
+	$(".mainInputCont .unfocused-underline").css("width", "442px");
 	$(".hideSettings").css("margin-left","36px");
 }
 
@@ -466,7 +501,7 @@ function bindListeners() {
 	$(".hideSettings").click(hideSettings);
 
 	$(".bindingInput, .rightInput").blur(function () {
-		saveInputs($(this).parent());
+		saveInputs($(this).parent().parent().parent());
 	});
 
 	$(".superSearchCheckbox").click(function () {

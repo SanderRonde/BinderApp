@@ -675,3 +675,9 @@ paper-input-decorator .actualinput {
 }
 
 /*#endregion*/
+
+/*#region paper-error*/
+.error-text, .error-icon {
+  color: red;
+}
+/*#endregion*/

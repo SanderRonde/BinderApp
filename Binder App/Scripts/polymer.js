@@ -17,7 +17,7 @@ function ripplestuff(element, e, circleornot) {
 		var cancelled = false;
 
 		if (circleornot) {
-			if ($(element).parent().attr("class") == "addmemes" || $(element).parent().attr("class") == "acceptupload" || $(element).parent().attr("class") == "declineupload") {
+			if ($(element).parent().attr("class") == "addmemes" || $(element).parent().attr("class") == "acceptupload" || $(element).parent().attr("class") == "declineupload" || $(element).parent().attr("class") == "fab") {
 				var waveMaxRadius = 19;
 			}
 			else {

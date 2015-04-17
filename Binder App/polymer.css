@@ -678,6 +678,17 @@ paper-input-decorator .actualinput {
 
 /*#region paper-error*/
 .error-text, .error-icon {
-  color: red;
+  color: rgb(255, 145, 0);
+  display:inline;
 }
+
+.error-icon {
+	fill: rgb(255, 145, 0);
+	float: right;
+}
+
+	.error-icon svg {
+		display: inline;
+	}
+
 /*#endregion*/

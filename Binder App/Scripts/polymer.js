@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 function ripplestuff(element, e, circleornot) {
 
-	dis = element;
+	var _this = element;
 
 	(function () {
 
@@ -160,7 +160,7 @@ function ripplestuff(element, e, circleornot) {
 
 		function cssColorWithAlpha(cssColor, alpha) {
 			var parts = cssColor.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-			if (typeof alpha == 'undefined') {
+			if (typeof alpha == "undefined") {
 				alpha = 1;
 			}
 			if (!parts) {
@@ -174,15 +174,14 @@ function ripplestuff(element, e, circleornot) {
 		}
 
 		function distanceFromPointToFurthestCorner(point, size) {
-			var tl_d = dist(point, { x: 0, y: 0 });
-			var tr_d = dist(point, { x: size.w, y: 0 });
-			var bl_d = dist(point, { x: 0, y: size.h });
-			var br_d = dist(point, { x: size.w, y: size.h });
-			return Math.max(tl_d, tr_d, bl_d, br_d);
+			var tlD = dist(point, { x: 0, y: 0 });
+			var trD = dist(point, { x: size.w, y: 0 });
+			var blD = dist(point, { x: 0, y: size.h });
+			var brD = dist(point, { x: size.w, y: size.h });
+			return Math.max(tlD, trD, blD, brD);
 		}
 
-		var obj = new Object();
-		obj = {
+		var obj = {
 
 			/**
 			 * The initial opacity set on the wave.
@@ -213,11 +212,11 @@ function ripplestuff(element, e, circleornot) {
 			waves: [],
 
 			ready: function () {
-				var waves = [];
+				this.waves = [];
 			},
 
 			downAction: function (e) {
-				var wave = createWave(dis);
+				var wave = createWave(_this);
 
 				cancelled = false;
 				wave.isMouseDown = true;
@@ -226,7 +225,7 @@ function ripplestuff(element, e, circleornot) {
 				wave.mouseUpStart = 0.0;
 				wave.mouseDownStart = now();
 
-				var rect = dis.getBoundingClientRect();
+				var rect = _this.getBoundingClientRect();
 				var width = rect.width;
 				var height = rect.height;
 				var touchX = e.pageX - rect.left;
@@ -234,7 +233,7 @@ function ripplestuff(element, e, circleornot) {
 
 				wave.startPosition = { x: touchX, y: touchY };
 
-				if (dis.classList.contains("recenteringTouch")) {
+				if (_this.classList.contains("recenteringTouch")) {
 					wave.endPosition = { x: width / 2, y: height / 2 };
 					wave.slideDistance = dist(wave.startPosition, wave.endPosition);
 				}
@@ -328,7 +327,7 @@ function ripplestuff(element, e, circleornot) {
 
 					// If we do a background fill fade too, work out the correct color.
 					var bgFillColor = null;
-					if (dis.backgroundFill) {
+					if (_this.backgroundFill) {
 						var bgFillAlpha = waveOuterOpacityFn(tDown, tUp, anim);
 						bgFillColor = cssColorWithAlpha(wave.waveColor, bgFillAlpha);
 					}
@@ -359,7 +358,7 @@ function ripplestuff(element, e, circleornot) {
 
 				if (!this.waves.length && this._loop) {
 					// clear the background color
-					$(dis).children(".bg").css("background-color", null);
+					$(_this).children(".bg").css("background-color", null);
 					this._loop = null;
 				}
 			}
@@ -636,13 +635,13 @@ function barContainerMousedown() {
 	/// The mousedown handler for the bar-container
 	/// </summary>
 	$(this).attr("mousedown", "true");
-	var dis = this;
+	var _this = this;
 	setTimeout(function () {
 
-		if ($(dis).attr("mousedown") == "true") {
+		if ($(_this).attr("mousedown") == "true") {
 
-			$(dis).parent().parent().attr("dragging", true);
-			$(dis)
+			$(_this).parent().parent().attr("dragging", true);
+			$(_this)
 				.parent()
 				.children(".sliderKnob")
 				.children(".sliderKnobInner")
@@ -669,30 +668,42 @@ function barContainerMouseUp() {
 	$(this).attr("mousedown", "false");
 }
 
-function paperInputDecoratorOnFocus() {
+function paperInputDecoratorOnFocus(element) {
 	/// <summary>
 	/// The onfocus handler for the paper-input-decorator element
 	/// </summary>
-	$(this)
+	var _this;
+	if (element !== undefined) {
+		_this = element;
+	}
+	else {
+		_this = this;
+	}
+	$(_this)
 		.children(".underline")
 		.children(".focusedUnderline")
 		.animate({
-			width: $(this).parent().width(),
-			marginTop: 2
+			width: $(this).parent().width()
 		}, 50);
 
 }
 
-function paperInputDecoratorOnBlur() {
+function paperInputDecoratorOnBlur(element) {
 	/// <summary>
 	/// The onBlur handler for the paper-input-decorator element
 	/// </summary>
-	$(this)
+	var _this;
+	if (element !== undefined) {
+		_this = element;
+	}
+	else {
+		_this = this;
+	}
+	$(_this)
 		.children(".underline")
 		.children(".focusedUnderline")
 		.animate({
-			width: 0,
-			marginTop: 12
+			width: 0
 		}, 50);
 
 }
@@ -702,10 +713,10 @@ function paperInputDecoratorOnKeypress(e) {
 	/// The onkeypress handler for the paper-input-decorator element
 	/// </summary>
 	/// <param name="e">Keypress Event</param>
-	if (e.which == 40 || e.which == 37) {
+	if (e.which === 40 || e.which === 37) {
 		changeToValue($(this).parent().parent()[0], $(this).parent().parent().attr("value") - 1);
 	}
-	else if (e.which == 38 || e.which == 39) {
+	else if (e.which === 38 || e.which === 39) {
 		changeToValue(parseInt($(this).parent().parent()[0], $(this).parent().parent().attr("value"), 10) + 1);
 	}
 }
@@ -725,9 +736,9 @@ function paperInputOnclick(e) {
 		width: focusedUnderline.parent().children(".unfocused-underline").css("width")
 	}, 300);
 
-	var dis = this;
+	var _this = this;
 	$("paper-input").each(function () {
-		if (this != dis) {
+		if (this != _this) {
 			var focusedUnderline = $(this).children("paper-input-decorator").children(".underline").children(".focusedUnderline");
 			focusedUnderline.animate({
 				width: "0px"
@@ -821,6 +832,17 @@ function bindPaperEls() {
 		.on("click", paperInputOnclick)
 		.each(function () {
 			$(this).find(".actualinput").attr("value", $(this).parent().attr("value"));
+		});
+
+	$("multiline-paper-input")
+		.on("click", paperInputOnclick);
+
+	$("multiline-paper-input textarea")
+		.on("focus", function() {
+			paperInputDecoratorOnFocus($(this).parent()[0]);
+		})
+		.on("blur", function() {
+			paperInputDecoratorOnBlur($(this).parent()[0]);
 		});
 }
 

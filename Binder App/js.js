@@ -1,12 +1,21 @@
 /// <reference path="~/Scripts/jquery-2.0.3.min.js" />
+/// <reference path="~/Scripts/jquery-2.0.3.min.js" />
+/// <reference path="~/Scripts/jquery-2.0.3.min.js" />
+/// <reference path="~/Scripts/polymer.js" />
 var storage = chrome.storage.sync;
 var app = chrome.app.window.current();
 var settings = {};
 var searchWebsites = [];
 var searchMode = false;
 
+function isset(dataToCheck) {
+	if (dataToCheck === undefined || dataToCheck === null) {
+		return false;
+	}
+	return true;
+}
+
 function updateSettings(key, data) {
-	console.log(key, data);
 	var obj = {};
 	if (typeof key === "object") {
 		for (objKey in key) {
@@ -221,34 +230,34 @@ function addInputField(sourceElement, dontAddNew, noRemoveButton, firstInputVal,
 function firstRun() {
 	//First run
 	updateSettings({
-		"set":true,
+		"set": true,
 		"colors": {
 			"bg": "#3C92FF",
 			"title": "#FFFFFF",
 			"text": "#FFFFFF"
 		},
-		"bindings":[""],
+		"bindings": [""],
 		"websites": [""],
 		"closeBinder": true,
-		"superSearch":false
+		"superSearch": false
 	});
 	var fa = chrome.app.window.current();
 	fa.resizeTo(700, 755);
-	$(".draggablearea").css("width","628px");
-	$(".firstTimeContainer").css("display","block");
-	$(".hideSettings").css("display","none");
+	$(".draggablearea").css("width", "628px");
+	$(".firstTimeContainer").css("display", "block");
+	$(".hideSettings").css("display", "none");
 	$(".toSettingsFromFirstTime").click(function () {
 		console.log("deze?");
 		loadBindings();
-		$(".firstTimeContainer").css("display","none");
+		$(".firstTimeContainer").css("display", "none");
 		showSettings(true);
 	});
 	$(".hideThis").click(function () {
 		loadBindings();
-		$(".firstTimeContainer").css("display","none");
+		$(".firstTimeContainer").css("display", "none");
 		hideSettings();
 	});
-	$(".addInputs").click(function(){
+	$(".addInputs").click(function () {
 		addInputField($(this).parent());
 	});
 }
@@ -307,14 +316,16 @@ function searchForBinding(){
 	else {
 		setTimeout(function(){
 			var input = $(".input").val();
-			var bindings = settings.bindings;
-			var websites = settings.websites;
-			var bindingSplit;
-			for (var i = 0; i < bindings.length; i++) {
-				bindingSplit = [];
-				bindingSplit = bindings[i].split(",");
-				for (var j = 0; j < bindingSplit.length; j++) {
-					checkBinding(input, bindingSplit[j], websites[i]);
+			if (input !== "") {
+				var bindings = settings.bindings;
+				var websites = settings.websites;
+				var bindingSplit;
+				for (var i = 0; i < bindings.length; i++) {
+					bindingSplit = [];
+					bindingSplit = bindings[i].split(",");
+					for (var j = 0; j < bindingSplit.length; j++) {
+						checkBinding(input, bindingSplit[j], websites[i]);
+					}
 				}
 			}
 		},0);
@@ -329,7 +340,7 @@ function handleOnKeyPress() {
 
 function showSettings() {
 	$(".hideSettings").css("display","inline-block");
-	$(".draggablearea").css("width","624px");
+	$(".draggablearea").css("width","628px");
 	app.resizeTo(700, 755);
 }
 
@@ -425,13 +436,23 @@ function addDefault(element) {
 
 	updateSettings("bindings", bindings);
 	updateSettings("Websites", websites);
+
+	loadBindings();
 }
 
 function addNewBinding() {
 	var binding = $(".newBindingInput .actualinput").first().val();
 	var website = $(".newBindingInput .actualinput").last().val();
 
+	var bindings = settings.bindings;
+	var websites = settings.websites;
+	bindings.push(binding);
+	websites.push(website);
+
+	updateSettings("bindings", bindings);
+	updateSettings("websites", websites);
 	//addInputField();
+	loadBindings();
 }
 
 function hideNewBindingAnimation() {
@@ -447,7 +468,7 @@ function hideNewBindingAnimation() {
 }
 
 function addNewBindingAnimation() {
-	var overlay = $('<div class="overlay"></div>')
+	$('<div class="overlay"></div>')
 		.click(function() {
 			hideNewBindingAnimation();
 		})
@@ -487,14 +508,14 @@ function addNewBindingAnimation() {
 	var buttonCont = $('<div class="addBindingButtonCont"></div>')
 		.appendTo(cont);
 
-	var cancelBtn = $('<div class="addBindingCancel"><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Cancel</div></paper-ripple></div>')
+	$('<div class="addBindingCancel"><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Cancel</div></paper-ripple></div>')
 		.click(function () {
 			ripplestuff($(this).children("paper-ripple")[0], "", false);
 			hideNewBindingAnimation();
 		})
 		.appendTo(buttonCont);
 
-	var addBtn = $('<div class="addBindingAdd"><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Add</div></paper-ripple></div>')
+	$('<div class="addBindingAdd"><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Add</div></paper-ripple></div>')
 		.click(function () {
 			ripplestuff($(this).children("paper-ripple")[0], "", false);
 			addNewBinding();
@@ -506,6 +527,88 @@ function addNewBindingAnimation() {
 	}, 500, "easeOutCubic", function () {
 		addNewBinding();
 	});
+}
+
+function clearTextarea() {
+	var textArea = $(this).parent().parent().find("textarea");
+	textArea.html("");
+}
+
+function checkAndUploadSettings(obj) {
+	console.log(obj);
+	var changes = false;
+	if (!isset(obj.set)) {
+		firstRun();
+	}
+	else {
+		if (!isset(obj.colors)) {
+			changes = true;
+			obj.colors = {
+				"bg": "#3C92FF",
+				"title": "#FFFFFF",
+				"text": "#FFFFFF"
+			};
+		}
+		if (!isset(obj.bindings)) {
+			changes = true;
+			obj.bindings = [""];
+		}
+		if (!isset(obj.websites)) {
+			changes = true;
+			obj.websites = [""];
+		}
+		var websitesAmount = obj.websites.length;
+		var bindingsAmount = obj.bindings.length;
+		if (bindingsAmount > websitesAmount) {
+			changes = true;
+			for (var i = 0; i < (bindingsAmount - websitesAmount) ; i++) {
+				obj.bindings.push("");
+			}
+		}
+		else if (bindingsAmount < websitesAmount) {
+			changes = true;
+			for (var i = 0; i < (websitesAmount - bindingsAmount) ; i++) {
+				obj.websites.push("");
+			}
+		}
+		if (!isset(obj.closeBinder)) {
+			changes = true;
+			obj.closeBinder = true;
+		}
+		if (!isset(obj.superSearch)) {
+			changes = true;
+			obj.superSearch = false;
+		}
+	}
+	console.log(obj);
+	if (changes) {
+		updateSettings(JSON.stringify(obj));
+	}
+}
+
+function importError() {
+	$(".importError").remove();
+	$('<div clas="importError">No settings can be derived from this text</div>')
+		.insertBefore(".importButtonsCont");
+}
+
+function importBindings() {
+	var textArea = $(this).parent().parent().find("textarea");
+	var JSONText = textArea.val();
+	try {
+		var importedSettings = JSON.parse(JSONText);
+		checkAndUploadSettings(importedSettings);
+	}
+	catch (e) {
+		importError();
+	}
+}
+
+function exportBindings() {
+	var textArea = $(this).parent().parent().find("textarea");
+	var settingsJSON = JSON.stringify(settings);
+	textArea.html(settingsJSON);
+	textArea.select();
 }
 
 function updateInputs() {
@@ -585,6 +688,156 @@ paper-input-decorator .focused-underline { background-color:#FFFFFF; }</style>')
 	bindstuff();
 }
 
+function reOpenSearchEngineImportInput() {
+
+}
+
+function showSearchEnginesList(searchEngines) {
+	//HIERZO
+	//TODO HIERZO
+	var foundSearchEnginesCont = $('<div class="foundSearchEnginesCont"></div>')
+		.appendTo(".importSearchEngineCont");
+
+	$('<div class="SEBindingTxt">Bindings:</div>' +
+			'<div class="SEURLTxt">Original URL</div>' +
+			'<div class="SESEURLTxt">Search URL:</div>')
+		.appendTo($(".bindingsContainer"));
+}
+
+function animateSEList(searchEngines) {
+	$(".processSearchEngines .button-content")
+		.html("Re-open")
+		.off("click", importSearchEngines)
+		.on("click", reOpenSearchEngineImportInput);
+	$(".importSearchEngineCont").animate({
+		marginTop: "40px"
+	}, 250, function() {
+		$(".importSearchEngineCont, .importSearchEngineCont .topShadowLayer, .importSearchEngineCont .bottomShadowLayer")
+			.animate({
+				height: "650px"
+			}, 150, function() {
+				$('.importSearchEngineContainer textarea')
+					.animate({
+						height: "20px"
+					}, 150, function() {
+						showSearchEnginesList(searchEngines);
+					});
+			});
+	});
+}
+
+function importSearchEngines() {
+	ripplestuff($(this).children("paper-ripple")[0], "", false);
+	var data = $(".importSearchBindingsTextArea").html();
+	data = data.split("\n");
+	var searchEngines = {searchEngines: []};
+	var bindingName;
+	var bindingUrl;
+	var searchBindingUrl;
+
+	bindingName = data[4];
+	bindingUrl = data[5];
+	searchBindingUrl = data[6];
+
+	var o = 8;
+	var obj = {};
+	while (bindingName !== "" && bindingUrl !== "" && searchBindingUrl !== "") {
+		bindingName = data[o];
+		o++;
+		bindingUrl = data[o];
+		o++;
+		searchBindingUrl = data[o];
+		o += 2;
+
+		if (bindingUrl === "" && searchBindingUrl !== "") {
+			//We are past the first box
+			o -= 2;
+			bindingName = data[o];
+			o++;
+			bindingUrl = data[o];
+			o++;
+			searchBindingUrl = data[o];
+			o += 2;
+		}
+		else if (bindingUrl === "" && searchBindingUrl === "") {
+			//The end of the search engines
+			break;
+		}
+
+		obj = {
+			name: bindingName,
+			url: bindingUrl,
+			searchUrl: searchBindingUrl
+		};
+		searchEngines.searchEngines.push(obj);
+	}
+	animateSEList(searchEngines);
+}
+
+function hideSearchEngineImport() {
+	ripplestuff($(this).children("paper-ripple")[0], "", false);
+	$(".overlay").animate({
+		opacity: 0
+	}, 200, "easeInCubic");
+	$(".importSearchEngineCont").animate({
+		marginLeft: "100%"
+	}, 250, "easeInCubic", function() {
+		$(this).remove();
+		$(".overlay").remove();
+	});
+}
+
+function searchEngineImport() {
+	$('<div class="overlay"></div>')
+		.click(function () {
+			importSearchEngines();
+		})
+		.insertBefore($("body").children().first())
+		.animate({
+			opacity: 1
+		}, 400, "easeOutCubic");
+	var importSearchEngineEl = $('<div class="importSearchEngineCont"></div>')
+		.insertBefore($("body").children().first());
+
+	$('<div class="topShadowLayer"></div>')
+		.appendTo(importSearchEngineEl);
+
+	$('<div class="bottomShadowLayer"></div>')
+		.appendTo(importSearchEngineEl);
+
+	var cont = $('<div class="importSearchEngineContainer"></div>')
+		.appendTo(importSearchEngineEl);
+
+	$('<div class="bigTxt">Import Search Bindings</div>')
+		.appendTo(cont);
+
+	$('<div class="importSearchBindingsInstructions">' +
+			'To import your search Bindings, right-click chrome\'s omnibar (the bar above all pages) and click "manage search engines". Then click on the text "Search Engines" on the top of this area' +
+			', then press ctrl+a and after that press ctrl+c. Now come back to Binder and paste that into the box below and hit process' +
+			'</div>')
+		.appendTo(cont);
+
+	$('<multiline-paper-input> <paper-input-decorator> <textarea class="importSearchBindingsTextArea" spellcheck="false" rows="10" class="paper-textarea"></textarea> <div class="underline"> <div class="unfocused-underline"></div> <div class="focusedUnderline focused-underline"></div> </div> </paper-input-decorator> </multiline-paper-input>')
+		.appendTo(cont);
+
+	var buttonCont = $('<div class="importSearchEnginesButtonCont"></div>')
+		.appendTo(cont);
+
+	$('<div class="importSearchBindingsCancel"><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Cancel</div></paper-ripple></div>')
+		.on("click",hideSearchEngineImport)
+		.appendTo(buttonCont);
+
+	$('<div class="processSearchEngines"><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Process</div></paper-ripple></div>')
+		.click(importSearchEngines)
+		.appendTo(buttonCont);
+
+	importSearchEngineEl.animate({
+		marginLeft: 0
+	}, 500, "easeOutCubic", function () {
+		addNewBinding();
+	});
+}
+
 function bindListeners() {
 	$(".input").keypress(handleOnKeyPress);
 
@@ -640,6 +893,16 @@ function bindListeners() {
 		ripplestuff($(this).children("paper-ripple")[0], "", true);
 		addNewBindingAnimation();
 	});
+
+	$(".exportClear").click(clearTextarea);
+
+	$(".exportExport").click(exportBindings);
+
+	$(".importClear").click(clearTextarea);
+
+	$(".importImport").click(importBindings);
+
+	$(".searchEngineImport").click(searchEngineImport);
 }
 
 function main() {
@@ -648,9 +911,7 @@ function main() {
 		if (app.getBounds().width !== 500 || app.getBounds().height !== 100) {
 			app.resizeTo(500, 100);
 		}
-		if (settings.set === undefined) {
-			firstRun();
-		}
+		checkAndUploadSettings(settings);
 
 		if (settings.superSearch) {
 			$(".input").attr("size","56");

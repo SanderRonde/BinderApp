@@ -22,6 +22,13 @@ body {
 		cursor: default;
 	}
 
+textarea {
+	resize:none;
+}
+
+a {
+	color: inherit;
+}
 
 ::-webkit-scrollbar {
 	width: 8px;
@@ -86,7 +93,7 @@ html, body {
 
 .optionsButton, .minimizeButton, .closeButton {
 	display:inline-block;
-	cursor: hand;
+	cursor: pointer;
 	-webkit-app-region: no-drag;
 }
 	
@@ -187,8 +194,8 @@ paper-input {
 
 paper-checkbox {
 	padding-right: 5px;
-  	padding-left: 5px;
-  	margin-bottom: -2px
+	padding-left: 5px;
+	margin-bottom: -2px
 }
 
 .checkboxtext {
@@ -287,20 +294,22 @@ paper-checkbox {
 	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
 }
 
-.bottomShadowLayer {
-	box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3);
-	height:140px;
-	width:100%;
-	position:absolute;
-	z-index:15;
+.topShadowLayer {
+	width: 100%;
+	position: absolute;
+	z-index: 15;
+	box-shadow: 0 17px 17px 0 rgba(0, 0, 0, 0.15);
 }
 
-.topShadowLayer {
-	box-shadow: 0 17px 17px 0 rgba(0, 0, 0, 0.15);
+.bottomShadowLayer {
+	box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3);
+	width: 100%;
+	position: absolute;
+	z-index: 15;
+}
+
+.newBindingPopup .bottomShadowLayer, .newBindingPopup .topShadowLayer {
 	height:140px;
-	width:100%;
-	position:absolute;
-	z-index:15;
 }
 
 .addNewContainer {
@@ -337,6 +346,59 @@ paper-checkbox {
 }
 
 	.addBindingCancel .button-content, .addBindingAdd .button-content {
+		text-transform: uppercase;
+		padding: 12px 30px;
+	}
+
+.paper-textarea {
+	background-color: transparent;
+	color: inherit;
+}
+
+multiline-paper-input .unfocused-underline {
+	width: 100%;
+}
+
+.exportButtonsCont, .importButtonsCont {
+	float: right;
+	margin-top: -10px;
+}
+
+.bigTxt {
+	font-size: 200%;
+	font-weight: bold;
+}
+
+.importSearchEngineCont {
+	position: fixed;
+	z-index: 15;
+	background-color: rgb(0, 90, 255);
+	height: 325px;
+	margin-top: 196px;
+	margin-left:100%;
+	width:100%;
+}
+
+.importSearchEngineCont .bottomShadowLayer, .importSearchEngineCont .topShadowLayer {
+	height:325px;
+}
+
+.importSearchEngineContainer {
+	padding: 10px;
+	position: absolute;
+	z-index:20;
+}
+
+.importSearchEnginesButtonCont {
+	float: right;
+}
+
+.importSearchBindingsCancel, .processSearchEngines {
+	display: inline-block;
+	cursor: pointer;
+}
+
+	.importSearchBindingsCancel .button-content, .processSearchEngines .button-content {
 		text-transform: uppercase;
 		padding: 12px 30px;
 	}

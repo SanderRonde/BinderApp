@@ -1,12 +1,12 @@
 <html>
-	<head>
-		<link rel="stylesheet" media="screen" type="text/css" href="Colorpicker/css/colorpicker.css" />
-		<link rel="stylesheet" href="polymer.css">
-		<link rel="stylesheet" href="css.css" />
-		<title>
-			Binder
-		</title>
-	</head>
+<head>
+	<link rel="stylesheet" media="screen" type="text/css" href="Colorpicker/css/colorpicker.css" />
+	<link rel="stylesheet" href="polymer.css">
+	<link rel="stylesheet" href="css.css" />
+	<title>
+		Binder
+	</title>
+</head>
 <body>
 	<div class="mainCont">
 		<div class="fixed">
@@ -87,7 +87,7 @@
 				<br />
 				<br />
 				<div class="firstTimeDefaultsCont">
-					<div class="firstTimeDefaultsTxt">
+					<div class="bigTxt">
 						Starting Bindings
 					</div>
 					<br />
@@ -203,7 +203,7 @@
 					</table>
 					<br /><br />
 					<hr />
-					<div class="firstTimeDefaultsTxt">
+					<div class="bigTxt">
 						Here are some search bindings
 					</div>
 					<table>
@@ -290,7 +290,9 @@
 					Options for Binder
 				</div>
 				<div class="optionsIntro">
-					Use the left boxes to choose a Binding you want linked to a certain URL. You can seperate multiple URL's with commas. One thing to keep in mind is that certain websites will not work without inserting https://www. in front of them, if you visit the website often your browser will most likely already fill this in for you, but keep this in mind if a website will not work, i recommend to simply copy the URL from the page and you're always good to go.
+					Use the left boxes to choose a Binding you want linked to a certain URL. You can seperate multiple URL's with commas. One thing to keep in mind is that certain websites will not work without inserting https://www. in front of them, if you visit the website often your browser will most likely already fill this in for you, but keep this in mind if a website will not work, i recommend to simply copy the URL from the page and you're always good to go.<br />
+					Your Bindings should in theory sync across all devices on which you are logged in with your Google account across google storage sync. This does however not always work. In that case use the import/export functions below.
+
 				</div>
 				<br><br>
 				<div class="colorChange">
@@ -345,8 +347,62 @@
 				<div class="bindingsContainer"></div>
 				<br />
 				<hr />
+				<div class="searchBindings">
+					<div class="bigTxt">
+						Search Bindings
+					</div>
+					<br />
+					Search Bindings will allow you to, after you trigger them, search the given website.<br />
+					This works by you giving a URL with <code>%s</code> in it, the <code>%s</code> is then replaced by the text you give afterwards, if you placed the <code>%s</code> correctly, this will then search the given website (or any other function the website may have). For example, you can search Google by giving this URL:<br />
+					http://www.google.com/search?q=%s
+					<br /><br />
+					To add your own search Bindings, you can choose one of these three methods:
+					<br /><br />
+					Method 1:
+					<ol type="1">
+						<li>
+							First simply visit the site and search something to store it into chrome's memory. Then right-click the omnibar and click "Manage Search Engines".
+						</li>
+						<li>
+							Find the website you just visited in the lists (it will most likely be in the bottom list).<br />
+							If you can not find the website in the list, try method 3
+						</li>
+						<li>
+							Click the website's URL in te right-most box and copy the URL
+						</li>
+						<li>
+							You are done, simply paste this URL as a URL for a Binding and it will work
+						</li>
+					</ol>
+					<br />
+					<paper-button class="searchEngineImport" raised>
+						<paper-ripple>
+							<div class="bg"></div>
+							<div class="waves"></div>
+							<div class="button-content">Method 2 (choose from a list)</div>
+						</paper-ripple><paper-shadow>
+							<div class="shadow-bot"></div>
+							<div class="shadow-top"></div>
+						</paper-shadow>
+					</paper-button>
+					<br/><br/>
+					Method 3:
+					<ol type="1">
+						<li>
+							Go to the website you want to search
+						</li>
+						<li>
+							Type %s into the search bar and hit enter
+						</li>
+						<li>
+							Copy the URL and create a Binding with it
+						</li>
+					</ol>
+				</div>
+				<br /><br />
+				<hr />
 				<div class="firstTimeDefaultsCont">
-					<div class="firstTimeDefaultsTxt">
+					<div class="bigTxt">
 						Starting Bindings
 					</div>
 					<br />
@@ -371,7 +427,16 @@
 									</div>
 								</td>
 								<td>
-									<paper-button class="addDefaults" raised><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Add</div></paper-ripple><paper-shadow> <div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>
+									<paper-button class="addDefaults" raised>
+										<paper-ripple>
+											<div class="bg"></div>
+											<div class="waves"></div>
+											<div class="button-content">Add</div>
+										</paper-ripple><paper-shadow>
+											<div class="shadow-bot"></div>
+											<div class="shadow-top"></div>
+										</paper-shadow>
+									</paper-button>
 								</td>
 							</tr>
 							<tr>
@@ -392,7 +457,16 @@
 									</div>
 								</td>
 								<td>
-									<paper-button class="addDefaults" raised><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Add</div></paper-ripple><paper-shadow> <div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>
+									<paper-button class="addDefaults" raised>
+										<paper-ripple>
+											<div class="bg"></div>
+											<div class="waves"></div>
+											<div class="button-content">Add</div>
+										</paper-ripple><paper-shadow>
+											<div class="shadow-bot"></div>
+											<div class="shadow-top"></div>
+										</paper-shadow>
+									</paper-button>
 								</td>
 							</tr>
 							<tr>
@@ -413,7 +487,16 @@
 									</div>
 								</td>
 								<td>
-									<paper-button class="addDefaults" raised><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Add</div></paper-ripple><paper-shadow> <div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>
+									<paper-button class="addDefaults" raised>
+										<paper-ripple>
+											<div class="bg"></div>
+											<div class="waves"></div>
+											<div class="button-content">Add</div>
+										</paper-ripple><paper-shadow>
+											<div class="shadow-bot"></div>
+											<div class="shadow-top"></div>
+										</paper-shadow>
+									</paper-button>
 								</td>
 							</tr>
 							<tr>
@@ -434,7 +517,16 @@
 									</div>
 								</td>
 								<td>
-									<paper-button class="addDefaults" raised><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Add</div></paper-ripple><paper-shadow> <div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>
+									<paper-button class="addDefaults" raised>
+										<paper-ripple>
+											<div class="bg"></div>
+											<div class="waves"></div>
+											<div class="button-content">Add</div>
+										</paper-ripple><paper-shadow>
+											<div class="shadow-bot"></div>
+											<div class="shadow-top"></div>
+										</paper-shadow>
+									</paper-button>
 								</td>
 							</tr>
 							<tr>
@@ -455,14 +547,23 @@
 									</div>
 								</td>
 								<td>
-									<paper-button class="addDefaults" raised><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Add</div></paper-ripple><paper-shadow> <div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>
+									<paper-button class="addDefaults" raised>
+										<paper-ripple>
+											<div class="bg"></div>
+											<div class="waves"></div>
+											<div class="button-content">Add</div>
+										</paper-ripple><paper-shadow>
+											<div class="shadow-bot"></div>
+											<div class="shadow-top"></div>
+										</paper-shadow>
+									</paper-button>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 					<br /><br />
 					<hr />
-					<div class="firstTimeDefaultsTxt">
+					<div class="bigTxt">
 						Here are some search bindings
 					</div>
 					<table>
@@ -485,7 +586,16 @@
 									</div>
 								</td>
 								<td>
-									<paper-button class="addDefaults" raised><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Add</div></paper-ripple><paper-shadow> <div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>
+									<paper-button class="addDefaults" raised>
+										<paper-ripple>
+											<div class="bg"></div>
+											<div class="waves"></div>
+											<div class="button-content">Add</div>
+										</paper-ripple><paper-shadow>
+											<div class="shadow-bot"></div>
+											<div class="shadow-top"></div>
+										</paper-shadow>
+									</paper-button>
 								</td>
 							</tr>
 							<tr>
@@ -506,7 +616,16 @@
 									</div>
 								</td>
 								<td>
-									<paper-button class="addDefaults" raised><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Add</div></paper-ripple><paper-shadow> <div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>
+									<paper-button class="addDefaults" raised>
+										<paper-ripple>
+											<div class="bg"></div>
+											<div class="waves"></div>
+											<div class="button-content">Add</div>
+										</paper-ripple><paper-shadow>
+											<div class="shadow-bot"></div>
+											<div class="shadow-top"></div>
+										</paper-shadow>
+									</paper-button>
 								</td>
 							</tr>
 							<tr>
@@ -527,12 +646,122 @@
 									</div>
 								</td>
 								<td>
-									<paper-button class="addDefaults" raised><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Add</div></paper-ripple><paper-shadow> <div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>
+									<paper-button class="addDefaults" raised>
+										<paper-ripple>
+											<div class="bg"></div>
+											<div class="waves"></div>
+											<div class="button-content">Add</div>
+										</paper-ripple><paper-shadow>
+											<div class="shadow-bot"></div>
+											<div class="shadow-top"></div>
+										</paper-shadow>
+									</paper-button>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
+				<br /><br />
+				<hr />
+				<div class="exportCont">
+					<div class="bigTxt">
+						Export
+					</div>
+					<br />
+					Click the export button to export all your data into the text-field, copy this data into an import text field on Binder on a different computer to import your bindings.
+					<br /><br />
+					<multiline-paper-input>
+						<paper-input-decorator>
+							<textarea spellcheck="false" rows="10" class="paper-textarea"></textarea>
+							<div class="underline">
+								<div class="unfocused-underline"></div>
+								<div class="focusedUnderline focused-underline"></div>
+							</div>
+						</paper-input-decorator>
+					</multiline-paper-input>
+					<br />
+					<div class="exportButtonsCont">
+						<paper-button class="exportClear" raised>
+							<paper-ripple>
+								<div class="bg"></div>
+								<div class="waves"></div>
+								<div class="button-content">Clear</div>
+							</paper-ripple><paper-shadow>
+								<div class="shadow-bot"></div>
+								<div class="shadow-top"></div>
+							</paper-shadow>
+						</paper-button>
+						<paper-button class="exportExport" raised>
+							<paper-ripple>
+								<div class="bg"></div>
+								<div class="waves"></div>
+								<div class="button-content">Export</div>
+							</paper-ripple><paper-shadow>
+								<div class="shadow-bot"></div>
+								<div class="shadow-top"></div>
+							</paper-shadow>
+						</paper-button>
+					</div>
+				</div>
+				<br /><br />
+				<hr />
+				<div class="importCont">
+					<div class="bigTxt">
+						Import
+					</div>
+					<br />
+					Click the import button to import all your data from a string of text into your settings.
+					<br /><br />
+					<multiline-paper-input>
+						<paper-input-decorator>
+							<textarea spellcheck="false" rows="10" class="paper-textarea"></textarea>
+							<div class="underline">
+								<div class="unfocused-underline"></div>
+								<div class="focusedUnderline focused-underline"></div>
+							</div>
+						</paper-input-decorator>
+					</multiline-paper-input>
+					<br />
+					<div class="importButtonsCont">
+						<paper-button class="importClear" raised>
+							<paper-ripple>
+								<div class="bg"></div>
+								<div class="waves"></div>
+								<div class="button-content">Clear</div>
+							</paper-ripple><paper-shadow>
+								<div class="shadow-bot"></div>
+								<div class="shadow-top"></div>
+							</paper-shadow>
+						</paper-button>
+						<paper-button class="importImport" raised>
+							<paper-ripple>
+								<div class="bg"></div>
+								<div class="waves"></div>
+								<div class="button-content">Import</div>
+							</paper-ripple><paper-shadow>
+								<div class="shadow-bot"></div>
+								<div class="shadow-top"></div>
+							</paper-shadow>
+						</paper-button>
+					</div>
+				</div>
+				<br /><br />
+				<hr />
+				<div class="keyboardShortcut">
+					<div class="bigTxt">
+						Keyboard Shortcut
+					</div>
+					You can create a keyboard shortcut to Binder to launch it a lot faster, here is how to do it for Windows:
+					<br />
+					<ol type="1">
+						<li>Go to chrome://apps (simply type this into the address-bar)</li>
+						<li>Right-click Binder, click "Create Shortcuts", make sure "Desktop" is checked and press "Create" (you do not have to check the taskbar checkbox as well)</li>
+						<li>Go to the shortcut on your desktop and right-click it, then go to properties</li>
+						<li>Click the "Shortcut" field and press the keys you want to trigger Binder (check out <a href="http://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts" target="_blank">List of keyboard shortcuts</a> to see if it is not already taken)</li>
+						<li>Hit OK and you are done, be sure not to delete the shortcut or the keyboard shortcut will also go away</li>
+					</ol>
+				</div>
+				<br /><br /><br /><br />
 			</div>
 		</div>
 	</div>

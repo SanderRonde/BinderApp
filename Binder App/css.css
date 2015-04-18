@@ -211,13 +211,17 @@ paper-checkbox {
 }
 
 .addInputs {
-	margin-top: 5px;
-	margin-bottom: 15px;
+	margin-top: 20px;
 }
 
-.removeInput {
+.addInputs, .reloadBindings {
+	display: inline-block;
+}
+
+.removeInput, .shortcutSettings {
 	min-width: 3em;
 	margin-left: 20px;
+	display:inline-block;
 }
 
 .settingsInput .actualinput {
@@ -299,6 +303,7 @@ paper-checkbox {
 	position: absolute;
 	z-index: 15;
 	box-shadow: 0 17px 17px 0 rgba(0, 0, 0, 0.15);
+	height:100%;
 }
 
 .bottomShadowLayer {
@@ -306,10 +311,7 @@ paper-checkbox {
 	width: 100%;
 	position: absolute;
 	z-index: 15;
-}
-
-.newBindingPopup .bottomShadowLayer, .newBindingPopup .topShadowLayer {
-	height:140px;
+	height:100%;
 }
 
 .addNewContainer {
@@ -379,9 +381,6 @@ multiline-paper-input .unfocused-underline {
 	width:100%;
 }
 
-.importSearchEngineCont .bottomShadowLayer, .importSearchEngineCont .topShadowLayer {
-	height:325px;
-}
 
 .importSearchEngineContainer {
 	padding: 10px;
@@ -402,3 +401,19 @@ multiline-paper-input .unfocused-underline {
 		text-transform: uppercase;
 		padding: 12px 30px;
 	}
+
+.assignKeyBindingCont {
+	position: fixed;
+	z-index: 20;
+	background-color: rgb(0, 90, 255);
+	height: 616px;
+	margin-top: 90px;
+	margin-left:100%;
+	width:100%;
+}
+
+.assignKeyBinding {
+	height: 100%;
+	width: 100%;
+	padding:10px;
+}

@@ -35,27 +35,211 @@ function updateSettings(key, data) {
 	}
 }
 
+function getAllKeyBindings(callback) {
+	chrome.runtime.onMessage.addListener(function (message) {
+		if (!isset(message.cmd)) {
+			console.log(message);
+			var data = message.keyBindings;
+			updateSettings("keyBindings", data);
+			callback(data);
+		}
+	});
+	chrome.runtime.sendMessage({ cmd: "getKeyBindings" });
+}
+
+function hidePopup() {
+	$(".overlay").animate({
+		opacity: 0
+	}, 200, "easeInCubic");
+	$(".popup").animate({
+		marginLeft: "100%"
+	}, 250, "easeInCubic", function() {
+		$(this).remove();
+		$(".overlay").remove();
+	});
+}
+
+function loadAKBindings() {
+	var target = $(".AKBindings");
+
+	var bindings = settings.bindings;
+	var websites = settings.websites;
+	var shortcuts = settings.shortcuts;
+	var keyBindings = settings.keyBindings;
+
+	var akBinding;
+	var keys;
+	var shortcutSplit;
+	for (var i = 0; i < bindings.length; i++) {
+		akBinding = $("<div class='AKBinding'></div>")
+			.appendTo(target);
+
+		$("<paper-input class=\"AKInput inputCont\"><paper-input-decorator><input disabled class=\"actualinput bindingInput\"" + bindings[i] + "/>\
+<div class=\"underline\"><div class=\"unfocused-underline\"></div><div class=\"focusedUnderline focused-underline\"></div></div></paper-input-decorator>\
+</paper-input>")
+			.css("width", "150px")
+			.appendTo(akBinding)
+			.find(".unfocused-underline")
+			.css("width", "150px");
+
+		$("<paper-input class=\"AKInput inputCont\"><paper-input-decorator><input disabled class=\"actualinput rightInput\"" + websites[i] + " />\
+<div class=\"underline\"><div class=\"unfocused-underline\"></div><div class=\"focusedUnderline focused-underline\"></div></div></paper-input-decorator>\
+					</paper-input>")
+			.css("margin-left","3px")
+			.css("width", "150px")
+			.appendTo(akBinding)
+			.find(".unfocused-underline")
+			.css("width", "150px");
+
+		if (shortcuts[i] === "") {
+			$("<div class='AKShortcut'>No Shortcut</div>")
+				.appendTo(akBinding);
+		}
+		else {
+			keys = "";
+			shortcutSplit = keyBindings[shortcuts[i]].shortcut.split("+");
+			for (var j = 0; j < shortcutSplit.length; j++) {
+				if (j !== 0) {
+					keys += "+";
+				}
+				keys += "<span class='key'>" + shortcutSplit[j] + "</span>";
+			}
+			$("<paper-button class=\"AKShortcut\" raised> <paper-ripple> <div class=\"bg\"></div> <div class=\"waves\"></div> <div class=\"button-content\">" + keys + "</div> </paper-ripple><paper-shadow> <div class=\"shadow-bot\"></div> <div class=\"shadow-top\"></div> </paper-shadow> </paper-button>")
+				.appendTo(akBinding);
+
+		}
+}
+
+function assignNewKeyBindingScreen(keyBinding) {
+	$("<div class='overlay'></div>")
+		.click(function() {
+			hidePopup();
+		})
+		.insertBefore($("body").children().first())
+		.animate({
+			opacity: 1
+		}, 400, "easeOutCubic");
+	var popup = $("<div class='assignKeyBindingCont popup'></div>")
+		.insertBefore($("body").children().first());
+
+	$("<div class=\"topShadowLayer\"></div>")
+		.appendTo(popup);
+
+	$("<div class=\"bottomShadowLayer\"></div>")
+		.appendTo(popup);
+
+	var cont = $("<div class=\"assignKeyBinding\"></div>")
+		.appendTo(popup);
+
+	$("<div class='bigTxt'>Assign Keybindings</div>")
+		.appendTo(cont);
+
+	var keys = "";
+	var shortcutSplit = keyBinding.shortcut.split("+");
+	for (var i = 0; i < shortcutSplit.length; i++) {
+		if (i !== 0) {
+			keys += "+";
+		}
+		keys += "<span class='key'>" + shortcutSplit[i] + "</span>";
+	}
+
+	$("<div class='AKDescr'>You have just assigned keyboard shortcuts, but you have not linked them to a Binding yet, choose one of the Bindings below to link it to " + keyBinding.description + " which is triggered upon pressing " +
+			keys + ", choose a Binding below that will trigger (the website will open) upon pressing that shortcut</div>")
+		.appendTo(cont);
+
+	$("<div class='AKBindings'></div>")
+		.appendTo(cont);
+
+	$("<paper-button class=\"importImport\" raised> <paper-ripple> <div class=\"bg\"></div> <div class=\"waves\"></div> <div class=\"button-content\">Close</div> </paper-ripple><paper-shadow> <div class=\"shadow-bot\"></div> <div class=\"shadow-top\"></div> </paper-shadow> </paper-button>")
+		.click(function(e) {
+			ripplestuff(this, e, false);
+			hidePopup();
+		});
+
+	console.log(keyBinding);
+
+	popup.animate({
+		marginLeft: 0
+	}, 500, "easeOutCubic");
+}
+
+function addUnassignedKeyBindingsButton() {
+	$("<paper-button class=\"reloadBindings\" raised><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">Assign Unassigned Key-bindings</div></paper-ripple>" +
+			"<paper-shadow> <div class=\"shadow-bot\"></div><div class=\"shadow-top\"></div> </paper-shadow></paper-button>")
+		.click(function(e) {
+			ripplestuff(this, e, false);
+			checkForKeyBindings();
+		})
+		.appendTo(".bindinsContButtonCont");
+}
+
+function checkForKeyBindings() {
+	getAllKeyBindings(function (bindings) {
+		console.log(bindings);
+		var referenced = [];
+		var shortcuts = settings.shortcuts;
+		var i;
+		for (i = 0; i < shortcuts.length; i++) {
+			if (shortcuts[i] !== "") {
+				referenced.push(shortcuts[i]);
+			}
+		}
+		console.log(referenced);
+		for (i = 0; i < referenced.length; i++) {
+			bindings.splice(referenced[i], 1);
+		}
+		console.log(bindings);
+		for (i = 1; i < bindings.length; i++) {
+			if (bindings[i].shortcut !== "") {
+				addUnassignedKeyBindingsButton();
+				assignNewKeyBindingScreen(bindings[i]);
+			}
+		}
+	});
+}
+
 function loadBindings() {
-	$(".bindingsContainer").html('');
-	$('<div class="bindingTxt">Bindings:</div>\
-				<div class="URLTxt">Websites:</div>')
+	$(".bindingsContainer").html("");
+	$("<div class=\"bindingTxt\">Bindings:</div>\
+				<div class=\"URLTxt\">Websites:</div>")
 		.appendTo($(".bindingsContainer"));
 	var bindings = settings.bindings;
 	var websites = settings.websites;
-	$('<paper-button class="addInputs" raised><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Add Inputs</div></paper-ripple>' +
-			'<paper-shadow> <div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>')
-		.click(function() {
+	var shortcuts = settings.shortcuts;
+	var buttonsCont = $("<div class=\"bindinsContButtonCont\"></div>")
+		.appendTo($(".bindingsContainer"));
+	$("<paper-button class=\"addInputs\" raised><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">Add Inputs</div></paper-ripple>" +
+			"<paper-shadow> <div class=\"shadow-bot\"></div><div class=\"shadow-top\"></div> </paper-shadow></paper-button>")
+		.click(function (e) {
+			ripplestuff(this, e, false);
 			addInputField($(this).parent());
 		})
-		.appendTo($(".bindingsContainer"));
-	console.log(bindings.length);
+		.appendTo(buttonsCont);
+	$("<paper-button class=\"reloadBindings\" raised><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">Reload Bindings</div></paper-ripple>" +
+			"<paper-shadow> <div class=\"shadow-bot\"></div><div class=\"shadow-top\"></div> </paper-shadow></paper-button>")
+		.click(function(e) {
+			ripplestuff(this, e, false);
+			loadBindings();
+		})
+		.appendTo(buttonsCont);
 	if (bindings.length > 0) {
-		console.log("in");
-		addInputField($(".bindingsContainer"), false, true, bindings[0], websites[0]);
+		if (shortcuts[0] !== "") {
+			addInputField($(".bindingsContainer"), false, true, bindings[0], websites[0], shortcuts[0], true);
+		}
+		else {
+			addInputField($(".bindingsContainer"), false, true, bindings[0], websites[0]);
+		}
 		for (var i = 1; i < bindings.length; i++) {
-			addInputField($(".bindingsContainer"), false, false, bindings[i], websites[i]);
+			if (shortcuts[i] !== "") {
+				addInputField($(".bindingsContainer"), false, false, bindings[i], websites[i], shortcuts[i], true);
+			}
+			else {
+				addInputField($(".bindingsContainer"), false, false, bindings[i], websites[i]);
+			}
 		}
 	}
+	console.log(app.getBounds());
+	checkForKeyBindings();
 }
 
 function animateGreenBorder(element) {
@@ -86,7 +270,7 @@ function animateGreenBorder(element) {
 }
 
 function removeError(element) {
-	element.css("margin-bottom", "0px");
+	element.css("margin-bottom", "0");
 	element.find(".unfocused-underline").css("background-color", "rgb(117, 117, 117)");
 	element.find(".focused-underline").css("background-color", "rgb(255, 255, 255)");
 }
@@ -94,23 +278,26 @@ function removeError(element) {
 function showError(element, error) {
 	element.css("margin-bottom", "-20px").children("paper-input-decorator").children(".footer").remove();
 	element.find(".underline").children().css("background-color", "rgb(255, 145, 0)");
-	$('<div class="footer" layout="" horizontal="" end-justified=""><div class="error" flex="" layout="" horizontal="" center=""><div class="error-text" flex="" auto="" role="alert"\
-aria-hidden="false">'  + error + '</div><core-icon id="errorIcon" class="error-icon" icon="warning" aria-label="warning" role="img"><svg \
-viewBox="0 0 24 24" height="100%" width="100%"\
-preserveAspectRatio="xMidYMid meet" fit="" style="pointer-events: none; display: block;"><g><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"></path></g></svg></core-icon>\
-</div><div aria-hidden="true"><content select=".counter"></content></div></div>')
+	$("<div class=\"footer\" layout=\"\" horizontal=\"\" end-justified=\"\"><div class=\"error\" flex=\"\" layout=\"\" horizontal=\"\" center=\"\"><div class=\"error-text\" flex=\"\" auto=\"\" role=\"alert\"\
+aria-hidden=\"false\">"  + error + "</div><core-icon id=\"errorIcon\" class=\"error-icon\" icon=\"warning\" aria-label=\"warning\" role=\"img\"><svg \
+viewBox=\"0 0 24 24\" height=\"100%\" width=\"100%\"\
+preserveAspectRatio=\"xMidYMid meet\" fit=\"\" style=\"pointer-events: none; display: block;\"><g><path d=\"M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z\"></path></g></svg></core-icon>\
+</div><div aria-hidden=\"true\"><content select=\".counter\"></content></div></div>")
 		.appendTo(element.children("paper-input-decorator"));
 }
 
-function checkBindingsForErrors(bindings, websites, bindingElements, websiteElements) {
+function checkBindingsForErrors(bindings, bindingElements) {
 	var binding;
 	if (settings.superSearch) {
 		for (var i = 0; i < bindings.length; i++) {
 			removeError(bindingElements[i]);
 			binding = bindings[i];
 			for (var j = 0; j < bindings.length; j++) {
-				if (binding.indexOf(bindings[j]) === 0 && i !== j) {
+				if (binding.indexOf(bindings[j]) === 0 && i !== j && bindings[i] !== "" && bindings[j] !== "" && bindings[i] !== bindings[j]) {
 					showError(bindingElements[i], "Binding will never be triggered");
+				}
+				else if (bindings[i] === bindings[j] && i !== j && bindings[i] !== "" && bindings[j] !== "") {
+					showError(bindingElements[i], "Binding is the same as a different binding");
 				}
 			}
 		}
@@ -121,7 +308,6 @@ function saveInputs(sourceElement) {
 	var bindings = [];
 	var websites = [];
 	var bindingElements = [];
-	var websiteElements = [];
 	sourceElement
 		.parent()
 		.children(".inputsField").each(function() {
@@ -137,7 +323,6 @@ function saveInputs(sourceElement) {
 			$(this).find(".rightInput")
 				.each(function () {
 					websites.push($(this).val());
-					websiteElements.push($(this).parent().parent());
 				});
 		});
 	updateSettings("bindings",bindings);
@@ -150,7 +335,7 @@ function saveInputs(sourceElement) {
 		.each(function() {
 			animateGreenBorder(this);
 		});
-	checkBindingsForErrors(bindings, websites, bindingElements, websiteElements);
+	checkBindingsForErrors(bindings, bindingElements);
 }
 
 function removeField(element) {
@@ -177,14 +362,18 @@ function removeField(element) {
 	element.parent().remove();
 }
 
-function addInputField(sourceElement, dontAddNew, noRemoveButton, firstInputVal, secondInputVal) {
+function showShortcutInfo(keyBindingIndex) {
+	//TODO
+}
+
+function addInputField(sourceElement, dontAddNew, noRemoveButton, firstInputVal, secondInputVal, keyBindingIndex, shortcut) {
 	console.log(sourceElement);
-	var input = $('<div class="inputsField"></div>')
+	var input = $("<div class=\"inputsField\"></div>")
 		.insertBefore(sourceElement.children().last());
 
-	var leftInput = $('<paper-input class="settingsInput inputCont"><paper-input-decorator><input class="actualinput bindingInput"' + ((firstInputVal !== undefined) ? (' value="' + firstInputVal + '"') : "") + '/>\
-<div class="underline"><div class="unfocused-underline"></div><div class="focusedUnderline focused-underline"></div></div></paper-input-decorator>\
-</paper-input>')
+	var leftInput = $("<paper-input class=\"settingsInput inputCont\"><paper-input-decorator><input class=\"actualinput bindingInput\"" + ((firstInputVal !== undefined) ? (" value=\"" + firstInputVal + "\"") : "") + "/>\
+<div class=\"underline\"><div class=\"unfocused-underline\"></div><div class=\"focusedUnderline focused-underline\"></div></div></paper-input-decorator>\
+</paper-input>")
 		.appendTo(input);
 
 	leftInput
@@ -193,9 +382,9 @@ function addInputField(sourceElement, dontAddNew, noRemoveButton, firstInputVal,
 			saveInputs($(this).parent().parent().parent());
 		});
 
-	var rightInput = $('<paper-input class="settingsInput inputCont"><paper-input-decorator><input class="actualinput rightInput"' + ((secondInputVal !== undefined) ? (' value="' + secondInputVal + '"') : "") + ' />\
-<div class="underline"><div class="unfocused-underline"></div><div class="focusedUnderline focused-underline"></div></div></paper-input-decorator>\
-					</paper-input>')
+	var rightInput = $("<paper-input class=\"settingsInput inputCont\"><paper-input-decorator><input class=\"actualinput rightInput\"" + ((secondInputVal !== undefined) ? (" value=\"" + secondInputVal + "\"") : "") + " />\
+<div class=\"underline\"><div class=\"unfocused-underline\"></div><div class=\"focusedUnderline focused-underline\"></div></div></paper-input-decorator>\
+					</paper-input>")
 		.css("margin-left", "3px")
 		.appendTo(input);
 
@@ -205,24 +394,46 @@ function addInputField(sourceElement, dontAddNew, noRemoveButton, firstInputVal,
 			saveInputs($(this).parent().parent().parent());
 		});
 
+	if (keyBindingIndex !== undefined && shortcut !== undefined) {
+		if (shortcut === true) {
+			$("<paper-button class=\"shortcutSettings\" raised><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\"><img height='20' width='20' class='keyboardImg' src='Images/keyboard.png'></div></paper-ripple><paper-shadow>\
+<div class=\"shadow-bot\"></div><div class=\"shadow-top\"></div> </paper-shadow></paper-button>")
+				.click(function(e) {
+					ripplestuff(this, e, false);
+					showShortcutInfo(keyBindingIndex);
+				})
+				.appendTo(input);
+			rightInput.css("width", "248px");
+		}
+	}
+
 	if (noRemoveButton === false || noRemoveButton === undefined) {
-		$('<paper-button class="removeInput" raised><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">x</div></paper-ripple><paper-shadow>\
-<div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>')
+		var removeButton = $("<paper-button class=\"removeInput\" raised><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">x</div></paper-ripple><paper-shadow>\
+<div class=\"shadow-bot\"></div><div class=\"shadow-top\"></div> </paper-shadow></paper-button>")
 			.click(function() {
+				ripplestuff(this, e, false);
 				removeField($(this));
 			})
 			.appendTo(input);
+		if (keyBindingIndex !== undefined && shortcut !== undefined) {
+			if (shortcut === true) {
+				removeButton.css("margin-left", "5px");
+			}
+		}
 	}
 
 	if (dontAddNew === undefined) {
 		var bindings = settings.bindings;
 		var websites = settings.websites;
+		var shortcuts = settings.shortcuts;
 		bindings.push("");
 		websites.push("");
+		shortcuts.push("");
 		console.log(bindings);
 		console.log(websites);
 		updateSettings("bindings", bindings);
 		updateSettings("websites", websites);
+		updateSettings("shortcuts", shortcuts);
 	}
 	bindstuff();
 }
@@ -238,6 +449,8 @@ function firstRun() {
 		},
 		"bindings": [""],
 		"websites": [""],
+		"shortcuts": [""],
+		"keyBindings": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
 		"closeBinder": true,
 		"superSearch": false
 	});
@@ -273,7 +486,8 @@ function openWebsites(website) {
 	sites = website.split(",");
 	var search = false;
 	//Search all of them for search things
-	for (var i = 0; i < sites.length; i++) {
+	var i;
+	for (i = 0; i < sites.length; i++) {
 		if (sites[i].indexOf("%s") > -1) {
 			search = true;
 		}
@@ -282,7 +496,7 @@ function openWebsites(website) {
 		searchBinding(sites);
 	}
 	else {
-		for (var i = 0; i < sites.length; i++) {
+		for (i = 0; i < sites.length; i++) {
 			window.open(sites[i],"_blank");
 		}
 	}
@@ -342,6 +556,7 @@ function showSettings() {
 	$(".hideSettings").css("display","inline-block");
 	$(".draggablearea").css("width","628px");
 	app.resizeTo(700, 755);
+	loadBindings();
 }
 
 function hideSettings() {
@@ -369,29 +584,29 @@ function setColors(change, color) {
 		case "bg":
 			$(".bgColor").css("background-color",color).css("color",color);
 			$(".customColorBg").remove();
-			$('<style class="customColorBg" type="text/css">\
-body { background-color: '  + color + '; }</style>')
+			$("<style class=\"customColorBg\" type=\"text/css\">\
+body { background-color: "  + color + "; }</style>")
 				.appendTo("head");
 		break;
 		case "title":
 			$(".titleColor").css("background-color",color).css("color",color);
 			$(".customColorTitle").remove();
-			$('<style class="customColorTitle" type="text/css">\
-#topbar { background-color: '  + color + '; }</style>')
+			$("<style class=\"customColorTitle\" type=\"text/css\">\
+#topbar { background-color: "  + color + "; }</style>")
 				.appendTo("head");
 		break;
 		case "text":
 			$(".textColor").css("background-color",color).css("color",color);
-			$('<style class="customColorTxt" type="text/css">\
-body { color: ' + color + '; }</style>\
-paper-input-decorator .focused-underline { background-color:#FFFFFF; }</style>')
+			$("<style class=\"customColorTxt\" type=\"text/css\">\
+body { color: " + color + "; }</style>\
+paper-input-decorator .focused-underline { background-color:#FFFFFF; }</style>")
 				.appendTo("head");
 		break;
 	}
 }
 
 function rgbToHex(r, g, b) {
-	 return toHex(r) + toHex(g) + toHex(b)
+	return toHex(r) + toHex(g) + toHex(b);
 }
 
 function toHex(n) {
@@ -430,12 +645,15 @@ function addDefault(element) {
 
 	var bindings = settings.bindings;
 	var websites = settings.websites;
+	var shortcuts = settings.shortcuts;
 
 	bindings.push(binding);
-	websites.push(websites);
+	websites.push(website);
+	shortcuts.push("");
 
 	updateSettings("bindings", bindings);
-	updateSettings("Websites", websites);
+	updateSettings("websites", websites);
+	updateSetting("shortcuts", shortcuts);
 
 	loadBindings();
 }
@@ -446,87 +664,76 @@ function addNewBinding() {
 
 	var bindings = settings.bindings;
 	var websites = settings.websites;
+	var shortcuts = settings.shortcuts;
 	bindings.push(binding);
 	websites.push(website);
+	shortcuts.push("");
 
 	updateSettings("bindings", bindings);
 	updateSettings("websites", websites);
-	//addInputField();
+	updateSettings("shortcuts", shortcuts);
 	loadBindings();
 }
 
-function hideNewBindingAnimation() {
-	$(".overlay").animate({
-		opacity: 0
-	}, 200, "easeInCubic");
-	$(".newBindingPopup").animate({
-		marginLeft: "100%"
-	}, 250, "easeInCubic", function() {
-		$(this).remove();
-		$(".overlay").remove();
-	});
-}
-
 function addNewBindingAnimation() {
-	$('<div class="overlay"></div>')
+	$("<div class=\"overlay\"></div>")
 		.click(function() {
-			hideNewBindingAnimation();
+			hidePopup();
 		})
 		.insertBefore($("body").children().first())
 		.animate({
 			opacity: 1
 		}, 400, "easeOutCubic");
-	var newBindingEl = $('<div class="newBindingPopup"></div>')
+	var newBindingEl = $("<div class=\"newBindingPopup popup\"></div>")
 		.insertBefore($("body").children().first());
 
-	$('<div class="topShadowLayer"></div>')
+	$("<div class=\"topShadowLayer\"></div>")
 		.appendTo(newBindingEl);
 
-	$('<div class="bottomShadowLayer"></div>')
+	$("<div class=\"bottomShadowLayer\"></div>")
 		.appendTo(newBindingEl);
 
-	var cont = $('<div class="addNewContainer"></div>')
+	var cont = $("<div class=\"addNewContainer\"></div>")
 		.appendTo(newBindingEl);
 
-	$('<div class="newBindingTxt">Add Binding</div>')
+	$("<div class=\"newBindingTxt\">Add Binding</div>")
 	.appendTo(cont);
 
-	var input = $('<div class="inputsField"></div>')
+	var input = $("<div class=\"inputsField\"></div>")
 		.appendTo(cont);
 
-	$('<paper-input class="newBindingInput inputCont"><paper-input-decorator><input placeholder="Binding" class="actualinput bindingInput" />\
-<div class="underline"><div class="unfocused-underline"></div><div class="focusedUnderline focused-underline"></div></div></paper-input-decorator>\
-</paper-input>')
+	$("<paper-input class=\"newBindingInput inputCont\"><paper-input-decorator><input placeholder=\"Binding\" class=\"actualinput bindingInput\" />\
+<div class=\"underline\"><div class=\"unfocused-underline\"></div><div class=\"focusedUnderline focused-underline\"></div></div></paper-input-decorator>\
+</paper-input>")
 		.appendTo(input);
 
-	$('<paper-input class="newBindingInput inputCont"><paper-input-decorator><input placeholder="Website" class="actualinput rightInput" />\
-<div class="underline"><div class="unfocused-underline"></div><div class="focusedUnderline focused-underline"></div></div></paper-input-decorator>\
-					</paper-input>')
+	$("<paper-input class=\"newBindingInput inputCont\"><paper-input-decorator><input placeholder=\"Website\" class=\"actualinput rightInput\" />\
+<div class=\"underline\"><div class=\"unfocused-underline\"></div><div class=\"focusedUnderline focused-underline\"></div></div></paper-input-decorator>\
+					</paper-input>")
 		.css("margin-left", "3px")
 		.appendTo(input);
 
-	var buttonCont = $('<div class="addBindingButtonCont"></div>')
+	var buttonCont = $("<div class=\"addBindingButtonCont\"></div>")
 		.appendTo(cont);
 
-	$('<div class="addBindingCancel"><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Cancel</div></paper-ripple></div>')
+	$("<div class=\"addBindingCancel\"><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">Cancel</div></paper-ripple></div>")
 		.click(function () {
 			ripplestuff($(this).children("paper-ripple")[0], "", false);
-			hideNewBindingAnimation();
+			hidePopup();
 		})
 		.appendTo(buttonCont);
 
-	$('<div class="addBindingAdd"><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Add</div></paper-ripple></div>')
+	$("<div class=\"addBindingAdd\"><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">Add</div></paper-ripple></div>")
 		.click(function () {
 			ripplestuff($(this).children("paper-ripple")[0], "", false);
 			addNewBinding();
+			loadBindings();
 		})
 		.appendTo(buttonCont);
 
 	newBindingEl.animate({
 		marginLeft: 0
-	}, 500, "easeOutCubic", function () {
-		addNewBinding();
-	});
+	}, 500, "easeOutCubic");
 }
 
 function clearTextarea() {
@@ -557,18 +764,39 @@ function checkAndUploadSettings(obj) {
 			changes = true;
 			obj.websites = [""];
 		}
+		if (!isset(obj.shortcuts)) {
+			changes = true;
+			obj.shortcuts = [""];
+		}
 		var websitesAmount = obj.websites.length;
 		var bindingsAmount = obj.bindings.length;
+		var shortcutsAmount = obj.shortcuts.length;
+		var i;
 		if (bindingsAmount > websitesAmount) {
 			changes = true;
-			for (var i = 0; i < (bindingsAmount - websitesAmount) ; i++) {
+			for (i = 0; i < (bindingsAmount - websitesAmount); i++) {
 				obj.bindings.push("");
 			}
 		}
 		else if (bindingsAmount < websitesAmount) {
 			changes = true;
-			for (var i = 0; i < (websitesAmount - bindingsAmount) ; i++) {
+			for (i = 0; i < (websitesAmount - bindingsAmount); i++) {
 				obj.websites.push("");
+			}
+		}
+		if (shortcutsAmount !== bindingsAmount) {
+			changes = true;
+			if (shortcutsAmount > bindingsAmount) {
+				var newShortcuts = [];
+				for (i = 0; i < bindingsAmount; i++) {
+					newShortcuts.push(obj.shortcuts[i]);
+				}
+				obj.shortcuts = newShortcuts;
+			}
+			else {
+				for (i = shortcutsAmount; i < bindingsAmount; i++) {
+					obj.shortcuts.push("");
+				}
 			}
 		}
 		if (!isset(obj.closeBinder)) {
@@ -579,71 +807,81 @@ function checkAndUploadSettings(obj) {
 			changes = true;
 			obj.superSearch = false;
 		}
-	}
-	console.log(obj);
-	if (changes) {
-		updateSettings(JSON.stringify(obj));
+
+		if (!isset(obj.keyBindings)) {
+			changes = true;
+			obj.keyBindings = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
+		}
+		else {
+			if (obj.keyBindings.length !== 50) {
+				changes = true;
+				obj.keyBindings = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
+			}
+		}
+		console.log(obj);
+		if (changes) {
+			updateSettings(JSON.stringify(obj));
+		}
 	}
 }
 
 function importError() {
-	$(".importError").remove();
-	$('<div clas="importError">No settings can be derived from this text</div>')
-		.insertBefore(".importButtonsCont");
-}
+		$(".importError").remove();
+		$("<div clas=\"importError\">No settings can be derived from this text</div>")
+			.insertBefore(".importButtonsCont");
+	}
 
 function importBindings() {
 	var textArea = $(this).parent().parent().find("textarea");
-	var JSONText = textArea.val();
+	var jsonText = textArea.val();
 	try {
-		var importedSettings = JSON.parse(JSONText);
+		var importedSettings = JSON.parse(jsonText);
 		checkAndUploadSettings(importedSettings);
-	}
-	catch (e) {
+	} catch (e) {
 		importError();
 	}
 }
 
 function exportBindings() {
 	var textArea = $(this).parent().parent().find("textarea");
-	var settingsJSON = JSON.stringify(settings);
-	textArea.html(settingsJSON);
+	var settingsJson = JSON.stringify(settings);
+	textArea.html(settingsJson);
 	textArea.select();
 }
 
 function updateInputs() {
 	$(".bgColor")
-			.css("background-color", settings.colors.bg)
-			.css("color", settings.colors.bg)
-			.ColorPicker({
-				color: settings.colors.bg,
-				onChange: function (hsb, hex) {
-					setColors("bg", hex);
-				},
-				onHide: function (hsb) {
-					var rgbColor = $(hsb)
-						.children(".colorpicker_new_color")
-						.css("background-color");
-					var hexColor = rgbToHex(
-						rgbColor.split(", ")[0].split("(")[1],
-						rgbColor.split(", ")[1],
-						rgbColor.split(", ")[2]
-					);
-					saveColors("bg", hexColor);
-				}
-			});
-	$('<style class="customColorBg" type="text/css">\
-body { background-color: '  + settings.colors.bg + '; }</style>')
+		.css("background-color", settings.colors.bg)
+		.css("color", settings.colors.bg)
+		.ColorPicker({
+			color: settings.colors.bg,
+			onChange: function(hsb, hex) {
+				setColors("bg", hex);
+			},
+			onHide: function(hsb) {
+				var rgbColor = $(hsb)
+					.children(".colorpicker_new_color")
+					.css("background-color");
+				var hexColor = rgbToHex(
+					rgbColor.split(", ")[0].split("(")[1],
+					rgbColor.split(", ")[1],
+					rgbColor.split(", ")[2]
+				);
+				saveColors("bg", hexColor);
+			}
+		});
+	$("<style class=\"customColorBg\" type=\"text/css\">\
+body { background-color: " + settings.colors.bg + "; }</style>")
 		.appendTo("head");
 	$(".inputsColor")
 		.css("background-color", settings.colors.input)
 		.css("color", settings.colors.input)
 		.ColorPicker({
 			color: settings.colors.input,
-			onChange: function (hsb, hex) {
+			onChange: function(hsb, hex) {
 				setColors("input", hex);
 			},
-			onHide: function (hsb) {
+			onHide: function(hsb) {
 				var rgbColor = $(hsb)
 					.children(".colorpicker_new_color")
 					.css("background-color");
@@ -655,18 +893,18 @@ body { background-color: '  + settings.colors.bg + '; }</style>')
 				saveColors("input", hexColor);
 			}
 		});
-	$('<style class="customColorInput" type="text/css">\
-input { background-color: '  + settings.colors.input + '; }</style>')
+	$("<style class=\"customColorInput\" type=\"text/css\">\
+input { background-color: " + settings.colors.input + "; }</style>")
 		.appendTo("head");
 	$(".textColor")
 		.css("background-color", settings.colors.text)
 		.css("color", settings.colors.text)
 		.ColorPicker({
 			color: settings.colors.text,
-			onChange: function (hsb, hex) {
+			onChange: function(hsb, hex) {
 				setColors("text", hex);
 			},
-			onHide: function (hsb) {
+			onHide: function(hsb) {
 				var rgbColor = $(hsb)
 					.children(".colorpicker_new_color")
 					.css("background-color");
@@ -678,9 +916,9 @@ input { background-color: '  + settings.colors.input + '; }</style>')
 				saveColors("text", hexColor);
 			}
 		});
-	$('<style class="customColorTxt" type="text/css">\
-body { color: '  + settings.colors.text + '; }\
-paper-input-decorator .focused-underline { background-color:#FFFFFF; }</style>')
+	$("<style class=\"customColorTxt\" type=\"text/css\">\
+body { color: " + settings.colors.text + "; }\
+paper-input-decorator .focused-underline { background-color:#FFFFFF; }</style>")
 		.appendTo("head");
 
 	$(".superSearchCheckbox").attr("on", (settings.superSearch ? "true" : "false"));
@@ -693,18 +931,16 @@ function reOpenSearchEngineImportInput() {
 }
 
 function showSearchEnginesList(searchEngines) {
-	//HIERZO
-	//TODO HIERZO
-	var foundSearchEnginesCont = $('<div class="foundSearchEnginesCont"></div>')
+	var foundSearchEnginesCont = $("<div class=\"foundSearchEnginesCont\"></div>")
 		.appendTo(".importSearchEngineCont");
 
-	$('<div class="SEBindingTxt">Bindings:</div>' +
-			'<div class="SEURLTxt">Original URL</div>' +
-			'<div class="SESEURLTxt">Search URL:</div>')
+	$("<div class=\"SEBindingTxt\">Bindings:</div>" +
+			"<div class=\"SEURLTxt\">Original URL</div>" +
+			"<div class=\"SESEURLTxt\">Search URL:</div>")
 		.appendTo($(".bindingsContainer"));
 }
 
-function animateSEList(searchEngines) {
+function animateSeList(searchEngines) {
 	$(".processSearchEngines .button-content")
 		.html("Re-open")
 		.off("click", importSearchEngines)
@@ -716,7 +952,7 @@ function animateSEList(searchEngines) {
 			.animate({
 				height: "650px"
 			}, 150, function() {
-				$('.importSearchEngineContainer textarea')
+				$(".importSearchEngineContainer textarea")
 					.animate({
 						height: "20px"
 					}, 150, function() {
@@ -771,142 +1007,129 @@ function importSearchEngines() {
 		};
 		searchEngines.searchEngines.push(obj);
 	}
-	animateSEList(searchEngines);
-}
-
-function hideSearchEngineImport() {
-	ripplestuff($(this).children("paper-ripple")[0], "", false);
-	$(".overlay").animate({
-		opacity: 0
-	}, 200, "easeInCubic");
-	$(".importSearchEngineCont").animate({
-		marginLeft: "100%"
-	}, 250, "easeInCubic", function() {
-		$(this).remove();
-		$(".overlay").remove();
-	});
+	animateSeList(searchEngines);
 }
 
 function searchEngineImport() {
-	$('<div class="overlay"></div>')
-		.click(function () {
-			importSearchEngines();
+	$("<div class=\"overlay\"></div>")
+		.click(function() {
+			hidePopup();
 		})
 		.insertBefore($("body").children().first())
 		.animate({
 			opacity: 1
 		}, 400, "easeOutCubic");
-	var importSearchEngineEl = $('<div class="importSearchEngineCont"></div>')
+	var importSearchEngineEl = $("<div class=\"importSearchEngineCont popup\"></div>")
 		.insertBefore($("body").children().first());
 
-	$('<div class="topShadowLayer"></div>')
+	$("<div class=\"topShadowLayer\"></div>")
 		.appendTo(importSearchEngineEl);
 
-	$('<div class="bottomShadowLayer"></div>')
+	$("<div class=\"bottomShadowLayer\"></div>")
 		.appendTo(importSearchEngineEl);
 
-	var cont = $('<div class="importSearchEngineContainer"></div>')
+	var cont = $("<div class=\"importSearchEngineContainer\"></div>")
 		.appendTo(importSearchEngineEl);
 
-	$('<div class="bigTxt">Import Search Bindings</div>')
+	$("<div class=\"bigTxt\">Import Search Bindings</div>")
 		.appendTo(cont);
 
-	$('<div class="importSearchBindingsInstructions">' +
-			'To import your search Bindings, right-click chrome\'s omnibar (the bar above all pages) and click "manage search engines". Then click on the text "Search Engines" on the top of this area' +
-			', then press ctrl+a and after that press ctrl+c. Now come back to Binder and paste that into the box below and hit process' +
-			'</div>')
+	$("<div class=\"importSearchBindingsInstructions\">" +
+			"To import your search Bindings, right-click chrome's omnibar (the bar above all pages) and click \"manage search engines\". Then click on the text \"Search Engines\" on the top of this area" +
+			", then press ctrl+a and after that press ctrl+c. Now come back to Binder and paste that into the box below and hit process" +
+			"</div>")
 		.appendTo(cont);
 
-	$('<multiline-paper-input> <paper-input-decorator> <textarea class="importSearchBindingsTextArea" spellcheck="false" rows="10" class="paper-textarea"></textarea> <div class="underline"> <div class="unfocused-underline"></div> <div class="focusedUnderline focused-underline"></div> </div> </paper-input-decorator> </multiline-paper-input>')
+	$("<multiline-paper-input> <paper-input-decorator> <textarea class=\"importSearchBindingsTextArea\" spellcheck=\"false\" rows=\"10\" class=\"paper-textarea\"></textarea> <div class=\"underline\"> <div class=\"unfocused-underline\"></div> <div class=\"focusedUnderline focused-underline\"></div> </div> </paper-input-decorator> </multiline-paper-input>")
 		.appendTo(cont);
 
-	var buttonCont = $('<div class="importSearchEnginesButtonCont"></div>')
+	var buttonCont = $("<div class=\"importSearchEnginesButtonCont\"></div>")
 		.appendTo(cont);
 
-	$('<div class="importSearchBindingsCancel"><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Cancel</div></paper-ripple></div>')
-		.on("click",hideSearchEngineImport)
+	$("<div class=\"importSearchBindingsCancel\"><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">Cancel</div></paper-ripple></div>")
+		.on("click", hidePopup)
 		.appendTo(buttonCont);
 
-	$('<div class="processSearchEngines"><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Process</div></paper-ripple></div>')
+	$("<div class=\"processSearchEngines\"><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">Process</div></paper-ripple></div>")
 		.click(importSearchEngines)
 		.appendTo(buttonCont);
 
 	importSearchEngineEl.animate({
 		marginLeft: 0
-	}, 500, "easeOutCubic", function () {
+	}, 500, "easeOutCubic", function() {
 		addNewBinding();
 	});
 }
 
 function bindListeners() {
-	$(".input").keypress(handleOnKeyPress);
+		$(".input").keypress(handleOnKeyPress);
 
-	$(".submitButton").click(searchForBinding);
+		$(".submitButton").click(searchForBinding);
 
-	$(".optionsButton").click(toggleSettings);
+		$(".optionsButton").click(toggleSettings);
 
-	$(".closeButton").click(function () {
-		app.close();
-	});
+		$(".closeButton").click(function() {
+			app.close();
+		});
 
-	$(".minimizeButton").click(function () {
-		app.minimize();
-	});
+		$(".minimizeButton").click(function() {
+			app.minimize();
+		});
 
-	$(".hideSettings").click(hideSettings);
+		$(".hideSettings").click(hideSettings);
 
-	$(".bindingInput, .rightInput").blur(function () {
-		saveInputs($(this).parent().parent().parent());
-	});
+		$(".bindingInput, .rightInput").blur(function() {
+			saveInputs($(this).parent().parent().parent());
+		});
 
-	$(".superSearchCheckbox").click(function () {
-		var context = this;
-		setTimeout(function() {
-			var val = false;
-			if ($(context).attr("on") === "true") {
-				val = true;
-			}
-			updateSettings("superSearch", val);
-		},0);
-	});
+		$(".superSearchCheckbox").click(function() {
+			var context = this;
+			setTimeout(function() {
+				var val = false;
+				if ($(context).attr("on") === "true") {
+					val = true;
+				}
+				updateSettings("superSearch", val);
+			}, 0);
+		});
 
-	$(".closeBinderCheckbox").click(function () {
-		var context = this;
-		setTimeout(function () {
-			var val = false;
-			if ($(context).attr("on") === "true") {
-				val = true;
-			}
-			updateSettings("closeBinder", val);
-		}, 0);
-	});
+		$(".closeBinderCheckbox").click(function() {
+			var context = this;
+			setTimeout(function() {
+				var val = false;
+				if ($(context).attr("on") === "true") {
+					val = true;
+				}
+				updateSettings("closeBinder", val);
+			}, 0);
+		});
 
-	$(".checkboxtext").click(function() {
-		$(this).parent().children("paper-checkbox").mousedown().click();
-	});
+		$(".checkboxtext").click(function() {
+			$(this).parent().children("paper-checkbox").mousedown().click();
+		});
 
-	$(".addDefaults").click(function () {
-		addDefault($(this))
-	});
+		$(".addDefaults").click(function() {
+			addDefault($(this));
+		});
 
-	$(".fab").click(function (e) {
-		ripplestuff($(this).children("paper-ripple")[0], "", true);
-		addNewBindingAnimation();
-	});
+		$(".fab").click(function() {
+			ripplestuff($(this).children("paper-ripple")[0], "", true);
+			addNewBindingAnimation();
+		});
 
-	$(".exportClear").click(clearTextarea);
+		$(".exportClear").click(clearTextarea);
 
-	$(".exportExport").click(exportBindings);
+		$(".exportExport").click(exportBindings);
 
-	$(".importClear").click(clearTextarea);
+		$(".importClear").click(clearTextarea);
 
-	$(".importImport").click(importBindings);
+		$(".importImport").click(importBindings);
 
-	$(".searchEngineImport").click(searchEngineImport);
-}
+		$(".searchEngineImport").click(searchEngineImport);
+	}
 
 function main() {
-	$(document).ready(function () {
+	$(document).ready(function() {
 		//Set to proper dimensions
 		if (app.getBounds().width !== 500 || app.getBounds().height !== 100) {
 			app.resizeTo(500, 100);
@@ -914,11 +1137,9 @@ function main() {
 		checkAndUploadSettings(settings);
 
 		if (settings.superSearch) {
-			$(".input").attr("size","56");
-			$(".submitButton").css("display","none");
+			$(".input").attr("size", "56");
+			$(".submitButton").css("display", "none");
 		}
-
-		loadBindings();
 
 		updateInputs();
 

@@ -10,23 +10,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 function ripplestuff(element, e, circleornot) {
 
-	var _this = element;
+	var elem = element;
 
 	(function () {
 
 		var cancelled = false;
-
+		var waveMaxRadius;
 		if (circleornot) {
-			if ($(element).parent().attr("class") == "addmemes" || $(element).parent().attr("class") == "acceptupload" || $(element).parent().attr("class") == "declineupload" || $(element).parent().attr("class") == "fab") {
-				var waveMaxRadius = 19;
+			if ($(element).parent().attr("class") === "addmemes" || $(element).parent().attr("class") === "acceptupload" || $(element).parent().attr("class") === "declineupload" || $(element).parent().attr("class") === "fab") {
+				waveMaxRadius = 19;
 			}
 			else {
-				var waveMaxRadius = 15;
+				waveMaxRadius = 15;
 			}
 		}
 		else {
-			var waveMaxRadius = 520;
+			waveMaxRadius = 520;
 		}
+
 		//
 		// INK EQUATIONS
 		//
@@ -47,9 +48,7 @@ function ripplestuff(element, e, circleornot) {
 
 		function waveOpacityFn(td, tu, anim) {
 			// Convert from ms to s.
-			var touchDown = td / 1000;
 			var touchUp = tu / 1000;
-			var totalElapsed = touchDown + touchUp;
 
 			if (tu <= 0) {  // before touch up
 				return anim.initialOpacity;
@@ -60,7 +59,6 @@ function ripplestuff(element, e, circleornot) {
 		function waveOuterOpacityFn(td, tu, anim) {
 			// Convert from ms to s.
 			var touchDown = td / 1000;
-			var touchUp = tu / 1000;
 
 			// Linear increase in background opacity, capped at the opacity
 			// of the wavefront (waveOpacity).
@@ -98,13 +96,13 @@ function ripplestuff(element, e, circleornot) {
 			var dx = x - (ctx.containerWidth / 2);
 			var dy = y - (ctx.containerHeight / 2);
 
-			ctx.wc.style.webkitTransform = 'translate3d(' + dx + 'px,' + dy + 'px,0)';
-			ctx.wc.style.transform = 'translate3d(' + dx + 'px,' + dy + 'px,0)';
+			ctx.wc.style.webkitTransform = "translate3d(" + dx + "px," + dy + "px,0)";
+			ctx.wc.style.transform = "translate3d(" + dx + "px," + dy + "px,0)";
 
 			// 2d transform for safari because of border-radius and overflow:hidden clipping bug.
 			// https://bugs.webkit.org/show_bug.cgi?id=98538
-			ctx.wave.style.webkitTransform = 'scale(' + s + ',' + s + ')';
-			ctx.wave.style.transform = 'scale3d(' + s + ',' + s + ',1)';
+			ctx.wave.style.webkitTransform = "scale(" + s + "," + s + ")";
+			ctx.wave.style.transform = "scale3d(" + s + "," + s + ",1)";
 		}
 
 		//
@@ -114,12 +112,12 @@ function ripplestuff(element, e, circleornot) {
 			var elementStyle = window.getComputedStyle(elem);
 			var fgColor = elementStyle.color;
 
-			var inner = document.createElement('div');
+			var inner = document.createElement("div");
 			inner.style.backgroundColor = fgColor;
-			inner.classList.add('wave');
+			inner.classList.add("wave");
 
-			var outer = document.createElement('div');
-			outer.classList.add('wave-container');
+			var outer = document.createElement("div");
+			outer.classList.add("wave-container");
 			outer.appendChild(inner);
 
 			var container = $(elem).children(".waves")[0];
@@ -164,9 +162,9 @@ function ripplestuff(element, e, circleornot) {
 				alpha = 1;
 			}
 			if (!parts) {
-				return 'rgba(255, 255, 255, ' + alpha + ')';
+				return "rgba(255, 255, 255, " + alpha + ")";
 			}
-			return 'rgba(' + parts[1] + ', ' + parts[2] + ', ' + parts[3] + ', ' + alpha + ')';
+			return "rgba(" + parts[1] + ", " + parts[2] + ", " + parts[3] + ", " + alpha + ")";
 		}
 
 		function dist(p1, p2) {
@@ -205,8 +203,8 @@ function ripplestuff(element, e, circleornot) {
 			pixelDensity: 2,
 
 			eventDelegates: {
-				down: 'downAction',
-				up: 'upAction'
+				down: "downAction",
+				up: "upAction"
 			},
 
 			waves: [],
@@ -216,7 +214,7 @@ function ripplestuff(element, e, circleornot) {
 			},
 
 			downAction: function (e) {
-				var wave = createWave(_this);
+				var wave = createWave(elem);
 
 				cancelled = false;
 				wave.isMouseDown = true;
@@ -225,7 +223,7 @@ function ripplestuff(element, e, circleornot) {
 				wave.mouseUpStart = 0.0;
 				wave.mouseDownStart = now();
 
-				var rect = _this.getBoundingClientRect();
+				var rect = elem.getBoundingClientRect();
 				var width = rect.width;
 				var height = rect.height;
 				var touchX = e.pageX - rect.left;
@@ -233,7 +231,7 @@ function ripplestuff(element, e, circleornot) {
 
 				wave.startPosition = { x: touchX, y: touchY };
 
-				if (_this.classList.contains("recenteringTouch")) {
+				if (elem.classList.contains("recenteringTouch")) {
 					wave.endPosition = { x: width / 2, y: height / 2 };
 					wave.slideDistance = dist(wave.startPosition, wave.endPosition);
 				}
@@ -243,10 +241,10 @@ function ripplestuff(element, e, circleornot) {
 				wave.maxRadius = distanceFromPointToFurthestCorner(wave.startPosition, { w: width, h: height });
 
 				// The wave is circular so constrain its container to 1:1
-				wave.wc.style.top = (wave.containerHeight - wave.containerSize) / 2 + 'px';
-				wave.wc.style.left = (wave.containerWidth - wave.containerSize) / 2 + 'px';
-				wave.wc.style.width = wave.containerSize + 'px';
-				wave.wc.style.height = wave.containerSize + 'px';
+				wave.wc.style.top = (wave.containerHeight - wave.containerSize) / 2 + "px";
+				wave.wc.style.left = (wave.containerWidth - wave.containerSize) / 2 + "px";
+				wave.wc.style.width = wave.containerSize + "px";
+				wave.wc.style.height = wave.containerSize + "px";
 
 				$(wave.wc).animate({
 					opacity: 0
@@ -288,10 +286,10 @@ function ripplestuff(element, e, circleornot) {
 					height: ctx.height,
 					width: ctx.width
 				}
-
-				for (var i = 0; i < this.waves.length; i++) {
-					var wave = this.waves[i];
-
+				var i;
+				var wave;
+				for (i = 0; i < this.waves.length; i++) {
+					wave = this.waves[i];
 					if (wave.mouseDownStart > 0) {
 						wave.tDown = now() - wave.mouseDownStart;
 					}
@@ -308,7 +306,6 @@ function ripplestuff(element, e, circleornot) {
 					// Obtain the instantenous size and alpha of the ripple.
 					var radius = waveRadiusFn(tDown, tUp, anim);
 					var waveAlpha = waveOpacityFn(tDown, tUp, anim);
-					var waveColor = cssColorWithAlpha(wave.waveColor, waveAlpha);
 					lastWaveColor = wave.waveColor;
 
 					// Position of the ripple.
@@ -327,8 +324,9 @@ function ripplestuff(element, e, circleornot) {
 
 					// If we do a background fill fade too, work out the correct color.
 					var bgFillColor = null;
-					if (_this.backgroundFill) {
-						var bgFillAlpha = waveOuterOpacityFn(tDown, tUp, anim);
+					var bgFillAlpha;
+					if (elem.backgroundFill) {
+						bgFillAlpha = waveOuterOpacityFn(tDown, tUp, anim);
 						bgFillColor = cssColorWithAlpha(wave.waveColor, bgFillAlpha);
 					}
 
@@ -351,14 +349,14 @@ function ripplestuff(element, e, circleornot) {
 					requestAnimationFrame(this._loop);
 				}
 
-				for (var i = 0; i < deleteTheseWaves.length; ++i) {
-					var wave = deleteTheseWaves[i];
+				for (i = 0; i < deleteTheseWaves.length; ++i) {
+					wave = deleteTheseWaves[i];
 					removeWaveFromScope(this, wave);
 				}
 
 				if (!this.waves.length && this._loop) {
 					// clear the background color
-					$(_this).children(".bg").css("background-color", null);
+					$(elem).children(".bg").css("background-color", null);
 					this._loop = null;
 				}
 			}
@@ -385,11 +383,11 @@ function addcallbacktoslider(sliderelement, func) {
 function changeInputTo(papersliderel, val) {
 
 	for (var i = 0; i < callbacks.length; i++) {
-		if (els[i] == papersliderel) {
+		if (els[i] === papersliderel) {
 			callbacks[i](val);
 		}
 	}
-
+	var val2;
 	if ($(this).attr("percentage")) {
 		val2 = val + "%";
 	}
@@ -495,7 +493,7 @@ $("body").mousemove(function (e) {
 
 	$("paper-slider").each(function () {
 
-		if ($(this).attr("dragging") == "true") {
+		if ($(this).attr("dragging") === "true") {
 
 			var newpos = e.clientX;
 			if (newpos > this.getBoundingClientRect().left + (parseInt($(this).css("width"), 10) - 70)) {
@@ -519,16 +517,16 @@ $("body").mousemove(function (e) {
 	});
 
 })
-.mouseup(function (e) {
+.mouseup(function () {
 
 	$(".sliderKnob").each(function () {
 
 		$(this)
-		.children(".sliderKnobInner")
-		.animate({
-			width: "12px",
-			height: "12px",
-		}, 100);
+			.children(".sliderKnobInner")
+			.animate({
+				width: "12px",
+				height: "12px"
+			}, 100);
 
 	});
 
@@ -536,7 +534,7 @@ $("body").mousemove(function (e) {
 
 		$(this).attr("dragging", false);
 
-		if ($(this).attr("value") != "-1") {
+		if ($(this).attr("value") !== "-1") {
 
 			//Switch the knob to the closest position
 			changeToValue(this, Math.round(parseInt($(this).attr("value"), 10)), false);
@@ -552,9 +550,11 @@ $("body").mousemove(function (e) {
 
 		var focusedUnderline = $(this).children("paper-input-decorator").children(".underline").children(".focusedUnderline");
 
-		focusedUnderline.animate({
-			width: "0px"
-		}, 300);
+		if (focusedUnderline.css("width") !== "0px" && focusedUnderline.css("width") !== "0" && focusedUnderline.css("width") !== 0) {
+			focusedUnderline.stop().animate({
+				width: "0px"
+			}, 300);
+		}
 
 	});
 
@@ -574,7 +574,7 @@ function paperCheckboxMousedown() {
 	/// <summary>
 	/// The onmousedown handler for the paper-checkbox
 	/// </summary>
-	if ($(this).attr("on") == "true") {
+	if ($(this).attr("on") === "true") {
 		$(this)
 			.children(".checkboxContainer")
 			.children("paper-ripple")
@@ -626,7 +626,7 @@ function sliderKnobMousedown() {
 		.children(".sliderKnobInner")
 		.animate({
 			width: "32px",
-			height: "32px",
+			height: "32px"
 		}, 100);
 }
 
@@ -635,19 +635,19 @@ function barContainerMousedown() {
 	/// The mousedown handler for the bar-container
 	/// </summary>
 	$(this).attr("mousedown", "true");
-	var _this = this;
+	var elem = this;
 	setTimeout(function () {
 
-		if ($(_this).attr("mousedown") == "true") {
+		if ($(elem).attr("mousedown") === "true") {
 
-			$(_this).parent().parent().attr("dragging", true);
-			$(_this)
+			$(elem).parent().parent().attr("dragging", true);
+			$(elem)
 				.parent()
 				.children(".sliderKnob")
 				.children(".sliderKnobInner")
 				.animate({
 					width: "32px",
-					height: "32px",
+					height: "32px"
 				}, 100);
 
 		}
@@ -672,14 +672,14 @@ function paperInputDecoratorOnFocus(element) {
 	/// <summary>
 	/// The onfocus handler for the paper-input-decorator element
 	/// </summary>
-	var _this;
+	var elem;
 	if (element !== undefined) {
-		_this = element;
+		elem = element;
 	}
 	else {
-		_this = this;
+		elem = this;
 	}
-	$(_this)
+	$(elem)
 		.children(".underline")
 		.children(".focusedUnderline")
 		.animate({
@@ -692,14 +692,14 @@ function paperInputDecoratorOnBlur(element) {
 	/// <summary>
 	/// The onBlur handler for the paper-input-decorator element
 	/// </summary>
-	var _this;
+	var elem;
 	if (element !== undefined) {
-		_this = element;
+		elem = element;
 	}
 	else {
-		_this = this;
+		elem = this;
 	}
-	$(_this)
+	$(elem)
 		.children(".underline")
 		.children(".focusedUnderline")
 		.animate({
@@ -726,59 +726,102 @@ function paperInputOnclick(e) {
 	/// The onclick handler for the paper-input element
 	/// </summary>
 	/// <param name="e">The click event</param>
-	e.stopPropagation();
+	if (!$(this).attr("disabled")) {
+		e.stopPropagation();
 
-	var focusedUnderline = $(this).children("paper-input-decorator").children(".underline").children(".focusedUnderline");
-	var input = $(this).children("paper-input-decorator").children(".actualinput");
+		var focusedUnderline = $(this).children("paper-input-decorator").children(".underline").children(".focusedUnderline");
+		var input = $(this).children("paper-input-decorator").children(".actualinput");
 
-	input.focus();
-	focusedUnderline.animate({
-		width: focusedUnderline.parent().children(".unfocused-underline").css("width")
-	}, 300);
+		input.focus();
+		focusedUnderline.animate({
+			width: focusedUnderline.parent().children(".unfocused-underline").css("width")
+		}, 300);
 
-	var _this = this;
-	$("paper-input").each(function () {
-		if (this != _this) {
-			var focusedUnderline = $(this).children("paper-input-decorator").children(".underline").children(".focusedUnderline");
-			focusedUnderline.animate({
-				width: "0px"
-			}, 300);
-		}
-	});
+		var elem = this;
+		$("paper-input").each(function() {
+			if (this !== elem) {
+				var focusedUnderline = $(this).children("paper-input-decorator").children(".underline").children(".focusedUnderline");
+				focusedUnderline.animate({
+					width: "0px"
+				}, 300);
+			}
+		});
+	}
 }
 
-function removeBinds() {
+function generalInputFocusHandler(elem) {
+	if (!$(elem).attr("disabled")) {
+		var focusedUnderline = $(elem).children("paper-input-decorator").children(".underline").children(".focusedUnderline");
+
+		focusedUnderline.stop().animate({
+			width: focusedUnderline.parent().children(".unfocused-underline").css("width")
+		}, 300);
+
+		$("paper-input").each(function () {
+			if (this !== elem[0]) {
+				var underline = $(this).children("paper-input-decorator").children(".underline").children(".focusedUnderline");
+				underline.stop().animate({
+					width: "0px"
+				}, 300);
+			}
+		});
+	}
+}
+
+function inputFocus() {
+	var elem = $(this).parent().parent();
+	generalInputFocusHandler(elem);
+}
+
+function stopEventPropagation(e) {
+	e.stopPropagation();
+}
+
+function handlePaperInputClick(e) {
+	stopEventPropagation(e);
+	$(this).find(".actualinput").focus();
+}
+
+function removeBinds(container) {
 	/// <summary>
 	/// Removes all previous onclicks, onmousedowns etc from paper-elements
 	/// </summary>
-	$("paper-button")
+	container.find("paper-button")
 		.off("mousedown", paperButtonMousedown);
-	$("paper-checkbox")
+	container.find("paper-checkbox")
 		.off("mousedown", paperCheckboxMousedown);
-	$(".sliderKnob")
+	container.find(".sliderKnob")
 		.off("mousedown", sliderKnobMousedown);
-	$(".bar-cofftainer")
+	container.find(".bar-cofftainer")
 		.off("mousedown", barContainerMousedown)
 		.off("mouseup", barContainerMouseUp);
-	$("paper-input-decorator")
+	container.find("paper-input-decorator")
 		.off("focus", paperInputDecoratorOnFocus)
 		.off("blur", paperInputDecoratorOnBlur)
 		.off("keypress", paperInputDecoratorOnKeypress);
-	$("paper-input")
-		.off("click", paperInputOnclick)
+	container.find("paper-input[disabled]")
+		.css("cursor", "default")
+		.children("paper-input-decorator")
+		.css("cursor", "default")
+		.children("input")
+		.css("cursor", "default");
+	container.find(".actualinput")
+		.off("focus", inputFocus);
+	container.find("paper-input")
+		.off("click", handlePaperInputClick);
 }
 
-function bindPaperEls() {
+function bindPaperEls(container) {
 	/// <summary>
 	/// Binds all paper-elements
 	/// </summary>
-	$("paper-button")
+	container.find("paper-button")
 		.on("mousedown", paperButtonMousedown)
 		.on("mousedown", "e", paperButtonMousedown);
-	$("paper-checkbox")
+	container.find("paper-checkbox")
 		.on("mousedown", paperCheckboxMousedown)
 		.each(function () {
-			if ($(this).attr("on") == "true") {
+			if ($(this).attr("on") === "true") {
 				if ($(this).children(".checkboxContainer").children("paper-ripple").css("color") !== "#B2DFDB") {
 					$(this)
 						.children(".checkboxContainer")
@@ -800,14 +843,12 @@ function bindPaperEls() {
 				}
 			}
 		});
-	$(".sliderKnob")
+	container.find(".sliderKnob")
 		.on("mousedown", sliderKnobMousedown);
-	$(".bar-container")
+	container.find(".bar-container")
 		.each(function () {
 
 			var paperslider = $(this).parent().parent()[0];
-			var paperprogress = $(this).children("paper-progress")[0];
-
 			if ($(paperslider).attr("value") != undefined) {
 				var val = parseInt($(paperslider).attr("value"), 10);
 				changeToValue(paperslider, val);
@@ -816,28 +857,30 @@ function bindPaperEls() {
 		})
 		.on("mousedown", barContainerMousedown)
 		.on("mouseup", barContainerMouseUp);
-	$("paper-input-decorator")
+	container.find("paper-input-decorator")
 		.on("focus", paperInputDecoratorOnFocus)
 		.on("blur", paperInputDecoratorOnBlur)
 		.on("keypress", paperInputDecoratorOnKeypress);
-	$("paper-slider")
+	container.find("paper-slider")
 		.each(function () {
-			if (!$(this).attr("value") || $(this).attr("value") == "NaN") {
+			if (!$(this).attr("value") || $(this).attr("value") === "NaN") {
 				$(this).attr("value", (parseInt($(this).attr("min"), 10) + parseInt($(this).attr("max"), 10)) / 2);
 			}
 			//Initialize
 			updateslider($(this));
 		});
-	$("paper-input")
-		.on("click", paperInputOnclick)
+	container.find(".actualinput")
+		.on("focus", inputFocus);
+	container.find("paper-input")
 		.each(function () {
 			$(this).find(".actualinput").attr("value", $(this).parent().attr("value"));
-		});
+		})
+		.on("click", handlePaperInputClick);
 
-	$("multiline-paper-input")
+	container.find("multiline-paper-input")
 		.on("click", paperInputOnclick);
 
-	$("multiline-paper-input textarea")
+	container.find("multiline-paper-input textarea")
 		.on("focus", function() {
 			paperInputDecoratorOnFocus($(this).parent()[0]);
 		})
@@ -846,13 +889,16 @@ function bindPaperEls() {
 		});
 }
 
-function bindstuff() {
+function bindstuff(container) {
 	/// <summary>
 	/// Binds all onclicks for sliderKnobs, bar-containers, paper-input-decorators, papersliders, paper-buttons, paper-checkboxes and paper-inputs (and removes previous if nessecary)
 	/// </summary>
 
-	removeBinds();
-	bindPaperEls();
+	if (container === undefined) {
+		container = $("body");
+	}
+	removeBinds(container);
+	bindPaperEls(container);
 }
 
 bindstuff();

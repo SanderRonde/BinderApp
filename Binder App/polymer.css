@@ -210,16 +210,16 @@ paper-checkbox[checked] .checkmark {
 
 @keyframes checkmark-expand {
   0% {
-    top: 9px;
-    left: 6px;
-    width: 0px;
-    height: 0px;
+	top: 9px;
+	left: 6px;
+	width: 0px;
+	height: 0px;
   }
   100% {
-    top: -1px;
-    left: 4px;
-    width: 5px;
-    height: 10px;
+	top: -1px;
+	left: 4px;
+	width: 5px;
+	height: 10px;
   }
 }
 
@@ -539,13 +539,13 @@ paper-progress .activeProgress.indeterminate {
 
 @keyframes indeterminate-bar {
   0% {
-    transform: translate(-50%) scaleX(0);
+	transform: translate(-50%) scaleX(0);
   }
   50% {
-    transform: translate(0%) scaleX(0.3);
+	transform: translate(0%) scaleX(0.3);
   }
   100% {
-    transform: translate(50%) scaleX(0);
+	transform: translate(50%) scaleX(0);
   }
 }
 
@@ -557,13 +557,12 @@ paper-input {
 	width:40px;
 	overflow:hidden;
 	cursor:text;
-  color:inherit;
+	color:inherit;
 }
 
 /*#region paper-input-decorator*/
 
 paper-input-decorator {
-  display: inline-block;
   outline: none;
   text-align: inherit;
   padding-top:20px;
@@ -571,6 +570,7 @@ paper-input-decorator {
   display:flex;
   flex-direction:column;
   color:inherit;
+  cursor:text;
 }
 
 paper-input-decorator polyfill-next-selector {

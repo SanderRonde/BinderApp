@@ -277,7 +277,7 @@
 			</div>
 
 			<div class="options">
-				<div class="fab">
+				<div class="fab bodyColor">
 					<paper-ripple>
 						<div class="bg"></div>
 						<div class="waves"></div>
@@ -345,7 +345,7 @@
 				<br /><br />
 				<hr />
 				<div class="bindingsContainer"></div>
-				<br /><br />
+				<br />
 				<hr />
 				<div class="keyboardShortcut">
 					<div class="bigTxt">
@@ -372,7 +372,7 @@
 						<li>Click the "Shortcut" field and press the keys you want to trigger Binder (check out <a href="http://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts" target="_blank">List of keyboard shortcuts</a> to see if it is not already taken)</li>
 						<li>Hit OK and you are done, be sure not to delete the shortcut or the keyboard shortcut will also go away</li>
 					</ol>
-					<br/><br/><br/>
+					<br/>
 					<div class="bigTxt">
 						Binding Shortcuts
 					</div>
@@ -440,7 +440,7 @@
 						</li>
 					</ol>
 				</div>
-				<br /><br />
+				<br />
 				<hr />
 				<div class="firstTimeDefaultsCont">
 					<div class="bigTxt">
@@ -746,47 +746,87 @@
 				</div>
 				<br /><br />
 				<hr />
-				<div class="importCont">
-					<div class="bigTxt">
-						Import
-					</div>
-					<br />
-					Click the import button to import all your data from a string of text into your settings.
-					<br /><br />
-					<multiline-paper-input>
-						<paper-input-decorator>
-							<textarea spellcheck="false" rows="10" class="paper-textarea"></textarea>
-							<div class="underline">
-								<div class="unfocused-underline"></div>
-								<div class="focusedUnderline focused-underline"></div>
-							</div>
-						</paper-input-decorator>
-					</multiline-paper-input>
-					<br />
-					<div class="importButtonsCont">
-						<paper-button class="importClear" raised>
-							<paper-ripple>
-								<div class="bg"></div>
-								<div class="waves"></div>
-								<div class="button-content">Clear</div>
-							</paper-ripple><paper-shadow>
-								<div class="shadow-bot"></div>
-								<div class="shadow-top"></div>
-							</paper-shadow>
-						</paper-button>
-						<paper-button class="importImport" raised>
-							<paper-ripple>
-								<div class="bg"></div>
-								<div class="waves"></div>
-								<div class="button-content">Import</div>
-							</paper-ripple><paper-shadow>
-								<div class="shadow-bot"></div>
-								<div class="shadow-top"></div>
-							</paper-shadow>
-						</paper-button>
-					</div>
+			<div class="importCont">
+				<div class="bigTxt">
+					Import
 				</div>
-				<br /><br /><br /><br />
+				<br/>
+				Click the import button to import all your data from a string of text into your settings.
+				<br/><br/>
+				<multiline-paper-input>
+					<paper-input-decorator>
+						<textarea spellcheck="false" rows="10" class="paper-textarea"></textarea>
+						<div class="underline">
+							<div class="unfocused-underline"></div>
+							<div class="focusedUnderline focused-underline"></div>
+						</div>
+					</paper-input-decorator>
+				</multiline-paper-input>
+				<br/>
+				<div class="importingFromPrevBinder">
+					<checkbox-text>
+						<paper-checkbox class="importFromBinderExtension" on="false">
+							<div class="checkboxcontainer">
+								<paper-ripple class="cirle recenteringTouch">
+									<div class="bg"></div>
+									<div class="waves"></div>
+								</paper-ripple>
+								<div class="checkbox">
+									<div class="checkmark"></div>
+								</div>
+							</div>
+						</paper-checkbox>
+						<div class="checkboxtext">
+							Check this if you're importing from the Binder extension
+						</div>
+					</checkbox-text>
+				</div>
+				<div class="importButtonsCont">
+					<paper-button class="importClear" raised>
+						<paper-ripple>
+							<div class="bg"></div>
+							<div class="waves"></div>
+							<div class="button-content">Clear</div>
+						</paper-ripple><paper-shadow>
+							<div class="shadow-bot"></div>
+							<div class="shadow-top"></div>
+						</paper-shadow>
+					</paper-button>
+					<paper-button class="importImport" raised>
+						<paper-ripple>
+							<div class="bg"></div>
+							<div class="waves"></div>
+							<div class="button-content">Import</div>
+						</paper-ripple><paper-shadow>
+							<div class="shadow-bot"></div>
+							<div class="shadow-top"></div>
+						</paper-shadow>
+					</paper-button>
+				</div>
+			</div>
+			<br/><br/>
+			<hr/>
+			<div class="changeLog">
+				<div class="bigTxt">Changelog</div>
+				This is the changelog, starting at version 2.0 since the previous changes are not really relevant anymore after this change
+				<br/><br/>
+				2.0
+				<ul>
+					<li>
+						Did a complete rewrite off the app
+					</li>
+					<li>
+						Added a floating button (the one on the bottom right) that lets you add a binding from anywhere easily
+					</li>
+					<li>
+						Hugely improved search harvesting functions
+					</li>
+					<li>
+						Changed way of storing things, this should be a bit more efficient, this should sync your settings across all browsers if you're logged in to your google account
+					</li>
+				</ul>
+			</div>
+				<br/><br/><br/><br/><br/>
 			</div>
 		</div>
 	</div>

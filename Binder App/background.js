@@ -30,7 +30,6 @@ chrome.runtime.onInstalled.addListener(function (details) {
 });
 
 chrome.commands.onCommand.addListener(function (command) {
-	console.log(command);
 	switch (command) {
 		case "launch_binder":
 			launchBinder();
@@ -44,18 +43,10 @@ chrome.commands.onCommand.addListener(function (command) {
 	}
 });
 
-chrome.commands.getAll(function (commands) {
-	for (var i = 0; i < commands.length; i++) {
-		console.log(commands[i]);
-	}
-});
-
 chrome.runtime.onMessage.addListener(function (message) {
-	console.log(message);
 	switch (message.cmd) {
 		case "getKeyBindings":
 			chrome.commands.getAll(function (commands) {
-				console.log(commands);
 				if (commands.length > 0) {
 					chrome.runtime.sendMessage({ "keyBindings": commands });
 				}

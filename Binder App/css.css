@@ -1,3 +1,9 @@
+/*
+	Green: #4CAF50
+	Blue: #3C92FF
+	Red: #F44336
+*/
+
 @font-face {
 	font-family: 'Segoe UI';
 	src: url('Segoe_UI.ttf');
@@ -87,22 +93,32 @@ html, body {
 }
 
 .closeButton {
-	background-color:red;
-	fill:white;
+	background-color:white;
+	margin-left:48px;
 }
 
+	.closeButton:hover {
+		background-color: #F44336;
+	}
+
 .optionsButton, .minimizeButton, .closeButton {
-	display:inline-block;
+	display:inline;
 	cursor: pointer;
 	-webkit-app-region: no-drag;
+	position:absolute;
+	padding:0 2px;
 }
+
+.minimizeButton {
+	margin-left: 24px;
+} 
 	
 .optionsButton, .minimizeButton {
-	opacity:0.6;
+	opacity:1;
 }
 
 	.optionsButton:hover, .minimizeButton:hover {
-		opacity:1;
+		background-color:rgb(170,170,170);
 	}
 
 .draggablearea {
@@ -206,9 +222,17 @@ paper-checkbox {
 	border: 3px solid transparent;
 }
 
-.firstTimeInput, .firstTimeInput .unfocused-underline, .bindingsContainer .inputCont, .bindingsContainer .unfocused-underline {
+.firstTimeInput, .firstTimeInput .unfocused-underline {
 	width: 300px;
 }
+
+.bindingsContainer .bindingsSettingsInput, .bindingsContainer .bindingsSettingsInput .unfocused-underline {
+	width: 150px;
+}
+
+	.bindingsContainer .urlSettingsInput, .bindingsContainer .urlSettingsInput .unfocused-underline {
+		width: 450px;
+	}
 
 .addInputs {
 	margin-top: 20px;
@@ -252,7 +276,6 @@ paper-checkbox {
 	position: fixed;
 	width: 50px;
 	height: 50px;
-	background-color: rgb(0, 90, 255);
 	border-radius: 25px;
 	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
 	margin-left: 612px;
@@ -282,13 +305,13 @@ paper-checkbox {
 	width: 100%;
 	height: 140px;
 	position: fixed;
-	background-color: rgb(0, 90, 255);
 	z-index: 10;
 	margin-left:100%;
 	margin-top: 302px;
 }
 
-.overlay {
+.overlay, .overlay2 {
+	margin-top:20px;
 	height: 100%;
 	width: 100%;
 	position: fixed;
@@ -363,7 +386,7 @@ multiline-paper-input .unfocused-underline {
 
 .exportButtonsCont, .importButtonsCont {
 	float: right;
-	margin-top: -10px;
+	margin-top: -30px;
 }
 
 .bigTxt {
@@ -374,7 +397,6 @@ multiline-paper-input .unfocused-underline {
 .importSearchEngineCont {
 	position: fixed;
 	z-index: 15;
-	background-color: rgb(0, 90, 255);
 	height: 325px;
 	margin-top: 196px;
 	margin-left:100%;
@@ -405,15 +427,202 @@ multiline-paper-input .unfocused-underline {
 .assignKeyBindingCont {
 	position: fixed;
 	z-index: 20;
-	background-color: rgb(0, 90, 255);
-	height: 616px;
 	margin-top: 90px;
 	margin-left:100%;
 	width:100%;
+	overflow-y:visible;
 }
 
 .assignKeyBinding {
 	height: 100%;
-	width: 100%;
+	width: 700px;
+	z-index:20;
+	position:relative;
+}
+
+.AKDescr, .AKBindings {
+	padding: 0 10px;
+}
+
+.key {
+	border: 1px solid #aaa;
+	border-radius: 0.2em;
+	box-shadow: 0.1em 0.2em 0.2em #ddd;
+	background-color: #f9f9f9;
+	color: black;
+	background-image: linear-gradient(to bottom, #eee, #f9f9f9, #eee);
+	padding: 0.1em 0.3em;
+	font-size: 0.85em;
+}
+
+.actualinput {
+	cursor: text;
+}
+
+.closeAssignKeyBinding {
+	margin-left:595px;
+	margin-bottom: 13px;
+	margin-top: 20px;
+}
+
+.AKShortcut {
+	width: 120px;
+	display: inline-block;
+	margin-left: 10px;
+	text-align: center;
+	border: 1px solid white;
+	padding: 10px;
+	position:absolute;
+	margin-top:4px;
+}
+
+.AKShortcutSet {
+	width: 130px;
+	display: inline-block;
+	margin-left: 10px;
+	text-align: center;
+}
+
+.AKBindings {
+	max-height: 400px;
+	overflow-y: scroll;
+}
+
+.assignShortcut {
+	position: absolute;
+	margin-left: 160px;
+	margin-top: 6px;
+	background-color: green;
+}
+
+.swapShortcut {
+	position: absolute;
+	margin-left: 160px;
+	margin-top: 6px;
+	background-color: blue;
+}
+
+.unAssignButton {
+	margin-top: 18px;
+	font-size: 150%;
+	margin-left: 5px;
+	min-width: 8em;
+	background-color:#D32F2F;
+}
+
+.SEBindingTxt, .SEURLTxt, .SESEURLTxt {
+	display: inline-block;
+	font-size: 160%;
+	font-weight: bold;
+	padding-left: 10px;
+	padding-right: 15px;
+}
+
+.foundSearchEnginesCont {
+	margin-top: 264px;
+	position: absolute;
+	z-index: 20;
+}
+
+paper-input.SEIName {
+  width: 120px;
+  margin-left: 5px;
+}
+
+paper-input.SEIUrl {
+  margin-left: 5px;
+  width: 130px;
+}
+
+paper-input.SEISUrl {
+  margin-left: 5px;
+  width: 342px;
+}
+
+.foundSearchEngines {
+	overflow-y: scroll;
+	height:400px;
+}
+
+.SEImportError {
+	position: absolute;
+	color: #F44336;
+}
+
+@-webkit-keyframes spin {
+	from { -webkit-transform: rotate(0deg); }
+	to { -webkit-transform: rotate(360deg); }
+}
+
+.loadingGif {
+	position: absolute;
+	z-index: 100;
+	margin-left: 50%;
+	margin-top:50%;
+	-webkit-animation-name:spin;
+	-webkit-animation-duration:500ms;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:linear;
+}
+
+.searchSearchBindings {
+	margin-top:190px;
+	position: absolute;
+	z-index:20;
+}
+
+.searchSearchBindings paper-input {
+	width:665px;
+	margin-left:20px;
+}
+
+.searchSearchBindings .unfocused-underline {
+	width:665px;
+}
+
+.searchSearchBindingsTxt {
+	font-size:150%;
+	padding-left:10px;
+	font-weight: bold;
+}
+
+.askSEISURLNameCont {
+	margin-left: 0;
+	position: absolute;
+	z-index: 30;
+	margin-top: 267px;
+	height: 155px;
+	width: 700px;
+}
+
+.askNameContainer {
+	z-index: 30;
+	position: absolute;
 	padding:10px;
+}
+
+.bigTxtNoBold {
+	font-size: 200%;
+}
+
+.SECName, .SECName .unfocused-underline {
+	width: 680px;
+}
+
+.importSearchEnginesChooseNameButtonCont {
+	display: flex;
+	float:right;
+}
+
+.SECNameCancel, .SECNameConfirm {
+	padding: 10px 25px;
+	cursor:pointer;
+}
+
+.importError {
+	color: #F44336;
+	font-weight: bold;
+	margin-top:-10px;
+	padding-bottom:4px;
+	padding-left:31px;
 }

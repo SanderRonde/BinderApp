@@ -1353,7 +1353,6 @@ paper-input-decorator .focused-underline { background-color:#FFFFFF; }</style>")
 
 	$(".superSearchCheckbox").attr("on", (settings.superSearch ? "true" : "false"));
 	$(".closeBinderCheckbox").attr("on", (settings.closeBinder ? "true" : "false"));
-	bindstuff();
 }
 
 function createSearchEngine(name, url, sourceButton) {
@@ -1700,9 +1699,12 @@ function bindListeners() {
 			var val = false;
 			if ($(context).attr("on") === "true") {
 				val = true;
+				hideGoButton();
+			}
+			else {
+				showGoButton();
 			}
 			updateSettings("superSearch", val);
-			showGoButton();
 		}, 0);
 	});
 	$(".closeBinderCheckbox").click(function () {
@@ -1774,33 +1776,27 @@ function upgradeBinderVersion() {
 }
 
 function main() {
-	$(document).ready(function () {
-		//Set to proper dimensions
+	if (settings.superSearch) {
+		$(".input").attr("size", "56");
+		$(".submitButton").css("display", "none");
+		hideGoButton();
+	}
+	else {
+		bindstuff($(".submitButton"));
+	}
+	bindstuff($(".input"));
+	app.focus();
+	$(".input").focus().click();
+	setTimeout(function() {
+		updateInputs();
 		if (app.getBounds().width !== 500 || app.getBounds().height !== 100) {
 			app.resizeTo(500, 100);
 		}
-
-		setTimeout(function () {
-			//Check if people are coming from the old Binder App
-			if (settings.firstrun !== undefined) {
-				//Yep
-				upgradeBinderVersion();
-			}
-			checkAndUploadSettings(settings);
-			if (settings.superSearch) {
-				$(".input").attr("size", "56");
-				$(".submitButton").css("display", "none");
-			}
-			updateInputs();
-			if (settings.superSearch) {
-				hideGoButton();
-			}
-			setTimeout(function () {
-				app.focus();
-				$(".input").focus().click();
-			}, 0);
-		}, 0);
-	});
+	}, 0);
+	setTimeout(function () {
+		bindstuff();
+		checkAndUploadSettings(settings);
+	}, 100);
 }
 
 storage.get(function (items) {

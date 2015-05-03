@@ -45,7 +45,7 @@ chrome.commands.onCommand.addListener(function (command) {
 
 function refreshWebsites() {
 	chrome.Storage.sync.get("websites", function (items) {
-		websites = items;
+		websites = items.websites;
 	});
 }
 
@@ -62,4 +62,14 @@ chrome.runtime.onMessage.addListener(function (message) {
 			refreshWebsites();
 			break;
 	}
+});
+
+chrome.runtime.onInstalled.addListener(function () {
+	//Check if people are coming from the old Binder App
+	chrome.Storage.sync.get("firstrun", function(items) {
+		if (items.firstrun !== undefined) {
+			//Yep
+			upgradeBinderVersion();
+		}
+	});
 });

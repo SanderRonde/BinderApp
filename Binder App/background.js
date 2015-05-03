@@ -16,18 +16,21 @@ function launchBinder() {
 	});
 }
 
-var settings = {};
+var websites = [];
+
+chrome.storage.sync.get("websites",function(items) {
+	websites = items;
+});
 
 chrome.app.runtime.onLaunched.addListener(function () {
 	launchBinder();
 });
 
-chrome.runtime.onInstalled.addListener(function (details) {
-	if (details.reason === "update") {
-		//Display update message, so place it in storage and wait for the user to boot up the app
-		chrome.storage.sync.set({ "newversion": "yep" });
-	};
-});
+function launchWebsite() {
+	var bindingNum = command.split("launch_binding_")[1];
+	bindingNum = parseInt(bindingNum, 10);
+	window.open(websites[bindingNum], "_blank");
+}
 
 chrome.commands.onCommand.addListener(function (command) {
 	switch (command) {
@@ -35,22 +38,28 @@ chrome.commands.onCommand.addListener(function (command) {
 			launchBinder();
 			break;
 		default:
-			var bindingNum = command.split("launch_binding_")[1];
-			bindingNum = parseInt(bindingNum, 10);
-			var websites = settings.websites;
-			window.open(websites[bindingNum], "_blank");
+			launchWebsite();
 			break;
 	}
 });
 
+function refreshWebsites() {
+	chrome.Storage.sync.get("websites", function(items) {
+		websites = items;
+	});
+}
+
 chrome.runtime.onMessage.addListener(function (message) {
 	switch (message.cmd) {
 		case "getKeyBindings":
-			chrome.commands.getAll(function (commands) {
+			chrome.commands.getAll(function(commands) {
 				if (commands.length > 0) {
-					chrome.runtime.sendMessage({ "keyBindings": commands });
+					chrome.runtime.sendMessage({"keyBindings": commands});
 				}
 			});
+			break;
+		case "refreshWebsites":
+			refreshWebsites();
 			break;
 	}
 });

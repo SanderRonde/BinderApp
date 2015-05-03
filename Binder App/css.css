@@ -87,7 +87,6 @@ html, body {
 }
 
 .closeButton {
-	background-color:white;
 	margin-left:48px;
 }
 
@@ -287,7 +286,6 @@ paper-checkbox {
 	.fab svg {
 		margin-top: 10px;
 		margin-left: 10px;
-		fill: white;
 	}
 
 .mainCont {
@@ -381,6 +379,10 @@ multiline-paper-input .unfocused-underline {
 .exportButtonsCont, .importButtonsCont {
 	float: right;
 	margin-top: -30px;
+}
+
+.exportButtonsCont {
+	margin-top: -10px;
 }
 
 .bigTxt {
@@ -544,7 +546,7 @@ paper-input.SEISUrl {
 }
 
 @-webkit-keyframes spin {
-	from { -webkit-transform: rotate(0deg); }
+	from { -webkit-transform: rotate(0); }
 	to { -webkit-transform: rotate(360deg); }
 }
 
@@ -619,4 +621,12 @@ paper-input.SEISUrl {
 	margin-top:-10px;
 	padding-bottom:4px;
 	padding-left:31px;
+}
+
+.importSuccess {
+	color: #4CAF50;
+	font-weight: bold;
+	margin-top: -10px;
+	padding-bottom: 4px;
+	padding-left: 31px;
 }

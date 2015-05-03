@@ -1,4 +1,3 @@
-window.chrome = window.chrome;
 var storage = chrome.storage.sync;
 var app = chrome.app.window.current();
 var settings = {};

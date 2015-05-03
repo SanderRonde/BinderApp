@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Binder App",
 	"description": "Open web pages quickly from your desktop",
-	"version": "1.2.1",
+	"version": "2.0.0",
 
 	"icons": {
 		"16": "icon-supersmall.png",

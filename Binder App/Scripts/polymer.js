@@ -900,5 +900,3 @@ function bindstuff(container) {
 	removeBinds(container);
 	bindPaperEls(container);
 }
-
-bindstuff();

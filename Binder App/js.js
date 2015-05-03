@@ -8,7 +8,7 @@ var keyBindingsToSetNum = [];
 var keyBindingCallback = function () {
 };
 var searchEngineImportExpanded = false;
-var searchWorker = undefined
+var searchWorker = undefined;
 function isset(dataToCheck) {
 	if (dataToCheck === undefined || dataToCheck === null) {
 		return false;

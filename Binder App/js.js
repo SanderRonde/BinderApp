@@ -1735,46 +1735,6 @@ function bindListeners() {
 	$("body").click(hideShortcutInfo);
 }
 
-function upgradeBinderVersion() {
-	var oldBindings = settings.binding;
-	var bindings = [];
-	var urls = [];
-	var emptyArray = [];
-	var oldBindingsSplit;
-	for (var i = 0; i < oldBindings.length; i++) {
-		oldBindingsSplit = oldBindings[i].split("%123");
-		bindings.push(oldBindingsSplit[0]);
-		urls.push(oldBindingsSplit[1]);
-		emptyArray.push("");
-	}
-	var oldColors = settings.colors;
-	$.each(function (key, value) {
-		oldColors[key] = "#" + value.replace("#", "");
-	});
-	var closeAfterBindings = (settings.exitafter === "1" || settings.exitafter === 1);
-	var superSearch = (settings.supasearch !== "no");
-
-	//Clear old settings
-	storage.clear(function () {
-		//Create a new settings container object
-		var newSettings = {
-			"bindings": bindings,
-			"websites": urls,
-			"color": {
-				"bg": oldColors.bg,
-				"title": oldColors.title,
-				"text": "#FFFFFF"
-			},
-			"set": true,
-			"shortcuts": emptyArray,
-			"keyBindings": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-			"closeBinder": closeAfterBindings,
-			"superSearch": superSearch
-		};
-		checkAndUploadSettings(newSettings);
-	});
-}
-
 function main() {
 	if (settings.superSearch) {
 		$(".input").attr("size", "56");

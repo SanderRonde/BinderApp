@@ -18,7 +18,7 @@ function launchBinder() {
 
 var websites = [];
 
-chrome.storage.sync.get("websites",function(items) {
+chrome.storage.sync.get("websites", function (items) {
 	websites = items;
 });
 
@@ -44,7 +44,7 @@ chrome.commands.onCommand.addListener(function (command) {
 });
 
 function refreshWebsites() {
-	chrome.Storage.sync.get("websites", function(items) {
+	chrome.Storage.sync.get("websites", function (items) {
 		websites = items;
 	});
 }
@@ -52,9 +52,9 @@ function refreshWebsites() {
 chrome.runtime.onMessage.addListener(function (message) {
 	switch (message.cmd) {
 		case "getKeyBindings":
-			chrome.commands.getAll(function(commands) {
+			chrome.commands.getAll(function (commands) {
 				if (commands.length > 0) {
-					chrome.runtime.sendMessage({"keyBindings": commands});
+					chrome.runtime.sendMessage({ "keyBindings": commands });
 				}
 			});
 			break;

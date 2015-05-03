@@ -5,7 +5,7 @@ var searchWebsites = [];
 var searchMode = false;
 var keyBindingsToSet = [];
 var keyBindingsToSetNum = [];
-var keyBindingCallback = function() {
+var keyBindingCallback = function () {
 };
 var searchEngineImportExpanded = false;
 var searchWorker = undefined;
@@ -18,7 +18,7 @@ function isset(dataToCheck) {
 }
 
 function sendUpdateWebsitesMessage() {
-	chrome.runtime.sendMessage({cmd: "refreshWebsites"});
+	chrome.runtime.sendMessage({ cmd: "refreshWebsites" });
 }
 
 function updateSettings(key, data) {
@@ -57,7 +57,7 @@ function performBlackMagic(arrayOfObjectsInQuantumState) {
 	return copy;
 }
 
-chrome.runtime.onMessage.addListener(function(message) {
+chrome.runtime.onMessage.addListener(function (message) {
 	if (!isset(message.cmd)) {
 		var data = message.keyBindings;
 		var x = data;
@@ -70,7 +70,7 @@ chrome.runtime.onMessage.addListener(function(message) {
 
 function getAllKeyBindings(callback) {
 	keyBindingCallback = callback;
-	chrome.runtime.sendMessage({cmd: "getKeyBindings"});
+	chrome.runtime.sendMessage({ cmd: "getKeyBindings" });
 }
 
 function hidePopup() {
@@ -82,7 +82,7 @@ function hidePopup() {
 	}, 200, "easeInCubic");
 	$(".popup").animate({
 		marginLeft: "100%"
-	}, 250, "easeInCubic", function() {
+	}, 250, "easeInCubic", function () {
 		$(this).remove();
 		$(".overlay, .overlay2").remove();
 	});
@@ -97,7 +97,7 @@ function assignKeyBinding(i, bindings) {
 	keyBindingsToSetNum.splice(0, 1);
 	hidePopup();
 	loadBindings();
-	setTimeout(function() {
+	setTimeout(function () {
 		setKeyBindings(bindings);
 	}, 260);
 }
@@ -142,17 +142,17 @@ function loadBindings() {
 		.appendTo($(".bindingsContainer"));
 	$("<paper-button class=\"addInputs\" raised><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">Add Inputs</div></paper-ripple>" +
 			"<paper-shadow> <div class=\"shadow-bot\"></div><div class=\"shadow-top\"></div> </paper-shadow></paper-button>")
-		.click(function(e) {
+		.click(function (e) {
 			ripplestuff($(this).children("paper-ripple")[0], e, false);
 			simpleAddInputField($(this).parent().parent());
 		})
 		.appendTo(buttonsCont);
 	$("<paper-button class=\"loadBindings\" raised><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">Reload Bindings</div></paper-ripple>" +
 			"<paper-shadow> <div class=\"shadow-bot\"></div><div class=\"shadow-top\"></div> </paper-shadow></paper-button>")
-		.click(function() {
+		.click(function () {
 			//Load for a bit
 			showLoadingGif();
-			setTimeout(function() {
+			setTimeout(function () {
 				loadBindings();
 				hideLoadingGif();
 			}, 500);
@@ -296,7 +296,7 @@ function swapBinding(i, bindings) {
 	$(".AKBindings").html("");
 	loadBindings();
 	loadAKBindings(bindings);
-	setTimeout(function() {
+	setTimeout(function () {
 		setKeyBindings(bindings);
 	}, 260);
 }
@@ -305,7 +305,7 @@ function assignNewKeyBindingScreen(bindings) {
 	var keyBinding = keyBindingsToSet[0];
 	$(".overlay, .assignKeyBindingCont").remove();
 	$("<div class='overlay'></div>")
-		.click(function() {
+		.click(function () {
 			hidePopup();
 		})
 		.insertBefore($("body").children().first())
@@ -345,7 +345,7 @@ function assignNewKeyBindingScreen(bindings) {
 		.appendTo(cont);
 
 	$("<paper-button class=\"closeAssignKeyBinding\" raised> <paper-ripple> <div class=\"bg\"></div> <div class=\"waves\"></div> <div class=\"button-content\">Close</div> </paper-ripple><paper-shadow> <div class=\"shadow-bot\"></div> <div class=\"shadow-top\"></div> </paper-shadow> </paper-button>")
-		.click(function(e) {
+		.click(function (e) {
 			ripplestuff($(this).children("paper-ripple")[0], e, false);
 			hidePopup();
 		})
@@ -368,7 +368,7 @@ function addUnassignedKeyBindingsButton(bindings) {
 	$(".assignBindings").remove();
 	$("<paper-button class=\"assignBindings\" raised><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">Assign Unassigned Key-bindings</div></paper-ripple>" +
 			"<paper-shadow> <div class=\"shadow-bot\"></div><div class=\"shadow-top\"></div> </paper-shadow></paper-button>")
-		.click(function(e) {
+		.click(function (e) {
 			ripplestuff($(this).children("paper-ripple")[0], e, false);
 			setKeyBindings(bindings);
 		})
@@ -376,7 +376,7 @@ function addUnassignedKeyBindingsButton(bindings) {
 }
 
 function checkForKeyBindings() {
-	getAllKeyBindings(function(bindings) {
+	getAllKeyBindings(function (bindings) {
 		var copy = bindings;
 		var i;
 		var otherCopy = performBlackMagic(copy);
@@ -480,7 +480,7 @@ function animateGreenBorder(element) {
 			window.requestAnimationFrame(step);
 		}
 		else {
-			setTimeout(function() {
+			setTimeout(function () {
 				window.requestAnimationFrame(step2);
 			}, 500);
 		}
@@ -531,18 +531,18 @@ function saveInputs(sourceElement) {
 	var bindingElements = [];
 	sourceElement
 		.parent()
-		.children(".inputsField").each(function() {
+		.children(".inputsField").each(function () {
 			$(this).find(".bindingInput")
-				.each(function() {
+				.each(function () {
 					bindings.push($(this).val());
 					bindingElements.push($(this).parent().parent());
 				});
 		});
 	sourceElement
 		.parent()
-		.children(".inputsField").each(function() {
+		.children(".inputsField").each(function () {
 			$(this).find(".rightInput")
-				.each(function() {
+				.each(function () {
 					websites.push($(this).val());
 				});
 		});
@@ -553,7 +553,7 @@ function saveInputs(sourceElement) {
 	}
 	sourceElement
 		.find(".bindingInput, .rightInput")
-		.each(function() {
+		.each(function () {
 			animateGreenBorder(this);
 		});
 	checkBindingsForErrors(bindings, bindingElements);
@@ -568,7 +568,7 @@ function removeField(element) {
 		.parent()
 		.parent()
 		.children()
-		.each(function() {
+		.each(function () {
 			index++;
 			if (this === parent) {
 				confirmedIndex = index;
@@ -606,7 +606,7 @@ function hideShortcutInfo(elem) {
 			width: "3em",
 			height: "40px",
 			marginLeft: "0"
-		}, 300, function() {
+		}, 300, function () {
 			$(this).attr("class", "shadow-top");
 			$(this).css("margin-top", "0");
 		});
@@ -616,7 +616,7 @@ function hideShortcutInfo(elem) {
 			height: "40px",
 			width: "3em",
 			marginLeft: "0"
-		}, 300, function() {
+		}, 300, function () {
 			$(this).parent().css("z-index", "1").children("paper-ripple").css("z-index", "1");
 			$(this).remove();
 		});
@@ -688,11 +688,11 @@ function showShortcutInfo(shortcutIndex, elem) {
 			"<div class=\"waves\"></div><div class=\"button-content\">Unassign</div></paper-ripple>" +
 			"<paper-shadow> <div class=\"shadow-bot\"></div><div class=\"shadow-top\">" +
 			"</div> </paper-shadow></paper-button>")
-		.click(function(e) {
+		.click(function (e) {
 			ripplestuff($(this).children("paper-ripple")[0], e, false);
 			unAssign(shortcutIndex);
 			hideShortcutInfo(elem);
-			setTimeout(function() {
+			setTimeout(function () {
 				loadBindings();
 			}, 300);
 		})
@@ -706,7 +706,7 @@ function toggleShortcutInfo(shortcutIndex, elem) {
 	else {
 		if ($(".shortcutInfoContainer")[0]) {
 			hideShortcutInfo();
-			setTimeout(function() {
+			setTimeout(function () {
 				showShortcutInfo(shortcutIndex, elem);
 			}, 300);
 		}
@@ -746,22 +746,22 @@ function addRemoveButtonToElement(parent) {
 function addInputOnClicks(leftInput, rightInput, removeButton, shortcutButton, shortcutIndex) {
 	leftInput
 		.find(".actualinput")
-		.blur(function() {
+		.blur(function () {
 			saveInputs($(this).parent().parent().parent());
 		});
 	rightInput
 		.find(".actualinput")
-		.blur(function() {
+		.blur(function () {
 			saveInputs($(this).parent().parent().parent());
 		});
 	if (shortcutIndex !== undefined) {
 		shortcutButton
-			.click(function() {
+			.click(function () {
 				toggleShortcutInfo(shortcutIndex, this);
 			});
 	}
 	removeButton
-		.click(function() {
+		.click(function () {
 			removeField($(this));
 		});
 }
@@ -834,17 +834,17 @@ function firstRun() {
 	$(".draggablearea").css("width", "628px");
 	$(".firstTimeContainer").css("display", "block");
 	$(".hideSettings").css("display", "none");
-	$(".toSettingsFromFirstTime").click(function() {
+	$(".toSettingsFromFirstTime").click(function () {
 		loadBindings();
 		$(".firstTimeContainer").css("display", "none");
 		showSettings(true);
 	});
-	$(".hideThis").click(function() {
+	$(".hideThis").click(function () {
 		loadBindings();
 		$(".firstTimeContainer").css("display", "none");
 		hideSettings();
 	});
-	$(".addInputs").click(function() {
+	$(".addInputs").click(function () {
 		simpleAddInputField($(this).parent());
 	});
 }
@@ -891,7 +891,7 @@ function checkBinding(input, binding, website) {
 
 function handleSearchBinding() {
 	searchMode = false;
-	setTimeout(function() {
+	setTimeout(function () {
 		var input = $(".input").val();
 		for (var i = 0; i < searchWebsites.length; i++) {
 			openWebsites(searchWebsites[i].replace("%s", input));
@@ -904,7 +904,7 @@ function searchForBinding() {
 		handleSearchBinding();
 	}
 	else {
-		setTimeout(function() {
+		setTimeout(function () {
 			var input = $(".input").val();
 			if (input !== "") {
 				var bindings = settings.bindings;
@@ -999,7 +999,7 @@ function saveColors(change, color) {
 	color = "#" + color;
 	var colors = settings.colors;
 	colors[change] = color;
-	updateSettings({"colors": colors});
+	updateSettings({ "colors": colors });
 }
 
 function showGoButton() {
@@ -1037,7 +1037,7 @@ function addNewBinding() {
 function addNewBindingAnimation() {
 	$(".overlay, .newBindingPopup").remove();
 	$("<div class=\"overlay\"></div>")
-		.click(function() {
+		.click(function () {
 			hidePopup();
 		})
 		.insertBefore($("body").children().first())
@@ -1077,14 +1077,14 @@ function addNewBindingAnimation() {
 		.appendTo(cont);
 
 	$("<div class=\"addBindingCancel\"><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">Cancel</div></paper-ripple></div>")
-		.click(function() {
+		.click(function () {
 			ripplestuff($(this).children("paper-ripple")[0], "", false);
 			hidePopup();
 		})
 		.appendTo(buttonCont);
 
 	$("<div class=\"addBindingAdd\"><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">Add</div></paper-ripple></div>")
-		.click(function() {
+		.click(function () {
 			ripplestuff($(this).children("paper-ripple")[0], "", false);
 			addNewBinding();
 			hidePopup();
@@ -1138,7 +1138,7 @@ function checkAndUploadSettings(obj) {
 		var i;
 		if (bindingsAmount > websitesAmount) {
 			changes = true;
-			for (i = 0; i < (bindingsAmount - websitesAmount); i++) {
+			for (i = 0; i < (bindingsAmount - websitesAmount) ; i++) {
 				obj.bindings.push("");
 			}
 		}
@@ -1285,10 +1285,10 @@ function updateInputs() {
 		.css("color", settings.colors.bg)
 		.ColorPicker({
 			color: settings.colors.bg,
-			onChange: function(hsb, hex) {
+			onChange: function (hsb, hex) {
 				setColors("bg", hex);
 			},
-			onHide: function(hsb) {
+			onHide: function (hsb) {
 				var rgbColor = $(hsb)
 					.children(".colorpicker_new_color")
 					.css("background-color");
@@ -1308,10 +1308,10 @@ body, .bodyColor { background-color: " + settings.colors.bg + "; }</style>")
 		.css("color", settings.colors.input)
 		.ColorPicker({
 			color: settings.colors.input,
-			onChange: function(hsb, hex) {
+			onChange: function (hsb, hex) {
 				setColors("input", hex);
 			},
-			onHide: function(hsb) {
+			onHide: function (hsb) {
 				var rgbColor = $(hsb)
 					.children(".colorpicker_new_color")
 					.css("background-color");
@@ -1331,10 +1331,10 @@ input { background-color: " + settings.colors.input + "; }</style>")
 		.css("color", settings.colors.text)
 		.ColorPicker({
 			color: settings.colors.text,
-			onChange: function(hsb, hex) {
+			onChange: function (hsb, hex) {
 				setColors("text", hex);
 			},
-			onHide: function(hsb) {
+			onHide: function (hsb) {
 				var rgbColor = $(hsb)
 					.children(".colorpicker_new_color")
 					.css("background-color");
@@ -1362,9 +1362,9 @@ function createSearchEngine(name, url, sourceButton) {
 	//Make that button green cause it's nice
 	$(sourceButton).animate({
 		backgroundColor: "#4CAF50"
-	}, 250, function() {
+	}, 250, function () {
 		var elem = this;
-		setTimeout(function() {
+		setTimeout(function () {
 			$(elem).animate({
 				backgroundColor: "rgba(0,0,0,0)"
 			}, 250);
@@ -1381,15 +1381,15 @@ function addImportedSearchEngine() {
 		.css("margin-left", "100%");
 	$("<div class=\"overlay2\"></div>")
 		.css("z-index", "25")
-		.click(function() {
+		.click(function () {
 			$(this).animate({
 				opacity: 0
-			}, 250, function() {
+			}, 250, function () {
 				$(this).remove();
 			});
 			askNameCont.animate({
 				marginLeft: "100%"
-			}, 250, "easeInCubic", function() {
+			}, 250, "easeInCubic", function () {
 				$(this).remove();
 			});
 		})
@@ -1419,7 +1419,7 @@ function addImportedSearchEngine() {
 	var paperInput = $("<paper-input class=\"inputCont SECName\"> <paper-input-decorator> <input class=\"actualinput\" placeholder=\"Binding Name\" /> <div class=\"underline\"> <div class=\"unfocused-underline\"></div> <div class=\"focusedUnderline focused-underline\"></div> </div> </paper-input-decorator> </paper-input>")
 		.appendTo(cont);
 
-	paperInput.click(function() {
+	paperInput.click(function () {
 		$(this).find(".actualinput").focus();
 	});
 
@@ -1429,32 +1429,32 @@ function addImportedSearchEngine() {
 		.appendTo(cont);
 
 	$("<div class=\"SECNameCancel\"><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">CANCEL</div></paper-ripple></div>")
-		.click(function(e) {
+		.click(function (e) {
 			ripplestuff($(this).children("paper-ripple")[0], e, false);
 			$(".overlay2").animate({
 				opacity: 0
-			}, 250, function() {
+			}, 250, function () {
 				$(this).remove();
 			});
 			askNameCont.animate({
 				marginLeft: "100%"
-			}, 250, "easeInCubic", function() {
+			}, 250, "easeInCubic", function () {
 				$(this).remove();
 			});
 		})
 		.appendTo(buttonCont);
 	$("<div class=\"SECNameConfirm\"><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">ADD</div></paper-ripple></div>")
-		.on("click", function(e) {
+		.on("click", function (e) {
 			ripplestuff($(this).children("paper-ripple")[0], e, false);
 			createSearchEngine($(this).parent().parent().find(".actualinput").val(), url, thisButton);
 			$(".overlay2").animate({
 				opacity: 0
-			}, 250, function() {
+			}, 250, function () {
 				$(this).remove();
 			});
 			askNameCont.animate({
 				marginLeft: "100%"
-			}, 250, "easeInCubic", function() {
+			}, 250, "easeInCubic", function () {
 				$(this).remove();
 			});
 		})
@@ -1489,17 +1489,17 @@ function showSearchEngineItems(searchEngines, container) {
 }
 
 function searchSearchBindings(searchEngines, el) {
-	setTimeout(function() {
+	setTimeout(function () {
 		var val = $(el).val();
 		if (val !== "") {
-			searchWorker.addEventListener("message", function(e) {
+			searchWorker.addEventListener("message", function (e) {
 				//Update list
 				var foundSearchEngines = $(".foundSearchEngines");
 				foundSearchEngines.html("");
 				showSearchEngineItems(e.data, foundSearchEngines);
 				hideLoadingGif();
 			});
-			searchWorker.postMessage({search: val, searchEngines: searchEngines});
+			searchWorker.postMessage({ search: val, searchEngines: searchEngines });
 		}
 		else {
 			showSearchEngineItems(searchEngines, $(".foundSearchEngines"));
@@ -1524,20 +1524,20 @@ function showSearchEnginesList(searchEngines) {
 	var searchSearchBindingsInput = $("<paper-input><paper-input-decorator>	<input class=\"actualinput\" /><div class=\"underline\"><div class=\"unfocused-underline\"></div><div class=\"focusedUnderline focused-underline\"></div></div></paper-input-decorator></paper-input>")
 		.appendTo(searchSearchBindingsCont);
 
-	searchSearchBindingsInput.click(function() {
+	searchSearchBindingsInput.click(function () {
 		$(this).find(".actualinput").focus();
 	});
 
-	searchSearchBindingsInput.find("paper-input-decorator").click(function() {
+	searchSearchBindingsInput.find("paper-input-decorator").click(function () {
 		$(this).find(".actualinput").focus();
 	});
 
 	searchSearchBindingsInput
 		.find(".actualinput")
-		.keydown(function() {
+		.keydown(function () {
 			var elem = this;
 			showLoadingGif();
-			setTimeout(function() {
+			setTimeout(function () {
 				searchSearchBindings(searchEngines, elem);
 			}, 0);
 		});
@@ -1562,15 +1562,15 @@ function animateSeList(searchEngines) {
 		.html("Re-open");
 	$(".importSearchEngineCont").stop().animate({
 		marginTop: "40px"
-	}, 250, function() {
+	}, 250, function () {
 		$(".importSearchEngineCont, .importSearchEngineCont .topShadowLayer, .importSearchEngineCont .bottomShadowLayer")
 			.stop().animate({
 				height: "695px"
-			}, 150, function() {
+			}, 150, function () {
 				$(".importSearchEngineContainer textarea")
 					.stop().animate({
 						height: "20px"
-					}, 150, function() {
+					}, 150, function () {
 						showSearchEnginesList(searchEngines);
 					});
 			});
@@ -1583,11 +1583,11 @@ function hideSeList() {
 		.html("Process");
 	$(".importSearchEngineCont").stop().animate({
 		marginTop: "196px"
-	}, 250, function() {
+	}, 250, function () {
 		$(".importSearchEngineCont, .importSearchEngineCont .topShadowLayer, .importSearchEngineCont .bottomShadowLayer")
 			.stop().animate({
 				height: "325px"
-			}, 150, function() {
+			}, 150, function () {
 				$(".importSearchEngineContainer textarea")
 					.stop().animate({
 						height: "154px"
@@ -1607,7 +1607,7 @@ function importSearchEngines(e) {
 		var worker = new Worker("worker.js");
 		var data = $(".importSearchBindingsTextArea").val();
 		showLoadingGif();
-		worker.addEventListener("message", function(e) {
+		worker.addEventListener("message", function (e) {
 			var structuredSearchEngines = e.data.searchEngines;
 			$(".SEImportError").remove();
 			if (structuredSearchEngines.length !== 0) {
@@ -1627,7 +1627,7 @@ function importSearchEngines(e) {
 
 function searchEngineImport() {
 	$("<div class=\"overlay\"></div>")
-		.click(function() {
+		.click(function () {
 			hidePopup();
 		})
 		.insertBefore($("body").children().first())
@@ -1662,7 +1662,7 @@ function searchEngineImport() {
 		.appendTo(cont);
 
 	$("<div class=\"importSearchBindingsCancel\"><paper-ripple><div class=\"bg\"></div><div class=\"waves\"></div><div class=\"button-content\">Close</div></paper-ripple></div>")
-		.click(function(e) {
+		.click(function (e) {
 			ripplestuff($(this).children("paper-ripple")[0], e, false);
 			hidePopup();
 		})
@@ -1683,20 +1683,20 @@ function bindListeners() {
 	$(".input").keypress(handleOnKeyPress);
 	$(".goButton").click(searchForBinding);
 	$(".optionsButton").click(toggleSettings);
-	$(".closeButton").click(function() {
+	$(".closeButton").click(function () {
 		app.resizeTo(500, 100);
 		app.close();
 	});
-	$(".minimizeButton").click(function() {
+	$(".minimizeButton").click(function () {
 		app.minimize();
 	});
 	$(".hideSettings").click(hideSettings);
-	$(".bindingInput, .rightInput").blur(function() {
+	$(".bindingInput, .rightInput").blur(function () {
 		saveInputs($(this).parent().parent().parent());
 	});
-	$(".superSearchCheckbox").click(function() {
+	$(".superSearchCheckbox").click(function () {
 		var context = this;
-		setTimeout(function() {
+		setTimeout(function () {
 			var val = false;
 			if ($(context).attr("on") === "true") {
 				val = true;
@@ -1705,9 +1705,9 @@ function bindListeners() {
 			showGoButton();
 		}, 0);
 	});
-	$(".closeBinderCheckbox").click(function() {
+	$(".closeBinderCheckbox").click(function () {
 		var context = this;
-		setTimeout(function() {
+		setTimeout(function () {
 			var val = false;
 			if ($(context).attr("on") === "true") {
 				val = true;
@@ -1715,13 +1715,13 @@ function bindListeners() {
 			updateSettings("closeBinder", val);
 		}, 0);
 	});
-	$(".checkboxtext").click(function() {
+	$(".checkboxtext").click(function () {
 		$(this).parent().children("paper-checkbox").mousedown().click();
 	});
-	$(".addDefaults").click(function() {
+	$(".addDefaults").click(function () {
 		addDefault($(this));
 	});
-	$(".fab").click(function() {
+	$(".fab").click(function () {
 		ripplestuff($(this).children("paper-ripple")[0], "", true);
 		addNewBindingAnimation();
 	});
@@ -1746,14 +1746,14 @@ function upgradeBinderVersion() {
 		emptyArray.push("");
 	}
 	var oldColors = settings.colors;
-	$.each(function(key, value) {
+	$.each(function (key, value) {
 		oldColors[key] = "#" + value.replace("#", "");
 	});
 	var closeAfterBindings = (settings.exitafter === "1" || settings.exitafter === 1);
 	var superSearch = (settings.supasearch !== "no");
 
 	//Clear old settings
-	storage.clear(function() {
+	storage.clear(function () {
 		//Create a new settings container object
 		var newSettings = {
 			"bindings": bindings,
@@ -1774,13 +1774,13 @@ function upgradeBinderVersion() {
 }
 
 function main() {
-	$(document).ready(function() {
+	$(document).ready(function () {
 		//Set to proper dimensions
 		if (app.getBounds().width !== 500 || app.getBounds().height !== 100) {
 			app.resizeTo(500, 100);
 		}
 
-		setTimeout(function() {
+		setTimeout(function () {
 			//Check if people are coming from the old Binder App
 			if (settings.firstrun !== undefined) {
 				//Yep
@@ -1795,7 +1795,7 @@ function main() {
 			if (settings.superSearch) {
 				hideGoButton();
 			}
-			setTimeout(function() {
+			setTimeout(function () {
 				app.focus();
 				$(".input").focus().click();
 			}, 0);
@@ -1803,7 +1803,7 @@ function main() {
 	});
 }
 
-storage.get(function(items) {
+storage.get(function (items) {
 	settings = items;
 	main();
 });

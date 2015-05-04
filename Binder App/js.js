@@ -17,10 +17,6 @@ function isset(dataToCheck) {
 	return true;
 }
 
-function sendUpdateWebsitesMessage() {
-	chrome.runtime.sendMessage({ cmd: "refreshWebsites" });
-}
-
 function updateSettings(key, data) {
 	var obj = {};
 	if (key !== null) {
@@ -28,9 +24,6 @@ function updateSettings(key, data) {
 			for (var objKey in key) {
 				if (key.hasOwnProperty(objKey)) {
 					obj = {};
-					if (objKey === "websites") {
-						sendUpdateWebsitesMessage();
-					}
 					obj[objKey] = key[objKey];
 					storage.set(obj);
 					settings[objKey] = key[objKey];
@@ -38,9 +31,6 @@ function updateSettings(key, data) {
 			}
 		}
 		else {
-			if (key === "websites") {
-				sendUpdateWebsitesMessage();
-			}
 			obj[key] = data;
 			storage.set(obj);
 			settings[key] = data;
@@ -62,7 +52,6 @@ chrome.runtime.onMessage.addListener(function (message) {
 		var data = message.keyBindings;
 		var x = data;
 		var copyToUpload = performBlackMagic(data);
-		copyToUpload.splice(0, 1);
 		updateSettings("keyBindings", copyToUpload);
 		keyBindingCallback(performBlackMagic(x));
 	}
@@ -1130,7 +1119,6 @@ function clearTextarea() {
 
 function checkAndUploadSettings(obj, alwaysSave) {
 	var changes = false;
-	var websiteChanges = false;
 	if (!isset(obj.set)) {
 		firstRun();
 	}
@@ -1148,7 +1136,6 @@ function checkAndUploadSettings(obj, alwaysSave) {
 			obj.bindings = [""];
 		}
 		if (!isset(obj.websites)) {
-			websiteChanges = true;
 			changes = true;
 			obj.websites = [""];
 		}
@@ -1169,7 +1156,6 @@ function checkAndUploadSettings(obj, alwaysSave) {
 		else if (bindingsAmount < websitesAmount) {
 			changes = true;
 			for (i = 0; i < (websitesAmount - bindingsAmount) ; i++) {
-				websiteChanges = true;
 				obj.websites.push("");
 			}
 		}
@@ -1208,9 +1194,6 @@ function checkAndUploadSettings(obj, alwaysSave) {
 			}
 		}
 		if (changes || alwaysSave !== undefined) {
-			if (websiteChanges) {
-				sendUpdateWebsitesMessage();
-			}
 			settings = obj;
 			storage.set(obj);
 		}
@@ -1866,7 +1849,8 @@ function bindListeners() {
 	$(".importImport").click(importBindings);
 	$(".searchEngineImport").click(searchEngineImport);
 	$("body").click(hideShortcutInfo);
-	$(".toSettingsFromUpgrade").click(function() {
+	$(".toSettingsFromUpgrade").click(function () {
+		loadBindings();
 		$(".binderUpgradeContainer").css("display", "none");
 		app.resizeTo(700, 755);
 	});

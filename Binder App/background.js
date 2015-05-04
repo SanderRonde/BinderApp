@@ -16,20 +16,14 @@ function launchBinder() {
 	});
 }
 
-var websites = [];
-
-chrome.storage.sync.get("websites", function (items) {
-	websites = items;
-});
-
 chrome.app.runtime.onLaunched.addListener(function () {
 	launchBinder();
 });
 
-function launchWebsite() {
+function launchWebsite(command, websites, shortcuts) {
 	var bindingNum = command.split("launch_binding_")[1];
 	bindingNum = parseInt(bindingNum, 10);
-	window.open(websites[bindingNum], "_blank");
+	window.open(websites[shortcuts.indexOf(bindingNum)], "_blank");
 }
 
 chrome.commands.onCommand.addListener(function (command) {
@@ -38,16 +32,12 @@ chrome.commands.onCommand.addListener(function (command) {
 			launchBinder();
 			break;
 		default:
-			launchWebsite();
+			chrome.storage.sync.get(function (items) {
+				launchWebsite(command, items.websites, items.shortcuts);
+			});
 			break;
 	}
 });
-
-function refreshWebsites() {
-	chrome.Storage.sync.get("websites", function (items) {
-		websites = items.websites;
-	});
-}
 
 chrome.runtime.onMessage.addListener(function (message) {
 	switch (message.cmd) {
@@ -57,9 +47,6 @@ chrome.runtime.onMessage.addListener(function (message) {
 					chrome.runtime.sendMessage({ "keyBindings": commands });
 				}
 			});
-			break;
-		case "refreshWebsites":
-			refreshWebsites();
 			break;
 	}
 });

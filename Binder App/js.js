@@ -1815,20 +1815,20 @@ function bindListeners() {
 	$(".input").keypress(handleOnKeyPress);
 	$(".goButton").click(searchForBinding);
 	$(".optionsButton").click(toggleSettings);
-	$(".closeButton").click(function () {
+	$(".closeButton").click(function() {
 		app.resizeTo(500, 100);
 		app.close();
 	});
-	$(".minimizeButton").click(function () {
+	$(".minimizeButton").click(function() {
 		app.minimize();
 	});
 	$(".hideSettings").click(hideSettings);
-	$(".bindingInput, .rightInput").blur(function () {
+	$(".bindingInput, .rightInput").blur(function() {
 		saveInputs($(this).parent().parent().parent());
 	});
-	$(".superSearchCheckbox").click(function () {
+	$(".superSearchCheckbox").click(function() {
 		var context = this;
-		setTimeout(function () {
+		setTimeout(function() {
 			var val = false;
 			if ($(context).attr("on") === "true") {
 				val = true;
@@ -1840,9 +1840,9 @@ function bindListeners() {
 			updateSettings("superSearch", val);
 		}, 0);
 	});
-	$(".closeBinderCheckbox").click(function () {
+	$(".closeBinderCheckbox").click(function() {
 		var context = this;
-		setTimeout(function () {
+		setTimeout(function() {
 			var val = false;
 			if ($(context).attr("on") === "true") {
 				val = true;
@@ -1850,13 +1850,13 @@ function bindListeners() {
 			updateSettings("closeBinder", val);
 		}, 0);
 	});
-	$(".checkboxtext").click(function () {
+	$(".checkboxtext").click(function() {
 		$(this).parent().children("paper-checkbox").mousedown().click();
 	});
-	$(".addDefaults").click(function () {
+	$(".addDefaults").click(function() {
 		addDefault($(this));
 	});
-	$(".fab").click(function () {
+	$(".fab").click(function() {
 		ripplestuff($(this).children("paper-ripple")[0], "", true);
 		addNewBindingAnimation();
 	});
@@ -1866,9 +1866,22 @@ function bindListeners() {
 	$(".importImport").click(importBindings);
 	$(".searchEngineImport").click(searchEngineImport);
 	$("body").click(hideShortcutInfo);
+	$(".toSettingsFromUpgrade").click(function() {
+		$(".binderUpgradeContainer").css("display", "none");
+		app.resizeTo(700, 755);
+	});
+	$(".hideThisFromUpgrade").click(function() {
+		$(".binderUpgradeContainer").css("display", "none");
+		$(".draggablearea").css("width", "428px");
+		app.resizeTo(500, 100);
+	});
 }
 
 function upgradeBinderVersion() {
+	$(".hideSettings").css("display", "inline-block");
+	$(".draggablearea").css("width", "628px");
+	$(".binderUpgradeContainer").css("display", "block");
+	app.resizeTo(700, 290);
 	var oldBindings = settings.binding;
 	var bindings = [];
 	var urls = [];

@@ -630,3 +630,13 @@ paper-input.SEISUrl {
 	padding-bottom: 4px;
 	padding-left: 31px;
 }
+
+.binderUpgradeContainer {
+	padding: 10px;
+	display:none;
+}
+
+.binderUpgradeTitle {
+	font-size: 250%;
+	font-weight: bold;
+}

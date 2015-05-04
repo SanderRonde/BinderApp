@@ -1317,21 +1317,6 @@ function updateInputs() {
 body, .bodyColor { " +
 					"background-color: " + settings.colors.bg + ";" +
 					"}" +
-					" paper-shadow .shadow-top, .fab { " +
-					"box-shadow: 0 1px 4px 0 rgba(" + (255 - bgR) + ", " + (255 - bgG) + ", " + (255 - bgB) + ",0.37);" +
-					"}" +
-					" ::-webkit-scrollbar-thumb { " +
-					"background: " + bgOpposite + ";" +
-					" }" +
-					".overlay, .overlay2 {" +
-					"box-shadow: 0 1px 4px 0 rgba(" + (255 - bgR) + ", " + (255 - bgG) + ", " + (255 - bgB) + ",0.5);" +
-					"}" +
-					".topShadowLayer {" +
-					"box-shadow: 0 17px 17px 0 rgba(" + (255 - bgR) + ", " + (255 - bgG) + ", " + (255 - bgB) + ",0.15);" +
-					"}" +
-					".bottomShadowLayer {" +
-					"box-shadow: 0 27px 55px 0 rgba(" + (255 - bgR) + ", " + (255 - bgG) + ", " + (255 - bgB) + ",0.3);" +
-					"}" +
 					" </style>")
 			.appendTo("head");
 		$(".titleColor")

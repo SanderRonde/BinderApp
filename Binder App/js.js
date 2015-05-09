@@ -862,7 +862,12 @@ function openWebsites(website) {
 	}
 	else {
 		for (i = 0; i < sites.length; i++) {
-			window.open(sites[i], "_blank");
+			if (sites[i].search("(.+)://") !== 0) {
+				window.open("http://" + sites[i], "_blank");
+			}
+			else {
+				window.open(sites[i], "_blank");
+			}
 		}
 	}
 	if (settings.closeBinder && !search) {

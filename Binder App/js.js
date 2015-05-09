@@ -775,8 +775,10 @@ function simpleAddInputField(sourceElement) {
 		.insertBefore(sourceElement.children().last());
 	var leftInput = addLeftInputToElement(input);
 	var rightInput = addRightInputToElement(input);
-	rightInput.css("width", "248px");
+	rightInput.css("width", "398px");
+	rightInput.find(".rightInput").css("width", "398px");
 	var removeButton = addRemoveButtonToElement(input);
+	removeButton.css("margin-left", "71px");
 	addInputOnClicks(leftInput, rightInput, removeButton);
 	pushBindingToData("", "", "");
 	bindstuff(sourceElement);

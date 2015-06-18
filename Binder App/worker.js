@@ -1,5 +1,5 @@
 ﻿function processData(data) {
-	data = data.split("\n");
+	data = data.split('\n');
 	var searchEngines = { searchEngines: [] };
 	var bindingName;
 	var bindingUrl;
@@ -12,7 +12,7 @@
 	var o = 8;
 	var obj;
 	var passedBox = false;
-	while (bindingName !== "" && bindingName !== undefined && bindingUrl !== "" && bindingUrl !== undefined && searchBindingUrl !== "" && searchBindingUrl !== undefined) {
+	while (bindingName !== '' && bindingName !== undefined && bindingUrl !== '' && bindingUrl !== undefined && searchBindingUrl !== '' && searchBindingUrl !== undefined) {
 		bindingName = data[o];
 		o++;
 		bindingUrl = data[o];
@@ -20,7 +20,7 @@
 		searchBindingUrl = data[o];
 		o += 2;
 
-		if (bindingUrl === "" && searchBindingUrl !== "") {
+		if (bindingUrl === '' && searchBindingUrl !== '') {
 			//We just passed the first box
 			o -= 2;
 			bindingName = data[o];
@@ -31,7 +31,7 @@
 			o += 2;
 			passedBox = true;
 		}
-		else if (bindingUrl === "" && searchBindingUrl === "") {
+		else if (bindingUrl === '' && searchBindingUrl === '') {
 			//The end of the search engines
 			break;
 		}
@@ -48,7 +48,7 @@
 	postMessage(searchEngines);
 }
 
-self.addEventListener("message", function(e) {
+self.addEventListener('message', function(e) {
 	var data = e.data;
 	processData(data);
 }, false);

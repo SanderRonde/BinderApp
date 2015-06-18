@@ -10,7 +10,7 @@ function searchData(query, data) {
 	postMessage(matchingData);
 }
 
-self.addEventListener("message", function(e) {
+self.addEventListener('message', function(e) {
 	var data = e.data;
 	searchData(data.search, data.searchEngines);
 }, false);

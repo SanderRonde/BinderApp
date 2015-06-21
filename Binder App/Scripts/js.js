@@ -224,14 +224,14 @@ function loadAKBindings(keyBindings) {
 			.find('.unfocused-underline')
 			.css('width', '150px');
 
-		$('<paper-input disabled class="AKInput inputCont"><paper-input-decorator><input disabled class="actualinput rightInput" value=\'' + websites[i] + '\' />\
+		$('<paper-input disabled class="AKInput AKInputURL inputCont"><paper-input-decorator><input disabled class="actualinput rightInput" value=\'' + websites[i] + '\' />\
 <div class="underline"><div class="unfocused-underline"></div><div class="focusedUnderline focused-underline"></div></div></paper-input-decorator>\
 					</paper-input>')
 			.css('margin-left', '3px')
-			.css('width', '150px')
+			.css('width', '280px')
 			.appendTo(akBinding)
 			.find('.unfocused-underline')
-			.css('width', '150px');
+			.css('width', '280px');
 
 		if (shortcuts[i] === '') {
 			$('<div class=\'AKShortcut\'>No Shortcut</div>')
@@ -1603,7 +1603,7 @@ function searchSearchBindings(searchEngines, el) {
 }
 
 function showSearchEnginesList(searchEngines) {
-	searchWorker = new Worker('searchWorker.js');
+	searchWorker = new Worker('Scripts/searchWorker.js');
 	$('.foundSearchEnginesCont').remove();
 	var foundSearchEnginesCont = $('<div class="foundSearchEnginesCont"></div>')
 		.appendTo('.importSearchEngineCont');
@@ -1698,7 +1698,7 @@ function importSearchEngines(e) {
 	}
 	else {
 		searchEngineImportExpanded = true;
-		var worker = new Worker('worker.js');
+		var worker = new Worker('Scripts/worker.js');
 		var data = $('.importSearchBindingsTextArea').val();
 		showLoadingGif();
 		worker.addEventListener('message', function (e) {

@@ -468,7 +468,6 @@ multiline-paper-input .unfocused-underline {
 	text-align: center;
 	border: 1px solid white;
 	padding: 10px;
-	position:absolute;
 	margin-top:4px;
 }
 
@@ -484,16 +483,16 @@ multiline-paper-input .unfocused-underline {
 	overflow-y: scroll;
 }
 
+.AKBinding {
+	display: flex;
+}
+
 .assignShortcut {
-	position: absolute;
-	margin-left: 160px;
 	margin-top: 6px;
 	background-color: green;
 }
 
 .swapShortcut {
-	position: absolute;
-	margin-left: 160px;
 	margin-top: 6px;
 	background-color: blue;
 }

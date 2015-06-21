@@ -23,7 +23,10 @@ chrome.app.runtime.onLaunched.addListener(function () {
 function launchWebsite(command, websites, shortcuts) {
 	var bindingNum = command.split('launch_binding_')[1];
 	bindingNum = parseInt(bindingNum, 10);
-	window.open(websites[shortcuts.indexOf(bindingNum)], '_blank');
+	var websitesArray = websites[shortcuts.indexOf(bindingNum)].split(',');
+	websitesArray.forEach(function(item) {
+		window.open(item, '_blank');
+	});
 }
 
 chrome.commands.onCommand.addListener(function (command) {

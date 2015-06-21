@@ -1,3 +1,4 @@
+/*Original can be found at https://github.com/BarryBamibal/BinderApp*/
 <html>
 <head>
 	<link rel="stylesheet" media="screen" type="text/css" href="Colorpicker/css/colorpicker.css" />
@@ -817,21 +818,31 @@
 				<div class="changeLog">
 					<div class="bigTxt">Changelog</div>
 					This is the changelog, starting at version 2.0 since the previous changes are not really relevant anymore after this change (full rewrite)
-					<br/><br/>
+					<br /><br />
+					2.0.4
+					<ul>
+						<li>
+							Fixed a bug that caused the assign new key binding screen to overflow. The elements were set to position:absolute which made them not care about the scrollable nature of the container. URL containers are now a bit bigger there as well.
+						</li>
+						<li>
+							Minified a few more files and changed structure
+						</li>
+					</ul>
+					<br /><br />
 					2.0.3
 					<ul>
 						<li>
 							Fixed a bug that made all inputs in the application change value on doing a search binding
 						</li>
 					</ul>
-					<br/><br/>
+					<br /><br />
 					2.0.2
 					<ul>
 						<li>
 							Fixed a bug that caused URL's without http:// in front of them to be invalid and them not being opened
 						</li>
 					</ul>
-					<br/><br/>
+					<br /><br />
 					2.0.1
 					<ul>
 						<li>
@@ -875,6 +886,6 @@
 	<script src="Scripts/jquery.easing.js"></script>
 	<script src="Colorpicker/js/colorpicker.js"></script>
 	<script src="Scripts/polymer.js"></script>
-	<script src="js.js"></script>
+	<script src="Scripts/js.js"></script>
 </body>
 </html>

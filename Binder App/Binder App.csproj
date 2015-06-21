@@ -43,7 +43,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="background.js" />
+    <Content Include="Scripts\background.js" />
     <Content Include="Colorpicker\css\colorpicker.css" />
     <Content Include="Colorpicker\css\layout.css" />
     <Content Include="Colorpicker\images\blank.gif" />
@@ -74,6 +74,7 @@
     <Content Include="Colorpicker\images\slider.png" />
     <Content Include="Colorpicker\js\colorpicker.js" />
     <Content Include="css.css" />
+    <Content Include="Gruntfile.js" />
     <Content Include="icon-large.png" />
     <Content Include="icon-small.png" />
     <Content Include="icon-supersmall.png" />
@@ -83,15 +84,15 @@
     <Content Include="Images\optionsimg.png" />
     <Content Include="Images\questionmark.png" />
     <Content Include="Images\settings.svg" />
-    <Content Include="js.js" />
+    <Content Include="Scripts\js.js" />
     <Content Include="polymer.css" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery.color-2.1.2.min.js" />
     <Content Include="Scripts\jquery.easing.js" />
     <Content Include="Scripts\polymer.js" />
-    <Content Include="searchWorker.js" />
+    <Content Include="Scripts\searchWorker.js" />
     <Content Include="window.html" />
-    <Content Include="worker.js" />
+    <Content Include="Scripts\worker.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" Condition="false" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="false and '$(VSToolsPath)' != ''" />
@@ -114,6 +115,9 @@
     <Content Include="manifest.json" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Segoe_UI.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="package.json" />
   </ItemGroup>
   <PropertyGroup>
     <LigerSharkChromeTargetsPath>$(BuildFolder)\ligershark.chrome.targets</LigerSharkChromeTargetsPath>

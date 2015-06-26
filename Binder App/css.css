@@ -631,3 +631,7 @@ paper-input.SEISUrl {
 	font-size: 250%;
 	font-weight: bold;
 }
+
+.aboutDev {
+	padding-bottom: 25px;
+}

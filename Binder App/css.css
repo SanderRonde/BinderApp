@@ -262,11 +262,12 @@ paper-checkbox {
 	width: 50px;
 	height: 50px;
 	border-radius: 25px;
-	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
-	margin-left: 612px;
-	margin-top: 557px;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	margin-left: 630px;
+	margin-top: 540px;
 	z-index: 5;
 	cursor:pointer;
+	background: #F44336;
 }
 
 	.fab paper-ripple {
@@ -278,6 +279,7 @@ paper-checkbox {
 	.fab svg {
 		margin-top: 10px;
 		margin-left: 10px;
+		fill: white;
 	}
 
 .mainCont {

@@ -62,8 +62,9 @@ a {
 }
 
 .inputAreaCont {
-	width:700px;
-	height:62px;
+	padding: 20px;
+	width: 700px;
+	height: 110px;
 }
 
 .inputArea {

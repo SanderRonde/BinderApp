@@ -52,7 +52,7 @@ a {
 	width: 100%;
 	height: 20px;
 	float: left;
-	background-color: white;
+	padding: 5px;
 }
 
 .fixed {
@@ -62,14 +62,25 @@ a {
 }
 
 .inputAreaCont {
-	width:700px;
-	height:62px;
+	padding: 20px;
+	width: 700px;
+	height: 110px;
+	background: white;
+	color: #3C92FF;
+	-webkit-box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.75);
 }
 
 .inputArea {
 	width:700px;
-	margin-top:32px;
+	margin-top:16px;
 	margin-left:30px;
+}
+
+.inputButton {
+	background: #3C92FF;
+	color: white;
 }
 
 .inputTxt {
@@ -86,33 +97,9 @@ html, body {
 	width:700px;
 }
 
-.closeButton {
-	margin-left:48px;
+.optionsButton {
+	width: 400px;
 }
-
-	.closeButton:hover {
-		background-color: #F44336;
-	}
-
-.optionsButton, .minimizeButton, .closeButton {
-	display:inline;
-	cursor: pointer;
-	-webkit-app-region: no-drag;
-	position:absolute;
-	padding:0 2px;
-}
-
-.minimizeButton {
-	margin-left: 24px;
-} 
-	
-.optionsButton, .minimizeButton {
-	opacity:1;
-}
-
-	.optionsButton:hover, .minimizeButton:hover {
-		background-color:rgb(170,170,170);
-	}
 
 .draggablearea {
 	-webkit-app-region: drag;
@@ -197,6 +184,11 @@ paper-input {
 	float: inherit;
 }
 
+paper-button {
+	background: white;
+	color: #3C92FF;
+}
+
 .goButton {
 	margin-left:20px;
 }
@@ -270,11 +262,12 @@ paper-checkbox {
 	width: 50px;
 	height: 50px;
 	border-radius: 25px;
-	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
-	margin-left: 612px;
-	margin-top: 557px;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	margin-left: 630px;
+	margin-top: 540px;
 	z-index: 5;
 	cursor:pointer;
+	background: #F44336;
 }
 
 	.fab paper-ripple {
@@ -286,6 +279,7 @@ paper-checkbox {
 	.fab svg {
 		margin-top: 10px;
 		margin-left: 10px;
+		fill: white;
 	}
 
 .mainCont {
@@ -638,4 +632,8 @@ paper-input.SEISUrl {
 .binderUpgradeTitle {
 	font-size: 250%;
 	font-weight: bold;
+}
+
+.aboutDev {
+	padding-bottom: 25px;
 }

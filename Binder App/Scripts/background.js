@@ -7,11 +7,10 @@ function launchBinder() {
 			top: 500
 		},
 		id: 'mainwindow',
-		minWidth: 500,
-		minHeight: 60,
+		minWidth: 520,
+		minHeight: 150,
 		maxWidth: 1000,
 		maxHeight: 755,
-		frame: 'none',
 		resizable: false
 	});
 }

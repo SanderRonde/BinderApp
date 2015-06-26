@@ -1777,13 +1777,6 @@ function bindListeners() {
 	$('.input').keypress(handleOnKeyPress);
 	$('.goButton').click(searchForBinding);
 	$('.optionsButton').click(toggleSettings);
-	$('.closeButton').click(function() {
-		app.resizeTo(500, 100);
-		app.close();
-	});
-	$('.minimizeButton').click(function() {
-		app.minimize();
-	});
 	$('.hideSettings').click(hideSettings);
 	$('.bindingInput, .rightInput').blur(function() {
 		saveInputs($(this).parent().parent().parent());

@@ -71,7 +71,7 @@ a {
 
 .inputArea {
 	width:700px;
-	margin-top:32px;
+	margin-top:16px;
 	margin-left:30px;
 }
 
@@ -94,33 +94,9 @@ html, body {
 	width:700px;
 }
 
-.closeButton {
-	margin-left:48px;
+.optionsButton {
+	width: 400px;
 }
-
-	.closeButton:hover {
-		background-color: #F44336;
-	}
-
-.optionsButton, .minimizeButton, .closeButton {
-	display:inline;
-	cursor: pointer;
-	-webkit-app-region: no-drag;
-	position:absolute;
-	padding:0 2px;
-}
-
-.minimizeButton {
-	margin-left: 24px;
-} 
-	
-.optionsButton, .minimizeButton {
-	opacity:1;
-}
-
-	.optionsButton:hover, .minimizeButton:hover {
-		background-color:rgb(170,170,170);
-	}
 
 .draggablearea {
 	-webkit-app-region: drag;

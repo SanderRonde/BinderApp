@@ -11,7 +11,6 @@ function launchBinder() {
 		minHeight: 150,
 		maxWidth: 1000,
 		maxHeight: 755,
-		frame: 'none',
 		resizable: false
 	});
 }

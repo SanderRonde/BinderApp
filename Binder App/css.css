@@ -184,6 +184,11 @@ paper-input {
 	float: inherit;
 }
 
+paper-button {
+	background: white;
+	color: #3C92FF;
+}
+
 .goButton {
 	margin-left:20px;
 }

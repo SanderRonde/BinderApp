@@ -48,11 +48,11 @@
 			taskName: {
 				options: {
 					position: 'top',
-					banner: '/*Original can be found at https://github.com/BarryBamibal/BinderApp*/',
+					banner: '/*Original can be found at https://github.com/BarryBamibal/BinderApp */',
 					linebreak: true
 				},
 				files: {
-					src: ['build/Scripts/background.js','build/Scripts/js.js','build/Scripts/polymer.js','build/Scripts/searchWorker.js','build/Scripts/worker.js','build/css.css','build/polymer.css','build/window.html']
+					src: ['build/Scripts/background.js','build/Scripts/js.js','build/Scripts/polymer.js','build/Scripts/searchWorker.js','build/Scripts/worker.js','build/css.css','build/polymer.css']
 				}
 			}
 		}

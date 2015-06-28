@@ -1,4 +1,3 @@
-<!--Original can be found at https://github.com/BarryBamibal/BinderApp*/-->
 <html>
 <head>
 	<link rel="stylesheet" media="screen" type="text/css" href="Colorpicker/css/colorpicker.css" />
@@ -11,7 +10,7 @@
 <body>
 	<div class="mainCont">
 		<div class="fixed">
-			<div class="topbar">
+			<div class="topbar titleBarColor">
 				<div class="draggablearea"></div>
 				<div class="optionsButton">
 					<img width="20" height="20" src="Images/settings.svg">
@@ -38,7 +37,6 @@
 					<paper-button raised class="hideSettings"><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Hide Binder Settings</div></paper-ripple><paper-shadow> <div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>
 				</div>
 			</div>
-			<hr>
 			<div class="firstTimeContainer">
 				<div class="firstTimeTitle">
 					Welcome to Binder
@@ -47,9 +45,89 @@
 					Binder is an app designed to make your browsing experience lightning-fast.
 					Whenever you want to open a website, you don't want to type in the entire URL, you simply want to go to the website you have in mind. That one song you listen to a lot on youtube? You don't want to have to go to youtube and type that in, you want to type in the title and go there. Well now you can with Binder. <br><br>
 					You simply type in a word you associate with the website you want to open, and you go there. There's also the possibility to open multiple websites at once (say they are bound to the binding "work"), and the ability to have multiple bindings open the same websites. You can even search any website you want right from this app.<br><br>
+					<div class="firstTimeThemes">
+						<div class="chooseThemeTxt bigTxt">Choose a theme:</div>
+						<div class="theme blueTheme">
+							<div class="themeTitleBar"></div>
+							<div class="themeBody">
+								<paper-button class="themeButton" raised>
+									<paper-ripple>
+										<div class="bg"></div>
+										<div class="waves"></div>
+										<div class="button-content themeTxt">Blue</div>
+									</paper-ripple>
+									<paper-shadow>
+										<div class="shadow-bot"></div>
+										<div class="themeShadow"></div>
+									</paper-shadow>
+									<span class="themeColorsJSON">{"name":"blue","title": "FFFFFF","bg":"3C92FF","shadow":"rgba(255,255,255,0.37)","text":"FFFFFF"}</span>
+								</paper-button>
+							</div>
+						</div>
+						<div class="theme blackTheme">
+							<div class="themeTitleBar"></div>
+							<div class="themeBody">
+								<paper-button class="themeButton" raised>
+									<paper-ripple>
+										<div class="bg"></div>
+										<div class="waves"></div>
+										<div class="button-content themeTxt">Black</div>
+									</paper-ripple>
+									<paper-shadow>
+										<div class="shadow-bot"></div>
+										<div class="themeShadow"></div>
+									</paper-shadow>
+									<span class="themeColorsJSON">{"name":"black","title": "FFFFFF","bg":"000000","shadow":"rgba(0,0,0,0.37)","text":"FFFFFF"}</span>
+								</paper-button>
+							</div>
+						</div>
+						<div class="theme whiteTheme">
+							<div class="themeTitleBar"></div>
+							<div class="themeBody">
+								<paper-button class="themeButton" raised>
+									<paper-ripple>
+										<div class="bg"></div>
+										<div class="waves"></div>
+										<div class="button-content themeTxt">White</div>
+									</paper-ripple>
+									<paper-shadow>
+										<div class="shadow-bot"></div>
+										<div class="themeShadow"></div>
+									</paper-shadow>
+									<span class="themeColorsJSON">{"name":"white","title": "FFFFFF","bg":"FFFFFF","shadow":"rgba(0,0,0,0.37)","text":"000000"}</span>
+								</paper-button>
+							</div>
+						</div>
+						<div class="theme redTheme">
+							<div class="themeTitleBar"></div>
+							<div class="themeBody">
+								<paper-button class="themeButton" raised>
+									<paper-ripple>
+										<div class="bg"></div>
+										<div class="waves"></div>
+										<div class="button-content themeTxt">Red</div>
+									</paper-ripple>
+									<paper-shadow>
+										<div class="shadow-bot"></div>
+										<div class="themeShadow"></div>
+									</paper-shadow>
+									<span class="themeColorsJSON">{"name":"red","title": "FFFFFF","bg":"FF0000","shadow":"rgba(0,0,0,0.37)","text":"FFFFFF"}</span>
+								</paper-button>
+							</div>
+						</div>
+					</div>
 					<div class="navFromFirstTime">
-						<paper-button class="toSettingsFromFirstTime" raised><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Go to settings page</div></paper-ripple><paper-shadow> <div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>
-						<paper-button raised class="hideThis"><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Hide this page</div></paper-ripple><paper-shadow> <div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>
+						<paper-button class="toSettingsFromFirstTime" raised>
+							<paper-ripple>
+								<div class="bg"></div>
+								<div class="waves"></div>
+								<div class="button-content">Go to settings page</div>
+							</paper-ripple>
+							<paper-shadow>
+								<div class="shadow-bot"></div>
+								<div class="shadow-top"></div>
+							</paper-shadow>
+						</paper-button>
 					</div>
 					<br>
 					Use the fields below to input your first binding(s).<br>
@@ -289,7 +367,7 @@
 				</div>
 			</div>
 			<div class="options">
-				<div class="fab bodyColor">
+				<div class="fab">
 					<paper-ripple>
 						<div class="bg"></div>
 						<div class="waves"></div>
@@ -298,15 +376,86 @@
 						</svg>
 					</paper-ripple>
 				</div>
-				<div class="optionsHeader">
+				<div class="optionsHeader bigTxt">
 					Options for Binder
 				</div>
 				<div class="optionsIntro">
-					Use the left boxes to choose a Binding you want linked to a certain URL. You can seperate multiple URL's with commas. One thing to keep in mind is that certain websites will not work without inserting https://www. in front of them, if you visit the website often your browser will most likely already fill this in for you, but keep this in mind if a website will not work, i recommend to simply copy the URL from the page and you're always good to go.<br />
-					Your Bindings should in theory sync across all devices on which you are logged in with your Google account across google storage sync. This does however not always work. In that case use the import/export functions below.
-
+					Use the left boxes to choose a Binding you want linked to a certain URL. You can seperate multiple URL's with commas.
+					Your Bindings should sync across all devices on which you are logged in with your Google account across google storage. This does however not always work. In that case use the import/export functions below.
 				</div>
-				<br><br>
+			<br><br>
+			<div class="chooseTheme">
+				<div class="bigTxt">Choose a theme:</div>
+				<div class="theme blueTheme">
+					<div class="themeTitleBar"></div>
+					<div class="themeBody">
+						<paper-button class="themeButton" raised>
+							<paper-ripple>
+								<div class="bg"></div>
+								<div class="waves"></div>
+								<div class="button-content themeTxt">Blue</div>
+							</paper-ripple>
+							<paper-shadow>
+								<div class="shadow-bot"></div>
+								<div class="themeShadow"></div>
+							</paper-shadow>
+							<span class="themeColorsJSON">{"name":"blue","title": "FFFFFF","bg":"3C92FF","shadow":"rgba(255,255,255,0.37)","text":"FFFFFF"}</span>
+						</paper-button>
+					</div>
+				</div>
+				<div class="theme blackTheme">
+					<div class="themeTitleBar"></div>
+					<div class="themeBody">
+						<paper-button class="themeButton" raised>
+							<paper-ripple>
+								<div class="bg"></div>
+								<div class="waves"></div>
+								<div class="button-content themeTxt">Black</div>
+							</paper-ripple>
+							<paper-shadow>
+								<div class="shadow-bot"></div>
+								<div class="themeShadow"></div>
+							</paper-shadow>
+							<span class="themeColorsJSON">{"name":"black","title": "FFFFFF","bg":"000000","shadow":"rgba(0,0,0,0.37)","text":"FFFFFF"}</span>
+						</paper-button>
+					</div>
+				</div>
+				<div class="theme whiteTheme">
+					<div class="themeTitleBar"></div>
+					<div class="themeBody">
+						<paper-button class="themeButton" raised>
+							<paper-ripple>
+								<div class="bg"></div>
+								<div class="waves"></div>
+								<div class="button-content themeTxt">White</div>
+							</paper-ripple>
+							<paper-shadow>
+								<div class="shadow-bot"></div>
+								<div class="themeShadow"></div>
+							</paper-shadow>
+							<span class="themeColorsJSON">{"name":"white","title": "FFFFFF","bg":"FFFFFF","shadow":"rgba(0,0,0,0.37)","text":"000000"}</span>
+						</paper-button>
+					</div>
+				</div>
+				<div class="theme redTheme">
+					<div class="themeTitleBar"></div>
+					<div class="themeBody">
+						<paper-button class="themeButton" raised>
+							<paper-ripple>
+								<div class="bg"></div>
+								<div class="waves"></div>
+								<div class="button-content themeTxt">Red</div>
+							</paper-ripple>
+							<paper-shadow>
+								<div class="shadow-bot"></div>
+								<div class="themeShadow"></div>
+							</paper-shadow>
+							<span class="themeColorsJSON">{"name":"red","title": "FFFFFF","bg":"FF0000","shadow":"rgba(0,0,0,0.37)","text":"FFFFFF"}</span>
+						</paper-button>
+					</div>
+				</div>
+			</div>
+			<br/><br/>
 				<div class="colorChange">
 					Change the background-color of the app in general.
 					<input class="colorPickInput bgColor">
@@ -316,6 +465,9 @@
 					<br><br>
 					Change the color of the text
 					<input class="colorPickInput textColor">
+					<br/><br/>
+					Change the color of the shadow
+					<input class="colorPickInput shadowColor"/>
 				</div>
 				<br><br>
 				<checkbox-text>
@@ -817,15 +969,60 @@
 				<hr />
 				<div class="changeLog">
 					<div class="bigTxt">Changelog</div>
-					This is the changelog, starting at version 2.0 since the previous changes are not really relevant anymore after this change (full rewrite)
-					<br /><br />
+					This is the changelog. Starting at version 2.0 since the previous changes are not really relevant anymore after this change (full rewrite)
+					<br/>
+					2.1
+					<ul>
+						<li>
+							Huge performance increase when loading the options page. Also huge performance increase on any inputs/buttons altogether, you will actually see the animation now.
+						</li>
+						<li>
+							The bindings will no longer be loaded unnessecarily when re-opening the options page after closing it.
+						</li>
+						<li>
+							Performance increase when importing search bindings and searching through them.
+						</li>
+						<li>
+							Changed the text a bit, took out useless sentences.
+						</li>
+						<li>
+							Added a theme option with some preset themes.
+						</li>
+						<li>
+							Changed the horizontal line seperating the options from the input at the top to shadow.
+						</li>
+						<li>
+							Changed the floating action button's color scheme, background-color is equal to the text-color of the page and the + is the color of the page's background.
+						</li>
+						<li>
+							Added bitcoin address.
+						</li>
+						<li>
+							Pressing escape now exits the application (only if you have the primary input in focus).
+						</li>
+						<li>
+							Added the possibilty to change the app's shadow's color.
+						</li>
+						<li>
+							Fixed a bug where pressing the cogwheel when already on the settings page only reloaded the page and did not toggle the settings page (hide it).
+						</li>
+						<li>
+							Every color chooser now has a border to show you where it is instead of only the background one.
+						</li>
+						<li>
+							Made any functions executed before the settings object is checked for errors run in a try catch function to prevent the app from breaking. If they fail they are re-run after the settings are validated.
+						</li>
+					</ul>
+					Thanks to <a href="https://github.com/JaspervanRiet" target="_blank">Jasper van Riet</a> for the help with the interface changes for this update.
+					<br/><br/>
+					<br />
 					2.0.5
 					<ul>
 						<li>
 							Fixed the "this item can be found at github-....." at the top of the app
 						</li>
 					</ul>
-					<br /><br />
+					<br />
 					2.0.4
 					<ul>
 						<li>
@@ -835,21 +1032,21 @@
 							Minified a few more files and changed structure
 						</li>
 					</ul>
-					<br /><br />
+					<br />
 					2.0.3
 					<ul>
 						<li>
 							Fixed a bug that made all inputs in the application change value on doing a search binding
 						</li>
 					</ul>
-					<br /><br />
+					<br />
 					2.0.2
 					<ul>
 						<li>
 							Fixed a bug that caused URL's without http:// in front of them to be invalid and them not being opened
 						</li>
 					</ul>
-					<br /><br />
+					<br />
 					2.0.1
 					<ul>
 						<li>
@@ -859,7 +1056,7 @@
 							Fixed the input width on adding a new input field with the "Add Input" button
 						</li>
 					</ul>
-					<br /><br />
+					<br />
 					2.0
 					<ul>
 						<li>
@@ -880,9 +1077,12 @@
 				<hr />
 				<div class="aboutDev">
 					<div class="bigTxt">Contact</div>
-					If you find any bugs or just want to talk to me about something please email me at <a href="mailto:awsdfgvhbjn@gmail.com" target="_blank">awsdfgvhbjn@gmail.com</a>.<br>
-					You can also place the issues on GitHub or simply check out the repo at <a href="https://github.com/BarryBamibal/BinderApp">https://github.com/BarryBamibal/BinderApp</a>.<br />
-					If you want to donate to me via paypal, you can do so to the e-mail sander.ronde@hotmail.com
+					<div class="aboutDevTxt">
+						If you find any bugs or just want to talk to me about something please email me at <a href="mailto:awsdfgvhbjn@gmail.com" target="_blank">awsdfgvhbjn@gmail.com</a>.<br>
+						You can also place the issues on GitHub or simply check out the repo at <a target="_blank" href="https://github.com/BarryBamibal/BinderApp">https://github.com/BarryBamibal/BinderApp</a>.<br />
+						If you want to donate to me via paypal, you can do so to the e-mail sander
+						.ronde@hotmail.com or with bitcoin to 15cApSXHyiVTXVHzj3VZMk95Nropk8ijnB
+					</div>
 				</div>
 				<br /><br />
 			</div>

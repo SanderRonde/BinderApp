@@ -8,7 +8,7 @@ var keyBindingsToSetNum = [];
 var keyBindingCallback = function () {
 };
 var searchEngineImportExpanded = false;
-var searchWorker = undefined;
+var searchWorker = null;
 
 function isset(dataToCheck) {
 	if (dataToCheck === undefined || dataToCheck === null) {
@@ -63,9 +63,7 @@ function getAllKeyBindings(callback) {
 }
 
 function hidePopup() {
-	if (searchWorker !== undefined) {
-		searchWorker.terminate();
-	}
+	searchWorker && searchWorker.terminate();
 	$('.overlay, .overlay2').animate({
 		opacity: 0
 	}, 200, 'easeInCubic');
@@ -781,7 +779,7 @@ function simpleAddInputField(sourceElement) {
 	removeButton.css('margin-left', '71px');
 	addInputOnClicks(leftInput, rightInput, removeButton);
 	pushBindingToData('', '', '');
-	bindstuff(sourceElement);
+	bindstuff(input);
 }
 
 function addInputField(sourceElement, firstInputVal, secondInputVal, smallerWidth, shortcutIndex) {
@@ -801,7 +799,7 @@ function addInputField(sourceElement, firstInputVal, secondInputVal, smallerWidt
 	addInputOnClicks(leftInput, rightInput, removeButton, shortcutButton, shortcutIndex);
 	fixSpacingsOnInputs(removeButton, shortcutIndex, smallerWidth, rightInput);
 
-	bindstuff(sourceElement);
+	bindstuff(input);
 }
 
 function firstRun() {
@@ -811,8 +809,10 @@ function firstRun() {
 		"colors": {
 			"bg": '#3C92FF',
 			"title": '#FFFFFF',
-			"text": '#FFFFFF'
+			"text": '#FFFFFF',
+			"shadow": 'rgba(0,0,0,0.37)'
 		},
+		"theme": 'blue',
 		"bindings": [''],
 		"websites": [''],
 		"shortcuts": [''],
@@ -907,7 +907,6 @@ function searchForBinding() {
 				var websites = settings.websites;
 				var bindingSplit;
 				for (var i = 0; i < bindings.length; i++) {
-					bindingSplit = [];
 					bindingSplit = bindings[i].split(',');
 					for (var j = 0; j < bindingSplit.length; j++) {
 						checkBinding(input, bindingSplit[j], websites[i]);
@@ -924,11 +923,21 @@ function handleOnKeyPress(e) {
 	}
 }
 
+function handleOnKeyDown(e) {
+	if (e.keyCode === 27) {
+		app.resizeTo(500, 100);
+		app.close();
+	}
+}
+
 function showSettings() {
 	$('.hideSettings').css('display', 'inline-block');
 	$('.draggablearea').css('width', '628px');
+	highlightCorrectTheme();
 	app.resizeTo(700, 755);
-	loadBindings();
+	if ($('.bindingsContainer').html() === '') {
+		loadBindings();
+	}
 }
 
 function hideSettings() {
@@ -937,7 +946,7 @@ function hideSettings() {
 }
 
 function toggleSettings(show) {
-	if (show) {
+	if (show === true) {
 		showSettings();
 	}
 	else {
@@ -952,38 +961,77 @@ function toggleSettings(show) {
 
 function setColors(change, color) {
 	color = '#' + color;
+	var bgColorsSplit;
+	var bgR;
+	var bgG;
+	var bgB;
+	var bgOpposite;
 	switch (change) {
 		case 'bg':
-			var bgColorsSplit = color.split('#')[1];
-			var bgR = parseInt(bgColorsSplit.slice(0, 1), 16) * 16 + parseInt(bgColorsSplit.slice(1, 2), 16);
-			var bgG = parseInt(bgColorsSplit.slice(2, 3), 16) * 16 + parseInt(bgColorsSplit.slice(3, 4), 16);
-			var bgB = parseInt(bgColorsSplit.slice(4, 5), 16) * 16 + parseInt(bgColorsSplit.slice(5, 6), 16);
-			var bgOpposite = 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
-			$('.bgColor').css('border', '2px solid ' + bgOpposite);
-			$('.bgColor').css('background-color', color).css('color', color);
+			bgColorsSplit = color.split('#')[1];
+			bgR = parseInt(bgColorsSplit.slice(0, 1), 16) * 16 + parseInt(bgColorsSplit.slice(1, 2), 16);
+			bgG = parseInt(bgColorsSplit.slice(2, 3), 16) * 16 + parseInt(bgColorsSplit.slice(3, 4), 16);
+			bgB = parseInt(bgColorsSplit.slice(4, 5), 16) * 16 + parseInt(bgColorsSplit.slice(5, 6), 16);
+			bgOpposite = 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
+			$('.bgColor')
+				.css('border', '2px solid ' + bgOpposite)
+				.css('background-color', color)
+				.css('color', color);
 			$('.customColorBg').remove();
 			$('<style class="customColorBg" type="text/css">\
 body, .bodyColor { ' +
 					'background-color: ' + color + ';' +
 					'}' +
-					' </style>')
+					'.fab { fill: ' + color + '; }' +
+					'</style>')
 				.appendTo('head');
 			break;
 		case 'title':
-			$('.titleColor').css('background-color', color).css('color', color);
+			bgColorsSplit = color.split('#')[1];
+			bgR = parseInt(bgColorsSplit.slice(0, 1), 16) * 16 + parseInt(bgColorsSplit.slice(1, 2), 16);
+			bgG = parseInt(bgColorsSplit.slice(2, 3), 16) * 16 + parseInt(bgColorsSplit.slice(3, 4), 16);
+			bgB = parseInt(bgColorsSplit.slice(4, 5), 16) * 16 + parseInt(bgColorsSplit.slice(5, 6), 16);
+			bgOpposite = 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
+			$('.titleColor')
+				.css('border', '2px solid ' + bgOpposite)
+				.css('background-color', color)
+				.css('color', color);
 			$('.customColorTitle').remove();
 			$('<style class="customColorTitle" type="text/css">\
-.topbar { background-color: ' + color + '; }</style>')
+.titleBarColor { background-color: ' + color + '; }</style>')
 				.appendTo('head');
 			break;
 		case 'text':
-			$('.textColor').css('background-color', color).css('color', color);
+			bgColorsSplit = color.split('#')[1];
+			bgR = parseInt(bgColorsSplit.slice(0, 1), 16) * 16 + parseInt(bgColorsSplit.slice(1, 2), 16);
+			bgG = parseInt(bgColorsSplit.slice(2, 3), 16) * 16 + parseInt(bgColorsSplit.slice(3, 4), 16);
+			bgB = parseInt(bgColorsSplit.slice(4, 5), 16) * 16 + parseInt(bgColorsSplit.slice(5, 6), 16);
+			bgOpposite = 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
+			$('.textColor')
+				.css('border', '2px solid ' + bgOpposite)
+				.css('background-color', color)
+				.css('color', color);
 			$('.customColorTxt').remove();
-			$('<style class="customColorTxt" type="text/css">\
-body { color: ' + color + '; fill: ' + color + '; }</style>\
-paper-input-decorator .focused-underline { background-color:#FFFFFF; }</style>')
+			$('<style class="customColorTxt" type="text/css">' +
+'body { color: ' + color + '; fill: ' + color + '; }' + 
+'paper-input-decorator .focused-underline, .fab { background-color: ' + color + '; }</style>')
 				.appendTo('head');
 			break;
+		case 'shadow':
+			bgColorsSplit = color.split('#')[1];
+			bgR = parseInt(bgColorsSplit.slice(0, 1), 16) * 16 + parseInt(bgColorsSplit.slice(1, 2), 16);
+			bgG = parseInt(bgColorsSplit.slice(2, 3), 16) * 16 + parseInt(bgColorsSplit.slice(3, 4), 16);
+			bgB = parseInt(bgColorsSplit.slice(4, 5), 16) * 16 + parseInt(bgColorsSplit.slice(5, 6), 16);
+			bgOpposite = 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
+			$('.shadowColor')
+				.css('border', '2px solid ' + bgOpposite)
+				.css('background-color', color)
+				.css('color', color);
+			$('.customColorShadow').remove();
+			$('<style class="customColorShadow" type="text/css">' +
+					'paper-shadow .shadow-top, .fab, .theme { box-shadow: 0 1px 4px 0 rgba(' + bgR + ', ' + bgG + ', ' + bgB + ', 0.37); }' + 
+					'.inputAreaCont { box-shadow: 0 1px 15px 0 rgba(' + bgR + ', ' + bgG + ',' + bgB + ', 0.75); } </style>')
+				.appendTo('head');
 	}
 }
 
@@ -1002,7 +1050,7 @@ function toHex(n) {
 }
 
 function saveColors(change, color) {
-	color = '#' + color;
+	color = (change === 'shadow' ? color : '#' + color);
 	var colors = settings.colors;
 	colors[change] = color;
 	updateSettings({ "colors": colors });
@@ -1121,7 +1169,8 @@ function checkAndUploadSettings(obj, alwaysSave) {
 			obj.colors = {
 				"bg": '#3C92FF',
 				"title": '#FFFFFF',
-				"text": '#FFFFFF'
+				"text": '#FFFFFF',
+				"shadow": 'rgba(0,0,0,0.37)'
 			};
 		}
 		if (!isset(obj.bindings)) {
@@ -1294,12 +1343,38 @@ function exportBindings() {
 function updateInputs() {
 	$('.customColorBg, .customColorTitle, .customColorText').remove();
 	if (settings.colors !== undefined) {
+		//Calculate opposites
+		var opposites = [];
+		var bgR, bgG, bgB, bgColorsSplit;
+		var colors = [settings.colors.bg, settings.colors.title, settings.colors.text];
+		for (var i = 0; i < 3; i++) {
+			bgColorsSplit = colors[i].split('#')[1];
+			bgR = parseInt(bgColorsSplit.slice(0, 1), 16) * 16 + parseInt(bgColorsSplit.slice(1, 2), 16);
+			bgG = parseInt(bgColorsSplit.slice(2, 3), 16) * 16 + parseInt(bgColorsSplit.slice(3, 4), 16);
+			bgB = parseInt(bgColorsSplit.slice(4, 5), 16) * 16 + parseInt(bgColorsSplit.slice(5, 6), 16);
+			opposites[i] = 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
+		}
+
+		var bgOpposite = opposites[0];
+		var titleBarOpposite = opposites[1];
+		var textOpposite = opposites[2];
+
+		var shadowOpposite;
+		bgColorsSplit = settings.colors.shadow.split('(')[1];
+		bgR = parseInt(bgColorsSplit.split(',')[0], 10);
+		bgG = parseInt(bgColorsSplit.split(',')[1], 10);
+		bgB = parseInt(bgColorsSplit.split(',')[2], 10);
+		shadowOpposite = 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
+
 		$('.bgColor')
 			.css('background-color', settings.colors.bg)
 			.css('color', settings.colors.bg)
+			.css('border', '2px solid ' + bgOpposite)
 			.ColorPicker({
 				color: settings.colors.bg,
-				onChange: function(hsb, hex) {
+				onChange: function (hsb, hex) {
+					updateSettings('theme', 'custom');
+					$('.theme').css('border', '4px solid transparent');
 					setColors('bg', hex);
 				},
 				onHide: function(hsb) {
@@ -1314,24 +1389,22 @@ function updateInputs() {
 					saveColors('bg', hexColor);
 				}
 			});
-		var bgColorsSplit = settings.colors.bg.split('#')[1];
-		var bgR = parseInt(bgColorsSplit.slice(0, 1), 16) * 16 + parseInt(bgColorsSplit.slice(1, 2), 16);
-		var bgG = parseInt(bgColorsSplit.slice(2, 3), 16) * 16 + parseInt(bgColorsSplit.slice(3, 4), 16);
-		var bgB = parseInt(bgColorsSplit.slice(4, 5), 16) * 16 + parseInt(bgColorsSplit.slice(5, 6), 16);
-		var bgOpposite = 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
-		$('.bgColor').css('border', '2px solid ' + bgOpposite);
 		$('<style class="customColorBg" type="text/css">\
 body, .bodyColor { ' +
-					'background-color: ' + settings.colors.bg + ';' +
-					'}' +
-					' </style>')
+				'background-color: ' + settings.colors.bg + ';' +
+				'}' +
+				'.fab { fill: ' + settings.colors.bg + ';}' +
+				'</style>')
 			.appendTo('head');
 		$('.titleColor')
 			.css('background-color', settings.colors.title)
 			.css('color', settings.colors.title)
+			.css('border', '2px solid ' + titleBarOpposite)
 			.ColorPicker({
 				color: settings.colors.title,
-				onChange: function(hsb, hex) {
+				onChange: function (hsb, hex) {
+					updateSettings('theme', 'custom');
+					$('.theme').css('border', '4px solid transparent');
 					setColors('title', hex);
 				},
 				onHide: function(hsb) {
@@ -1347,14 +1420,17 @@ body, .bodyColor { ' +
 				}
 			});
 		$('<style class="customColorTitle" type="text/css">\
-.topbar { background-color: ' + settings.colors.title + '; }</style>')
-		.appendTo('head');
+.titleBarColor { background-color: ' + settings.colors.title + '; }</style>')
+			.appendTo('head');
 		$('.textColor')
 			.css('background-color', settings.colors.text)
 			.css('color', settings.colors.text)
+			.css('border', '2px solid ' + textOpposite)
 			.ColorPicker({
 				color: settings.colors.text,
-				onChange: function(hsb, hex) {
+				onChange: function (hsb, hex) {
+					updateSettings('theme', 'custom');
+					$('.theme').css('border', '4px solid transparent');
 					setColors('text', hex);
 				},
 				onHide: function(hsb) {
@@ -1369,21 +1445,47 @@ body, .bodyColor { ' +
 					saveColors('text', hexColor);
 				}
 			});
-		$('<style class="customColorTxt" type="text/css">\
-body { color: ' + settings.colors.text + '; fill: ' + settings.colors.text + '; }\
-paper-input-decorator .focused-underline { background-color:' + settings.colors.text + '; }</style>')
+		$('<style class="customColorTxt" type="text/css">' +
+				'body { color: ' + settings.colors.text + '; fill: ' + settings.colors.text + '; }' +
+				'paper-input-decorator .focused-underline, .fab { background-color:' + settings.colors.text + '; }</style>')
+			.appendTo('head');
+		var shadowBg = settings.colors.shadow.split('.')[0] + '.99)';
+		$('.shadowColor')
+			.css('background-color', shadowBg)
+			.css('color', shadowBg)
+			.css('border', '2px solid ' + shadowOpposite)
+			.ColorPicker({
+				color: settings.colors.shadow,
+				onChange: function (hsb, hex) {
+					updateSettings('theme', 'custom');
+					$('.theme').css('border', '4px solid transparent');
+					setColors('shadow', hex);
+				},
+				onHide: function(hsb) {
+					var rgbColor = $(hsb)
+						.children('.colorpicker_new_color')
+						.css('background-color');
+					var rgbaColor = 'rgba(' + rgbColor.split('rgb(')[1].split(')')[0] + ', 0.37)';
+					saveColors('shadow', rgbaColor);
+				}
+			});
+		$('<style class="customColorShadow" type="text/css">' +
+				'paper-shadow .shadow-top, .fab, .theme { box-shadow: 0 1px 4px 0 ' + settings.colors.shadow + '; } .inputAreaCont { box-shadow: 0 1px 15px 0 ' + settings.colors.shadow.split('.')[0] + '.75); }</style>')
 			.appendTo('head');
 	}
 	else {
 		$('.bgColor')
 			.css('background-color', '#3C92FF')
 			.css('color', '#3C92FF')
+			.css('border', '2px solid #FFAB3D')
 			.ColorPicker({
 				color: '#3C92FF',
 				onChange: function (hsb, hex) {
+					updateSettings('theme', 'custom');
+					$('.theme').css('border', '4px solid transparent');
 					setColors('bg', hex);
 				},
-				onHide: function (hsb) {
+				onHide: function(hsb) {
 					var rgbColor = $(hsb)
 						.children('.colorpicker_new_color')
 						.css('background-color');
@@ -1396,17 +1498,20 @@ paper-input-decorator .focused-underline { background-color:' + settings.colors.
 				}
 			});
 		$('<style class="customColorBg" type="text/css">\
-body, .bodyColor { background-color: ' + '#3C92FF' + '; }</style>')
+body, .bodyColor { background-color: #3C92FF; } .fab { fill: #3C92FF }</style>')
 			.appendTo('head');
 		$('.titleColor')
 			.css('background-color', '#FFFFFF')
 			.css('color', '#FFFFFF')
+			.css('border', '2px solid #000000')
 			.ColorPicker({
 				color: '#FFFFFF',
 				onChange: function (hsb, hex) {
+					updateSettings('theme', 'custom');
+					$('.theme').css('border', '4px solid transparent');
 					setColors('text', hex);
 				},
-				onHide: function (hsb) {
+				onHide: function(hsb) {
 					var rgbColor = $(hsb)
 						.children('.colorpicker_new_color')
 						.css('background-color');
@@ -1419,17 +1524,20 @@ body, .bodyColor { background-color: ' + '#3C92FF' + '; }</style>')
 				}
 			});
 		$('<style class="customColorTitle" type="text/css">\
-.topbar { background-color: ' + '#FFFFFF' + '; fill: #FFFFFF; }</style>')
-		.appendTo('head');
+.titleBarColor { background-color: #FFFFFF; fill: #FFFFFF; }</style>')
+			.appendTo('head');
 		$('.textColor')
 			.css('background-color', '#FFFFFF')
 			.css('color', '#FFFFFF')
+			.css('border', '2px solid #000000')
 			.ColorPicker({
 				color: '#FFFFFF',
 				onChange: function (hsb, hex) {
+					updateSettings('theme', 'custom');
+					$('.theme').css('border', '4px solid transparent');
 					setColors('text', hex);
 				},
-				onHide: function (hsb) {
+				onHide: function(hsb) {
 					var rgbColor = $(hsb)
 						.children('.colorpicker_new_color')
 						.css('background-color');
@@ -1441,9 +1549,31 @@ body, .bodyColor { background-color: ' + '#3C92FF' + '; }</style>')
 					saveColors('text', hexColor);
 				}
 			});
-		$('<style class="customColorTxt" type="text/css">\
-body { color: ' + '#FFFFFF' + '; fil: #FFFFFF; }\
-paper-input-decorator .focused-underline { background-color:#FFFFFF; }</style>')
+		$('<style class="customColorTxt" type="text/css">' +
+				'body { color: #FFFFFF; fil: #FFFFFF; }' +
+				'paper-input-decorator .focused-underline, .fab { background-color:#FFFFFF; }</style>')
+			.appendTo('head');
+		$('.shadowColor')
+			.css('background-color', '#FFFFFF')
+			.css('color', '#FFFFFF')
+			.css('border', '2px solid #FFFFFF')
+			.ColorPicker({
+				color: settings.colors.shadow,
+				onChange: function (hsb, hex) {
+					updateSettings('theme', 'custom');
+					$('.theme').css('border', '4px solid transparent');
+					setColors('shadow', hex);
+				},
+				onHide: function (hsb) {
+					var rgbColor = $(hsb)
+						.children('.colorpicker_new_color')
+						.css('background-color');
+					var rgbaColor = 'rgba(' + rgbColor.split('rgb(')[1].split(')')[0] + ', 0.37)';
+					saveColors('shadow', rgbaColor);
+				}
+			});
+		$('<style class="customColorShadow" type="text/css">' +
+				'paper-shadow .shadow-top, .fab, .theme { box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37); } .inputAreaCont { box-shadow: 0 1px 15px 0 rgba(0,0,0,0.75); }</style>')
 			.appendTo('head');
 	}
 	$('.superSearchCheckbox').attr('on', (settings.superSearch ? 'true' : 'false'));
@@ -1603,7 +1733,7 @@ function searchSearchBindings(searchEngines, el) {
 }
 
 function showSearchEnginesList(searchEngines) {
-	searchWorker = new Worker('Scripts/searchWorker.js');
+	searchWorker = searchWorker || new Worker('Scripts/searchWorker.js');
 	$('.foundSearchEnginesCont').remove();
 	var foundSearchEnginesCont = $('<div class="foundSearchEnginesCont"></div>')
 		.appendTo('.importSearchEngineCont');
@@ -1773,8 +1903,40 @@ function searchEngineImport() {
 	}, 500, 'easeOutCubic');
 }
 
+function applyTheme(e) {
+	var colors = JSON.parse($(e.target).next().html());
+	setColors('title', colors.title);
+	setColors('bg', colors.bg);
+	setColors('text', colors.text);
+	setColors('shadow', colors.shadow);
+	saveColors('title', colors.title);
+	saveColors('bg', colors.bg);
+	saveColors('text', colors.text);
+	saveColors('shadow', colors.shadow);
+	$('.theme').css('border', '4px solid transparent');
+	e.target.parentNode.parentNode.parentNode.style.border = '4px solid orange';
+	updateSettings('theme', colors.name);
+}
+
+function highlightCorrectTheme() {
+	switch (settings.theme) {
+		case 'blue':
+			$('.blueTheme').css('border', '4px solid orange');
+			break;
+		case 'black':
+			$('.blackTheme').css('border', '4px solid orange');
+			break;
+		case 'white':
+			$('.whiteTheme').css('border', '4px solid orange');
+			break;
+		case 'red':
+			$('.redTheme').css('border', '4px solid orange');
+			break;
+	}
+}
+
 function bindListeners() {
-	$('.input').keypress(handleOnKeyPress);
+	$('.input').keypress(handleOnKeyPress).keydown(handleOnKeyDown);
 	$('.goButton').click(searchForBinding);
 	$('.optionsButton').click(toggleSettings);
 	$('.closeButton').click(function() {
@@ -1838,6 +2000,7 @@ function bindListeners() {
 		$('.draggablearea').css('width', '428px');
 		app.resizeTo(500, 100);
 	});
+	$('.themeButton').click(applyTheme);
 }
 
 function upgradeBinderVersion() {
@@ -1904,8 +2067,13 @@ function main() {
 	bindstuff($('.input'));
 	app.focus();
 	$('.input').focus().click();
+	var repaintInputs = false;
 	setTimeout(function () {
-		updateInputs();
+		try {
+			updateInputs();
+		} catch (e) {
+			repaintInputs = true;
+		}
 		if (app.getBounds().width !== 500 || app.getBounds().height !== 100) {
 			app.resizeTo(500, 100);
 		}
@@ -1913,6 +2081,16 @@ function main() {
 	setTimeout(function () {
 		bindstuff();
 		checkAndUploadSettings(settings);
+		if (repaintInputs) {
+			settings.colors = {
+				"bg": '#3C92FF',
+				"title": '#FFFFFF',
+				"text": '#FFFFFF',
+				"shadow": 'rgba(0,0,0,0.37)'
+			};
+			storage.set(settings);
+			updateInputs();
+		}
 	}, 100);
 }
 

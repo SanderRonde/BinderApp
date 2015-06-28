@@ -67,6 +67,13 @@
 					src: ['build/window.html']
 				}
 			}
+		},
+		zip: {
+			'using-cwd': {
+				cwd: 'build/',
+				src: ['build/**'],
+				dest: 'Binder App.zip'
+			}
 		}
 	});
 
@@ -75,6 +82,7 @@
 	grunt.loadNpmTasks('grunt-contrib-htmlmin');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-banner');
+	grunt.loadNpmTasks('grunt-zip');
 
-	grunt.registerTask('build', ['htmlmin', 'minified','cssmin','copy','usebanner']);
+	grunt.registerTask('build', ['htmlmin', 'minified','cssmin','copy','usebanner','zip']);
 }

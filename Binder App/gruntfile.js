@@ -26,12 +26,14 @@
 				roundinPrecision: -1
 			},
 			targets: {
-				files: [{
-					expand: true,
-					src: ['css.css', 'polymer.css'],
-					dest: 'build/',
-					ext: '.css'
-				}]
+				files: [
+					{
+						expand: true,
+						src: ['css.css', 'polymer.css'],
+						dest: 'build/',
+						ext: '.css'
+					}
+				]
 			}
 		},
 		copy: {
@@ -45,14 +47,24 @@
 			}
 		},
 		usebanner: {
-			taskName: {
+			jsCssBanner: {
 				options: {
 					position: 'top',
 					banner: '/*Original can be found at https://github.com/BarryBamibal/BinderApp */',
 					linebreak: true
 				},
 				files: {
-					src: ['build/Scripts/background.js','build/Scripts/js.js','build/Scripts/polymer.js','build/Scripts/searchWorker.js','build/Scripts/worker.js','build/css.css','build/polymer.css']
+					src: ['build/Scripts/background.js', 'build/Scripts/js.js', 'build/Scripts/polymer.js', 'build/Scripts/searchWorker.js', 'build/Scripts/worker.js', 'build/css.css', 'build/polymer.css']
+				}
+			},
+			htmlBanner: {
+				options: {
+					position: 'top',
+					banner: '<!--Original can be found at https://github.com/BarryBamibal/BinderApp*/-->',
+					linebreak: true
+				},
+				files: {
+					src: ['build/window.html']
 				}
 			}
 		}

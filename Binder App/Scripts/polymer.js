@@ -17,7 +17,7 @@ function ripplestuff(element, e, circleornot) {
 		var cancelled = false;
 		var waveMaxRadius;
 		if (circleornot) {
-			if ($(element).parent().attr("class") === "addmemes" || $(element).parent().attr("class") === "acceptupload" || $(element).parent().attr("class") === "declineupload" || $(element).parent().attr("class") === "fab") {
+			if ($(element).parent().attr('class') === 'addmemes' || $(element).parent().attr('class') === 'acceptupload' || $(element).parent().attr('class') === 'declineupload' || $(element).parent().attr('class') === 'fab') {
 				waveMaxRadius = 19;
 			}
 			else {
@@ -96,13 +96,13 @@ function ripplestuff(element, e, circleornot) {
 			var dx = x - (ctx.containerWidth / 2);
 			var dy = y - (ctx.containerHeight / 2);
 
-			ctx.wc.style.webkitTransform = "translate3d(" + dx + "px," + dy + "px,0)";
-			ctx.wc.style.transform = "translate3d(" + dx + "px," + dy + "px,0)";
+			ctx.wc.style.webkitTransform = 'translate3d(' + dx + 'px,' + dy + 'px,0)';
+			ctx.wc.style.transform = 'translate3d(' + dx + 'px,' + dy + 'px,0)';
 
 			// 2d transform for safari because of border-radius and overflow:hidden clipping bug.
 			// https://bugs.webkit.org/show_bug.cgi?id=98538
-			ctx.wave.style.webkitTransform = "scale(" + s + "," + s + ")";
-			ctx.wave.style.transform = "scale3d(" + s + "," + s + ",1)";
+			ctx.wave.style.webkitTransform = 'scale(' + s + ',' + s + ')';
+			ctx.wave.style.transform = 'scale3d(' + s + ',' + s + ',1)';
 		}
 
 		//
@@ -112,21 +112,21 @@ function ripplestuff(element, e, circleornot) {
 			var elementStyle = window.getComputedStyle(elem);
 			var fgColor = elementStyle.color;
 
-			var inner = document.createElement("div");
+			var inner = document.createElement('div');
 			inner.style.backgroundColor = fgColor;
-			inner.classList.add("wave");
+			inner.classList.add('wave');
 
-			var outer = document.createElement("div");
-			outer.classList.add("wave-container");
+			var outer = document.createElement('div');
+			outer.classList.add('wave-container');
 			outer.appendChild(inner);
 
-			var container = $(elem).children(".waves")[0];
+			var container = $(elem).children('.waves')[0];
 			container.appendChild(outer);
 
-			$(elem).children(".bg").css("background-color", fgColor);
+			$(elem).children('.bg').css('background-color', fgColor);
 
 			var wave = {
-				bg: $(elem).children(".bg")[0],
+				bg: $(elem).children('.bg')[0],
 				wc: outer,
 				wave: inner,
 				waveColor: fgColor,
@@ -158,13 +158,13 @@ function ripplestuff(element, e, circleornot) {
 
 		function cssColorWithAlpha(cssColor, alpha) {
 			var parts = cssColor.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-			if (typeof alpha == "undefined") {
+			if (typeof alpha == 'undefined') {
 				alpha = 1;
 			}
 			if (!parts) {
-				return "rgba(255, 255, 255, " + alpha + ")";
+				return 'rgba(255, 255, 255, ' + alpha + ')';
 			}
-			return "rgba(" + parts[1] + ", " + parts[2] + ", " + parts[3] + ", " + alpha + ")";
+			return 'rgba(' + parts[1] + ', ' + parts[2] + ', ' + parts[3] + ', ' + alpha + ')';
 		}
 
 		function dist(p1, p2) {
@@ -203,8 +203,8 @@ function ripplestuff(element, e, circleornot) {
 			pixelDensity: 2,
 
 			eventDelegates: {
-				down: "downAction",
-				up: "upAction"
+				down: 'downAction',
+				up: 'upAction'
 			},
 
 			waves: [],
@@ -231,7 +231,7 @@ function ripplestuff(element, e, circleornot) {
 
 				wave.startPosition = { x: touchX, y: touchY };
 
-				if (elem.classList.contains("recenteringTouch")) {
+				if (elem.classList.contains('recenteringTouch')) {
 					wave.endPosition = { x: width / 2, y: height / 2 };
 					wave.slideDistance = dist(wave.startPosition, wave.endPosition);
 				}
@@ -241,10 +241,10 @@ function ripplestuff(element, e, circleornot) {
 				wave.maxRadius = distanceFromPointToFurthestCorner(wave.startPosition, { w: width, h: height });
 
 				// The wave is circular so constrain its container to 1:1
-				wave.wc.style.top = (wave.containerHeight - wave.containerSize) / 2 + "px";
-				wave.wc.style.left = (wave.containerWidth - wave.containerSize) / 2 + "px";
-				wave.wc.style.width = wave.containerSize + "px";
-				wave.wc.style.height = wave.containerSize + "px";
+				wave.wc.style.top = (wave.containerHeight - wave.containerSize) / 2 + 'px';
+				wave.wc.style.left = (wave.containerWidth - wave.containerSize) / 2 + 'px';
+				wave.wc.style.width = wave.containerSize + 'px';
+				wave.wc.style.height = wave.containerSize + 'px';
 
 				$(wave.wc).animate({
 					opacity: 0
@@ -356,7 +356,7 @@ function ripplestuff(element, e, circleornot) {
 
 				if (!this.waves.length && this._loop) {
 					// clear the background color
-					$(elem).children(".bg").css("background-color", null);
+					$(elem).children('.bg').css('background-color', null);
 					this._loop = null;
 				}
 			}
@@ -388,25 +388,25 @@ function changeInputTo(papersliderel, val) {
 		}
 	}
 	var val2;
-	if ($(this).attr("percentage")) {
-		val2 = val + "%";
+	if ($(this).attr('percentage')) {
+		val2 = val + '%';
 	}
 	else {
 		val2 = val;
 	}
 
 	$(papersliderel)
-		.attr("value", val)
-		.children("paper-input")
-		.children("paper-input-decorator")
-		.children("input")
-		.attr("value", val2);
+		.attr('value', val)
+		.children('paper-input')
+		.children('paper-input-decorator')
+		.children('input')
+		.attr('value', val2);
 
 }
 
 function switchKnobToPos(papersliderel, newpos, animate) {
 
-	var widthToVal = parseInt($(papersliderel).attr("max"), 10) / (parseInt($(papersliderel).css("width"), 10) - 70);
+	var widthToVal = parseInt($(papersliderel).attr('max'), 10) / (parseInt($(papersliderel).css('width'), 10) - 70);
 
 	//Work out new value
 	var newval = newpos * widthToVal;
@@ -414,9 +414,9 @@ function switchKnobToPos(papersliderel, newpos, animate) {
 	//Round new value to nearest whole number
 	newval = Math.round(newval);
 
-	if (newval > parseInt($(papersliderel).attr("max"), 10)) {
+	if (newval > parseInt($(papersliderel).attr('max'), 10)) {
 
-		changeToValue(papersliderel, parseInt($(papersliderel).attr("max"), 10), animate);
+		changeToValue(papersliderel, parseInt($(papersliderel).attr('max'), 10), animate);
 
 	}
 	else if (newval < 0) {
@@ -434,14 +434,14 @@ function switchKnobToPos(papersliderel, newpos, animate) {
 
 function changeToValue(papersliderel, val, animate) {
 
-	if (val > parseInt($(papersliderel).attr("max"), 10)) {
-		val = parseInt($(papersliderel).attr("max"), 10);
+	if (val > parseInt($(papersliderel).attr('max'), 10)) {
+		val = parseInt($(papersliderel).attr('max'), 10);
 	}
 	else if (val < 0) {
 		val = 0;
 	}
 
-	var widthToVal = parseInt($(papersliderel).attr("max"), 10) / (parseInt($(papersliderel).css("width"), 10) - 70);
+	var widthToVal = parseInt($(papersliderel).attr('max'), 10) / (parseInt($(papersliderel).css('width'), 10) - 70);
 
 	changeInputTo(papersliderel, Math.round(val));
 
@@ -449,18 +449,18 @@ function changeToValue(papersliderel, val, animate) {
 
 
 		$(papersliderel)
-			.children(".sliderContainer")
-			.children(".bar-container")
-			.children("paper-progress")
-			.children(".progressContainer")
-			.children(".progress")
+			.children('.sliderContainer')
+			.children('.bar-container')
+			.children('paper-progress')
+			.children('.progressContainer')
+			.children('.progress')
 			.animate({
 				width: val / widthToVal
 			}, 20);
 
 		$(papersliderel)
-			.children(".sliderContainer")
-			.children(".sliderKnob")
+			.children('.sliderContainer')
+			.children('.sliderKnob')
 			.animate({
 				left: val / widthToVal
 			}, 20);
@@ -469,103 +469,28 @@ function changeToValue(papersliderel, val, animate) {
 	else {
 
 		$(papersliderel)
-			.children(".sliderContainer")
-			.children(".bar-container")
-			.children("paper-progress")
-			.children(".progressContainer")
-			.children(".progress")
-			.css("width", val / widthToVal);
+			.children('.sliderContainer')
+			.children('.bar-container')
+			.children('paper-progress')
+			.children('.progressContainer')
+			.children('.progress')
+			.css('width', val / widthToVal);
 
 		$(papersliderel)
-			.children(".sliderContainer")
-			.children(".sliderKnob")
-			.css("left", val / widthToVal);
+			.children('.sliderContainer')
+			.children('.sliderKnob')
+			.css('left', val / widthToVal);
 
 	}
 
 }
-
-function updateslider(slider) {
-	changeToValue(slider[0], slider.attr("value"), false);
-}
-
-$("body").mousemove(function (e) {
-
-	$("paper-slider").each(function () {
-
-		if ($(this).attr("dragging") === "true") {
-
-			var newpos = e.clientX;
-			if (newpos > this.getBoundingClientRect().left + (parseInt($(this).css("width"), 10) - 70)) {
-
-				changeToValue(this, parseInt($(this).attr("max"), 10));
-
-			}
-			else if (newpos < this.getBoundingClientRect().left) {
-
-				changeToValue(this, 0);
-
-			}
-			else {
-
-				switchKnobToPos(this, e.clientX - $(this).children(".sliderContainer").children(".bar-container")[0].getBoundingClientRect().left, false);
-
-			}
-
-		}
-
-	});
-
-})
-.mouseup(function () {
-
-	$(".sliderKnob").each(function () {
-
-		$(this)
-			.children(".sliderKnobInner")
-			.animate({
-				width: "12px",
-				height: "12px"
-			}, 100);
-
-	});
-
-	$("paper-slider").each(function () {
-
-		$(this).attr("dragging", false);
-
-		if ($(this).attr("value") !== "-1") {
-
-			//Switch the knob to the closest position
-			changeToValue(this, Math.round(parseInt($(this).attr("value"), 10)), false);
-
-		}
-
-	});
-
-})
-.click(function () {
-
-	$("paper-input").each(function () {
-
-		var focusedUnderline = $(this).children("paper-input-decorator").children(".underline").children(".focusedUnderline");
-
-		if (focusedUnderline.css("width") !== "0px" && focusedUnderline.css("width") !== "0" && focusedUnderline.css("width") !== 0) {
-			focusedUnderline.stop().animate({
-				width: "0px"
-			}, 300);
-		}
-
-	});
-
-});
 
 function paperButtonMousedown(e) {
 	/// <summary>
 	/// The onclick for the paper-button
 	/// </summary>
 	/// <param name="e">Mouse-down-event</param>
-	$(this).children("paper-ripple").each(function () {
+	$(this).children('paper-ripple').each(function () {
 		ripplestuff(this, e, false);
 	});
 }
@@ -574,98 +499,60 @@ function paperCheckboxMousedown() {
 	/// <summary>
 	/// The onmousedown handler for the paper-checkbox
 	/// </summary>
-	if ($(this).attr("on") === "true") {
+	if ($(this).attr('on') === 'true') {
 		$(this)
-			.children(".checkboxContainer")
-			.children("paper-ripple")
-			.css("color", "#5a5f5a");
+			.children('.checkboxContainer')
+			.children('paper-ripple')
+			.css('color', '#5a5f5a');
 		$(this)
-			.children(".checkboxcontainer")
-			.children(".checkbox")
+			.children('.checkboxcontainer')
+			.children('.checkbox')
 			.animate({
-				backgroundColor: "rgba(0,0,0,0)",
-				borderColor: "#5a5a5a"
+				backgroundColor: 'rgba(0,0,0,0)',
+				borderColor: '#5a5a5a'
 			}, 50);
 		$(this)
-			.children(".checkboxcontainer")
-			.children(".checkbox")
-			.children(".checkmark")
-			.css("display", "none");
-		$(this).attr("on", "false");
+			.children('.checkboxcontainer')
+			.children('.checkbox')
+			.children('.checkmark')
+			.css('display', 'none');
+		$(this).attr('on', 'false');
 	}
 	else {
 		$(this)
-			.children(".checkboxContainer")
-			.children("paper-ripple")
-			.css("color", "#B2DFDB");
+			.children('.checkboxContainer')
+			.children('paper-ripple')
+			.css('color', '#B2DFDB');
 		$(this)
-			.children(".checkboxcontainer")
-			.children(".checkbox")
+			.children('.checkboxcontainer')
+			.children('.checkbox')
 			.animate({
-				backgroundColor: "#009688",
-				borderColor: "#009688"
+				backgroundColor: '#009688',
+				borderColor: '#009688'
 			}, 50);
 		$(this)
-			.children(".checkboxcontainer")
-			.children(".checkbox")
-			.children(".checkmark")
-			.css("display", "block")
-			.css("-webkit-animation", "checkmark-expand 140ms ease-out forwards");
-		$(this).attr("on", "true");
+			.children('.checkboxcontainer')
+			.children('.checkbox')
+			.children('.checkmark')
+			.css('display', 'block')
+			.css('-webkit-animation', 'checkmark-expand 140ms ease-out forwards');
+		$(this).attr('on', 'true');
 	}
 
-	ripplestuff($(this).children(".checkboxcontainer").children("paper-ripple")[0], "", true);
+	ripplestuff($(this).children('.checkboxcontainer').children('paper-ripple')[0], '', true);
 }
 
 function sliderKnobMousedown() {
 	/// <summary>
 	/// The mousedown handler for the slider-knob
 	/// </summary>
-	$(this).parent().parent().attr("dragging", true);
+	$(this).parent().parent().attr('dragging', true);
 	$(this)
-		.children(".sliderKnobInner")
+		.children('.sliderKnobInner')
 		.animate({
-			width: "32px",
-			height: "32px"
+			width: '32px',
+			height: '32px'
 		}, 100);
-}
-
-function barContainerMousedown() {
-	/// <summary>
-	/// The mousedown handler for the bar-container
-	/// </summary>
-	$(this).attr("mousedown", "true");
-	var elem = this;
-	setTimeout(function () {
-
-		if ($(elem).attr("mousedown") === "true") {
-
-			$(elem).parent().parent().attr("dragging", true);
-			$(elem)
-				.parent()
-				.children(".sliderKnob")
-				.children(".sliderKnobInner")
-				.animate({
-					width: "32px",
-					height: "32px"
-				}, 100);
-
-		}
-
-	}, 20);
-
-	var left = $(this)[0].getBoundingClientRect().left;
-
-	//Off the knob
-	//Switch knob to that position
-	switchKnobToPos($(this).parent().parent()[0], (e.clientX - left), true);
-}
-
-function barContainerMouseUp() {
-	/// <summary>
-	/// The mouse-up event handler for the bar-container element
-	/// </summary>
-	$(this).attr("mousedown", "false");
 }
 
 function paperInputDecoratorOnFocus(element) {
@@ -680,8 +567,8 @@ function paperInputDecoratorOnFocus(element) {
 		elem = this;
 	}
 	$(elem)
-		.children(".underline")
-		.children(".focusedUnderline")
+		.children('.underline')
+		.children('.focusedUnderline')
 		.animate({
 			width: $(this).parent().width()
 		}, 50);
@@ -700,8 +587,8 @@ function paperInputDecoratorOnBlur(element) {
 		elem = this;
 	}
 	$(elem)
-		.children(".underline")
-		.children(".focusedUnderline")
+		.children('.underline')
+		.children('.focusedUnderline')
 		.animate({
 			width: 0
 		}, 50);
@@ -714,10 +601,10 @@ function paperInputDecoratorOnKeypress(e) {
 	/// </summary>
 	/// <param name="e">Keypress Event</param>
 	if (e.which === 40 || e.which === 37) {
-		changeToValue($(this).parent().parent()[0], $(this).parent().parent().attr("value") - 1);
+		changeToValue($(this).parent().parent()[0], $(this).parent().parent().attr('value') - 1);
 	}
 	else if (e.which === 38 || e.which === 39) {
-		changeToValue(parseInt($(this).parent().parent()[0], $(this).parent().parent().attr("value"), 10) + 1);
+		changeToValue(parseInt($(this).parent().parent()[0], $(this).parent().parent().attr('value'), 10) + 1);
 	}
 }
 
@@ -726,45 +613,26 @@ function paperInputOnclick(e) {
 	/// The onclick handler for the paper-input element
 	/// </summary>
 	/// <param name="e">The click event</param>
-	if (!$(this).attr("disabled")) {
+	if (!$(this).attr('disabled')) {
 		e.stopPropagation();
 
-		var focusedUnderline = $(this).children("paper-input-decorator").children(".underline").children(".focusedUnderline");
-		var input = $(this).children("paper-input-decorator").children(".actualinput");
+		var focusedUnderline = $(this).children('paper-input-decorator').children('.underline').children('.focusedUnderline');
+		var input = $(this).children('paper-input-decorator').children('.actualinput');
 
 		input.focus();
 		focusedUnderline.animate({
-			width: focusedUnderline.parent().children(".unfocused-underline").css("width")
+			width: focusedUnderline.parent().children('.unfocused-underline').css('width')
 		}, 300);
-
-		var elem = this;
-		$("paper-input").each(function() {
-			if (this !== elem) {
-				var focusedUnderline = $(this).children("paper-input-decorator").children(".underline").children(".focusedUnderline");
-				focusedUnderline.animate({
-					width: "0px"
-				}, 300);
-			}
-		});
 	}
 }
 
 function generalInputFocusHandler(elem) {
-	if (!$(elem).attr("disabled")) {
-		var focusedUnderline = $(elem).children("paper-input-decorator").children(".underline").children(".focusedUnderline");
+	if (!$(elem).attr('disabled')) {
+		var focusedUnderline = $(elem).children('paper-input-decorator').children('.underline').children('.focusedUnderline');
 
 		focusedUnderline.stop().animate({
-			width: focusedUnderline.parent().children(".unfocused-underline").css("width")
+			width: focusedUnderline.parent().children('.unfocused-underline').css('width')
 		}, 300);
-
-		$("paper-input").each(function () {
-			if (this !== elem[0]) {
-				var underline = $(this).children("paper-input-decorator").children(".underline").children(".focusedUnderline");
-				underline.stop().animate({
-					width: "0px"
-				}, 300);
-			}
-		});
 	}
 }
 
@@ -779,112 +647,93 @@ function stopEventPropagation(e) {
 
 function handlePaperInputClick(e) {
 	stopEventPropagation(e);
-	$(this).find(".actualinput").focus();
+	$(this).find('.actualinput').focus();
+}
+
+function inputBlur(e) {
+	var underline = $(this).next().children('.focusedUnderline');
+	underline.stop().animate({
+		width: '0px'
+	}, 300);
 }
 
 function removeBinds(container) {
 	/// <summary>
 	/// Removes all previous onclicks, onmousedowns etc from paper-elements
 	/// </summary>
-	container.find("paper-button")
-		.off("mousedown", paperButtonMousedown);
-	container.find("paper-checkbox")
-		.off("mousedown", paperCheckboxMousedown);
-	container.find(".sliderKnob")
-		.off("mousedown", sliderKnobMousedown);
-	container.find(".bar-cofftainer")
-		.off("mousedown", barContainerMousedown)
-		.off("mouseup", barContainerMouseUp);
-	container.find("paper-input-decorator")
-		.off("focus", paperInputDecoratorOnFocus)
-		.off("blur", paperInputDecoratorOnBlur)
-		.off("keypress", paperInputDecoratorOnKeypress);
-	container.find("paper-input[disabled]")
-		.css("cursor", "default")
-		.children("paper-input-decorator")
-		.css("cursor", "default")
-		.children("input")
-		.css("cursor", "default");
-	container.find(".actualinput")
-		.off("focus", inputFocus);
-	container.find("paper-input")
-		.off("click", handlePaperInputClick);
+	container.find('paper-button')
+		.off('mousedown', paperButtonMousedown);
+	container.find('paper-checkbox')
+		.off('mousedown', paperCheckboxMousedown);
+	container.find('paper-input-decorator')
+		.off('focus', paperInputDecoratorOnFocus)
+		.off('blur', paperInputDecoratorOnBlur)
+		.off('keypress', paperInputDecoratorOnKeypress);
+	container.find('paper-input[disabled]')
+		.css('cursor', 'default')
+		.children('paper-input-decorator')
+		.css('cursor', 'default')
+		.children('input')
+		.css('cursor', 'default');
+	container.find('.actualinput')
+		.off('focus', inputFocus);
+	container.find('paper-input')
+		.off('click', handlePaperInputClick);
 }
 
 function bindPaperEls(container) {
 	/// <summary>
 	/// Binds all paper-elements
 	/// </summary>
-	container.find("paper-button")
-		.on("mousedown", paperButtonMousedown)
-		.on("mousedown", "e", paperButtonMousedown);
-	container.find("paper-checkbox")
-		.on("mousedown", paperCheckboxMousedown)
+	container.find('paper-button')
+		.on('mousedown', paperButtonMousedown)
+		.on('mousedown', 'e', paperButtonMousedown);
+	container.find('paper-checkbox')
+		.on('mousedown', paperCheckboxMousedown)
 		.each(function () {
-			if ($(this).attr("on") === "true") {
-				if ($(this).children(".checkboxContainer").children("paper-ripple").css("color") !== "#B2DFDB") {
+			if ($(this).attr('on') === 'true') {
+				if ($(this).children('.checkboxContainer').children('paper-ripple').css('color') !== '#B2DFDB') {
 					$(this)
-						.children(".checkboxContainer")
-						.children("paper-ripple")
-						.css("color", "#B2DFDB");
+						.children('.checkboxContainer')
+						.children('paper-ripple')
+						.css('color', '#B2DFDB');
 					$(this)
-						.children(".checkboxcontainer")
-						.children(".checkbox")
+						.children('.checkboxcontainer')
+						.children('.checkbox')
 						.animate({
-							backgroundColor: "#009688",
-							borderColor: "#009688"
+							backgroundColor: '#009688',
+							borderColor: '#009688'
 						}, 50);
 					$(this)
-						.children(".checkboxcontainer")
-						.children(".checkbox")
-						.children(".checkmark")
-						.css("display", "block")
-						.css("-webkit-animation", "checkmark-expand 140ms ease-out forwards");
+						.children('.checkboxcontainer')
+						.children('.checkbox')
+						.children('.checkmark')
+						.css('display', 'block')
+						.css('-webkit-animation', 'checkmark-expand 140ms ease-out forwards');
 				}
 			}
 		});
-	container.find(".sliderKnob")
-		.on("mousedown", sliderKnobMousedown);
-	container.find(".bar-container")
+	container.find('paper-input-decorator')
+		.on('focus', paperInputDecoratorOnFocus)
+		.on('blur', paperInputDecoratorOnBlur)
+		.on('keypress', paperInputDecoratorOnKeypress);
+	container.find('.actualinput')
+		.on('focus', inputFocus)
+		.on('blur', inputBlur);
+	container.find('paper-input')
 		.each(function () {
-
-			var paperslider = $(this).parent().parent()[0];
-			if ($(paperslider).attr("value") != undefined) {
-				var val = parseInt($(paperslider).attr("value"), 10);
-				changeToValue(paperslider, val);
-			}
-
+			$(this).find('.actualinput').attr('value', $(this).parent().attr('value'));
 		})
-		.on("mousedown", barContainerMousedown)
-		.on("mouseup", barContainerMouseUp);
-	container.find("paper-input-decorator")
-		.on("focus", paperInputDecoratorOnFocus)
-		.on("blur", paperInputDecoratorOnBlur)
-		.on("keypress", paperInputDecoratorOnKeypress);
-	container.find("paper-slider")
-		.each(function () {
-			if (!$(this).attr("value") || $(this).attr("value") === "NaN") {
-				$(this).attr("value", (parseInt($(this).attr("min"), 10) + parseInt($(this).attr("max"), 10)) / 2);
-			}
-			//Initialize
-			updateslider($(this));
-		});
-	container.find(".actualinput")
-		.on("focus", inputFocus);
-	container.find("paper-input")
-		.each(function () {
-			$(this).find(".actualinput").attr("value", $(this).parent().attr("value"));
-		})
-		.on("click", handlePaperInputClick);
+		.on('click', handlePaperInputClick);
 
-	container.find("multiline-paper-input")
-		.on("click", paperInputOnclick);
+	container.find('multiline-paper-input')
+		.on('click', paperInputOnclick);
 
-	container.find("multiline-paper-input textarea")
-		.on("focus", function() {
+	container.find('multiline-paper-input textarea')
+		.on('focus', function() {
 			paperInputDecoratorOnFocus($(this).parent()[0]);
 		})
-		.on("blur", function() {
+		.on('blur', function() {
 			paperInputDecoratorOnBlur($(this).parent()[0]);
 		});
 }
@@ -895,7 +744,7 @@ function bindstuff(container) {
 	/// </summary>
 
 	if (container === undefined) {
-		container = $("body");
+		container = $('body');
 	}
 	removeBinds(container);
 	bindPaperEls(container);

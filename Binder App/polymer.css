@@ -118,7 +118,7 @@ paper-shadow {
 	display: block;
 }
 
-paper-shadow .shadow-top, paper-shadow .shadow-bot {
+paper-shadow .shadow-top, paper-shadow .shadow-bot, paper-shadow .themeShadow {
 	transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 	border-radius: inherit;
 	pointer-events: none;

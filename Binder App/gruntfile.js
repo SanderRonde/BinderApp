@@ -42,7 +42,7 @@
 					{expand: true, src: ['Scripts/jquery-2.0.3.min.js', 'Scripts/jquery.color-2.1.2.min.js', 'jquery.easing.js'], dest: 'build/'},
 					{expand: true, src: ['Images/*'], dest: 'build/'},
 					{expand: true, src: ['Colorpicker/**'], dest: 'build/' },
-					{expand: true, src: ['LICENSE.txt'], dest: 'build/' },
+					{expand: true, src: ['LICENSE.txt', 'manifest.json'], dest: 'build/' },
 					{expand: true, src: ['icon-large.png', 'icon-small.png', 'icon-supersmall.png', 'manifest.json', 'Segoe_UI.ttf'], dest: 'build/'}
 				]
 			}
@@ -73,7 +73,7 @@
 			'using-cwd': {
 				cwd: 'build/',
 				src: ['build/**'],
-				dest: 'Binder App.zip'
+				dest: 'build/Binder App.zip'
 			}
 		}
 	});

@@ -59,7 +59,7 @@ chrome.runtime.onMessage.addListener(function (message) {
 
 function getAllKeyBindings(callback) {
 	keyBindingCallback = callback;
-	chrome.runtime.sendMessage({ cmd: 'getKeyBindings' });
+	window.chrome.runtime.sendMessage({ cmd: 'getKeyBindings' });
 }
 
 function hidePopup() {
@@ -820,7 +820,7 @@ function firstRun() {
 		"closeBinder": true,
 		"superSearch": false
 	});
-	var fa = chrome.app.window.current();
+	var fa = window.chrome.app.window.current();
 	fa.resizeTo(700, 755);
 	$('.draggablearea').css('width', '628px');
 	$('.firstTimeContainer').css('display', 'block');
@@ -847,8 +847,7 @@ function searchBinding(websites) {
 }
 
 function openWebsites(website) {
-	var sites = [];
-	sites = website.split(',');
+	var sites = website.split(',');
 	var search = false;
 	//Search all of them for search things
 	var i;
@@ -1286,7 +1285,7 @@ function importBindings() {
 			var rows = parseInt(importvar[1], 10) - 1;
 			for (var i = 22; i < 22 + rows; i++) {
 				urlpos = i + rows;
-				if (importvar[i] !== 'thisoneisnotsetyet' && importvar[urlpos] !== 'thisoneisnotsetyet' && importvar[urkpos] !== 'thisisasearchurl') {
+				if (importvar[i] !== 'thisoneisnotsetyet' && importvar[urlpos] !== 'thisoneisnotsetyet' && importvar[urlpos] !== 'thisisasearchurl') {
 					bindings.push(importvar[i]);
 					urls.push(importvar[urlpos]);
 					shortcuts.push('');

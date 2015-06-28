@@ -105,10 +105,6 @@
     <ScriptsFolder Condition=" '$(ScriptsFolder)'=='' ">scripts\</ScriptsFolder>
   </PropertyGroup>
   <ItemGroup>
-    <AppFolderItem Include="$(AppFolder)" />
-    <ScriptsFolderItem Include="$(ScriptsFolder)" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,14 +1,18 @@
 {
-  "name": "BinderApp",
-  "version": "2.0.5",
-  "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-banner": "^0.4.0",
-    "grunt-contrib-copy": "^0.8.0",
-    "grunt-contrib-cssmin": "^0.12.3",
-    "grunt-contrib-htmlmin": "^0.4.0",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-minified": "0.0.6",
-    "grunt-zip": "^0.16.2"
-  }
+	"name": "BinderApp",
+	"version": "2.0.5",
+	"description": "Open web pages quickly from your desktop",
+	"repository": {"url": "https://github.com/BarryBamibal/BinderApp"},
+	"license": "MIT",
+	"devDependencies": {
+		"grunt": "~0.4.5",
+		"grunt-banner": "^0.4.0",
+		"grunt-contrib-copy": "^0.8.0",
+		"grunt-contrib-cssmin": "^0.12.3",
+		"grunt-contrib-htmlmin": "^0.4.0",
+		"grunt-contrib-jshint": "~0.10.0",
+		"grunt-minified": "0.0.6",
+		"grunt-processhtml": "^0.3.8",
+		"grunt-zip": "^0.16.2"
+	}
 }

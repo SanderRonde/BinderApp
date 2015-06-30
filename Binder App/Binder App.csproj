@@ -43,6 +43,10 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="LICENSE.txt" />
+    <Content Include="themes\blackTheme.css" />
+    <Content Include="themes\redTheme.css" />
+    <Content Include="themes\whiteTheme.css" />
     <Content Include="Scripts\background.js" />
     <Content Include="Colorpicker\css\colorpicker.css" />
     <Content Include="Colorpicker\css\layout.css" />
@@ -91,8 +95,10 @@
     <Content Include="Scripts\jquery.easing.js" />
     <Content Include="Scripts\polymer.js" />
     <Content Include="Scripts\searchWorker.js" />
-    <Content Include="window.html" />
+    <Content Include="html\window.html" />
     <Content Include="Scripts\worker.js" />
+    <Content Include="html\withoutSuperSearch.html" />
+    <Content Include="html\withSuperSearch.html" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" Condition="false" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="false and '$(VSToolsPath)' != ''" />

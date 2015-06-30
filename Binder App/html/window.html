@@ -1,11 +1,17 @@
 <html>
 <head>
-	<link rel="stylesheet" media="screen" type="text/css" href="Colorpicker/css/colorpicker.css" />
-	<link rel="stylesheet" href="polymer.css">
-	<link rel="stylesheet" href="css.css" />
+	<link rel="stylesheet" media="screen" type="text/css" href="../Colorpicker/css/colorpicker.css" />
+	<link rel="stylesheet" href="../polymer.css">
+	<link rel="stylesheet" href="../css.css" />
 	<title>
 		Binder
 	</title>
+	<!-- build:css:red inline ../../themes/redTheme.css -->
+	<!-- /build -->
+	<!-- build:css:black inline ../../themes/blackTheme.css -->
+	<!-- /build -->
+	<!-- build:css:white inline ../../themes/whiteTheme.css -->
+	<!-- /build -->
 </head>
 <body>
 	<div class="mainCont">
@@ -13,15 +19,20 @@
 			<div class="topbar titleBarColor">
 				<div class="draggablearea"></div>
 				<div class="optionsButton">
-					<img width="20" height="20" src="Images/settings.svg">
+					<img width="20" height="20" src="../Images/settings.svg">
 				</div>
 				<div class="minimizeButton">
-					<img width="20" height="20" src="Images/minimize.png">
+					<img width="20" height="20" src="../Images/minimize.png">
 				</div>
 				<div class="closeButton">
-					<img width="20" height="20" src="Images/close.png" />
+					<img width="20" height="20" src="../Images/close.png" />
 				</div>
 			</div>
+			<!-- build:include:without withoutSuperSearch.html -->
+			<!-- /build -->
+			<!-- build:include:with withSuperSearch.html -->
+			<!-- /build -->
+			<!-- build:remove -->
 			<div class="inputAreaCont">
 				<div class="inputArea">
 					<paper-input class="mainInputCont inputCont">
@@ -37,6 +48,7 @@
 					<paper-button raised class="hideSettings"><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Hide Binder Settings</div></paper-ripple><paper-shadow> <div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>
 				</div>
 			</div>
+			<!-- /build -->
 			<div class="firstTimeContainer">
 				<div class="firstTimeTitle">
 					Welcome to Binder
@@ -60,7 +72,7 @@
 										<div class="shadow-bot"></div>
 										<div class="themeShadow"></div>
 									</paper-shadow>
-									<span class="themeColorsJSON">{"name":"blue","title": "FFFFFF","bg":"3C92FF","shadow":"rgba(255,255,255,0.37)","text":"FFFFFF"}</span>
+									<span class="themeColorsJSON">{"name":"blue","title": "FFFFFF","bg":"3C92FF","shadow":"rgba(0,0,0,0.37)","text":"FFFFFF"}</span>
 								</paper-button>
 							</div>
 						</div>
@@ -77,7 +89,7 @@
 										<div class="shadow-bot"></div>
 										<div class="themeShadow"></div>
 									</paper-shadow>
-									<span class="themeColorsJSON">{"name":"black","title": "FFFFFF","bg":"000000","shadow":"rgba(0,0,0,0.37)","text":"FFFFFF"}</span>
+									<span class="themeColorsJSON">{"name":"black","title": "FFFFFF","bg":"000000","shadow":"rgba(255,255,255,0.37)","text":"FFFFFF"}</span>
 								</paper-button>
 							</div>
 						</div>
@@ -383,79 +395,79 @@
 					Use the left boxes to choose a Binding you want linked to a certain URL. You can seperate multiple URL's with commas.
 					Your Bindings should sync across all devices on which you are logged in with your Google account across google storage. This does however not always work. In that case use the import/export functions below.
 				</div>
-			<br><br>
-			<div class="chooseTheme">
-				<div class="bigTxt">Choose a theme:</div>
-				<div class="theme blueTheme">
-					<div class="themeTitleBar"></div>
-					<div class="themeBody">
-						<paper-button class="themeButton" raised>
-							<paper-ripple>
-								<div class="bg"></div>
-								<div class="waves"></div>
-								<div class="button-content themeTxt">Blue</div>
-							</paper-ripple>
-							<paper-shadow>
-								<div class="shadow-bot"></div>
-								<div class="themeShadow"></div>
-							</paper-shadow>
-							<span class="themeColorsJSON">{"name":"blue","title": "FFFFFF","bg":"3C92FF","shadow":"rgba(255,255,255,0.37)","text":"FFFFFF"}</span>
-						</paper-button>
+				<br><br>
+				<div class="chooseTheme">
+					<div class="bigTxt">Choose a theme:</div>
+					<div class="theme blueTheme">
+						<div class="themeTitleBar"></div>
+						<div class="themeBody">
+							<paper-button class="themeButton" raised>
+								<paper-ripple>
+									<div class="bg"></div>
+									<div class="waves"></div>
+									<div class="button-content themeTxt">Blue</div>
+								</paper-ripple>
+								<paper-shadow>
+									<div class="shadow-bot"></div>
+									<div class="themeShadow"></div>
+								</paper-shadow>
+								<span class="themeColorsJSON">{"name":"blue","title": "FFFFFF","bg":"3C92FF","shadow":"rgba(0,0,0,0.37)","text":"FFFFFF"}</span>
+							</paper-button>
+						</div>
+					</div>
+					<div class="theme blackTheme">
+						<div class="themeTitleBar"></div>
+						<div class="themeBody">
+							<paper-button class="themeButton" raised>
+								<paper-ripple>
+									<div class="bg"></div>
+									<div class="waves"></div>
+									<div class="button-content themeTxt">Black</div>
+								</paper-ripple>
+								<paper-shadow>
+									<div class="shadow-bot"></div>
+									<div class="themeShadow"></div>
+								</paper-shadow>
+								<span class="themeColorsJSON">{"name":"black","title": "FFFFFF","bg":"000000","shadow":"rgba(255,255,255,0.37)","text":"FFFFFF"}</span>
+							</paper-button>
+						</div>
+					</div>
+					<div class="theme whiteTheme">
+						<div class="themeTitleBar"></div>
+						<div class="themeBody">
+							<paper-button class="themeButton" raised>
+								<paper-ripple>
+									<div class="bg"></div>
+									<div class="waves"></div>
+									<div class="button-content themeTxt">White</div>
+								</paper-ripple>
+								<paper-shadow>
+									<div class="shadow-bot"></div>
+									<div class="themeShadow"></div>
+								</paper-shadow>
+								<span class="themeColorsJSON">{"name":"white","title": "FFFFFF","bg":"FFFFFF","shadow":"rgba(0,0,0,0.37)","text":"000000"}</span>
+							</paper-button>
+						</div>
+					</div>
+					<div class="theme redTheme">
+						<div class="themeTitleBar"></div>
+						<div class="themeBody">
+							<paper-button class="themeButton" raised>
+								<paper-ripple>
+									<div class="bg"></div>
+									<div class="waves"></div>
+									<div class="button-content themeTxt">Red</div>
+								</paper-ripple>
+								<paper-shadow>
+									<div class="shadow-bot"></div>
+									<div class="themeShadow"></div>
+								</paper-shadow>
+								<span class="themeColorsJSON">{"name":"red","title": "FFFFFF","bg":"FF0000","shadow":"rgba(0,0,0,0.37)","text":"FFFFFF"}</span>
+							</paper-button>
+						</div>
 					</div>
 				</div>
-				<div class="theme blackTheme">
-					<div class="themeTitleBar"></div>
-					<div class="themeBody">
-						<paper-button class="themeButton" raised>
-							<paper-ripple>
-								<div class="bg"></div>
-								<div class="waves"></div>
-								<div class="button-content themeTxt">Black</div>
-							</paper-ripple>
-							<paper-shadow>
-								<div class="shadow-bot"></div>
-								<div class="themeShadow"></div>
-							</paper-shadow>
-							<span class="themeColorsJSON">{"name":"black","title": "FFFFFF","bg":"000000","shadow":"rgba(0,0,0,0.37)","text":"FFFFFF"}</span>
-						</paper-button>
-					</div>
-				</div>
-				<div class="theme whiteTheme">
-					<div class="themeTitleBar"></div>
-					<div class="themeBody">
-						<paper-button class="themeButton" raised>
-							<paper-ripple>
-								<div class="bg"></div>
-								<div class="waves"></div>
-								<div class="button-content themeTxt">White</div>
-							</paper-ripple>
-							<paper-shadow>
-								<div class="shadow-bot"></div>
-								<div class="themeShadow"></div>
-							</paper-shadow>
-							<span class="themeColorsJSON">{"name":"white","title": "FFFFFF","bg":"FFFFFF","shadow":"rgba(0,0,0,0.37)","text":"000000"}</span>
-						</paper-button>
-					</div>
-				</div>
-				<div class="theme redTheme">
-					<div class="themeTitleBar"></div>
-					<div class="themeBody">
-						<paper-button class="themeButton" raised>
-							<paper-ripple>
-								<div class="bg"></div>
-								<div class="waves"></div>
-								<div class="button-content themeTxt">Red</div>
-							</paper-ripple>
-							<paper-shadow>
-								<div class="shadow-bot"></div>
-								<div class="themeShadow"></div>
-							</paper-shadow>
-							<span class="themeColorsJSON">{"name":"red","title": "FFFFFF","bg":"FF0000","shadow":"rgba(0,0,0,0.37)","text":"FFFFFF"}</span>
-						</paper-button>
-					</div>
-				</div>
-			</div>
-			<br/><br/>
+				<br /><br />
 				<div class="colorChange">
 					Change the background-color of the app in general.
 					<input class="colorPickInput bgColor">
@@ -465,9 +477,9 @@
 					<br><br>
 					Change the color of the text
 					<input class="colorPickInput textColor">
-					<br/><br/>
+					<br /><br />
 					Change the color of the shadow
-					<input class="colorPickInput shadowColor"/>
+					<input class="colorPickInput shadowColor" />
 				</div>
 				<br><br>
 				<checkbox-text>
@@ -970,7 +982,26 @@
 				<div class="changeLog">
 					<div class="bigTxt">Changelog</div>
 					This is the changelog. Starting at version 2.0 since the previous changes are not really relevant anymore after this change (full rewrite)
-					<br/>
+					<br />
+					2.1.1
+					<ul>
+						<li>
+							The go button being hidden if superSearch is on will be instant now, no more flashing.
+						</li>
+						<li>
+							If you are using any of the default themes, the application of these themes will be instant as well, any modification of them will make the application NOT instant (i.e. a short blue flash).
+						</li>
+						<li>
+							Increase in loading speed of differently colored interface in general.
+						</li>
+						<li>
+							App should start up and be ready for use a tiny bit faster now.
+						</li>
+						<li>
+							Made the loading for the options page happen asynchronously, meaning that you will neither get a load impact at the launch of the app nor when you click the options button nor when you are typing, but some time after that.
+						</li>
+					</ul>
+					<br />
 					2.1
 					<ul>
 						<li>
@@ -1014,7 +1045,7 @@
 						</li>
 					</ul>
 					Thanks to <a href="https://github.com/JaspervanRiet" target="_blank">Jasper van Riet</a> for the help with the interface changes for this update.
-					<br/><br/>
+					<br /><br />
 					<br />
 					2.0.5
 					<ul>
@@ -1088,11 +1119,11 @@
 			</div>
 		</div>
 	</div>
-	<script src="Scripts/jquery-2.0.3.min.js"></script>
-	<script src="Scripts/jquery.color-2.1.2.min.js"></script>
-	<script src="Scripts/jquery.easing.js"></script>
-	<script src="Colorpicker/js/colorpicker.js"></script>
-	<script src="Scripts/polymer.js"></script>
-	<script src="Scripts/js.js"></script>
+	<script src="../Scripts/jquery-2.0.3.min.js"></script>
+	<script src="../Scripts/jquery.color-2.1.2.min.js"></script>
+	<script src="../Scripts/jquery.easing.js"></script>
+	<script src="../Colorpicker/js/colorpicker.js" async></script>
+	<script src="../Scripts/polymer.js"></script>
+	<script src="../Scripts/js.js"></script>
 </body>
 </html>

@@ -1,0 +1,27 @@
+﻿body, .bodyColor {
+	background-color: #FFFFFF;
+}
+
+.fab {
+	fill: #FFFFFF;
+}
+
+.titleBarColor {
+	background-color: #FFFFFF;
+}
+
+body {
+	color: #000000;
+}
+
+paper-input-decorator .focused-underline, .fab {
+	background-color: #000000;
+}
+
+paper-shadow .shadow-top, .fab, .theme {
+	box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+}
+
+.inputAreaCont {
+	box-shadow: 0 1px 15px 0 rgba(0,0,0,0.75);
+}

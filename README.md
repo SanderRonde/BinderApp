@@ -1,8 +1,11 @@
 # BinderApp
 The Binder App for Chrome
 
-#Install
-https://chrome.google.com/webstore/detail/binder-app/jeolbigkboigkhlfhilmedbakkkcmeif
+#Installing from repo
+Clone the repo, run npm install and run the grunt "build" task, load the extension into chrome from the "build" folder
+
+#Installing from the chrome web store
+The app can be found here https://chrome.google.com/webstore/detail/binder-app/jeolbigkboigkhlfhilmedbakkkcmeif
 
 #Description
 Open web pages from your desktop easily. Simply start the Binder app and enter the word you linked to a URL. Thanks to the new way chrome apps work, you can now launch them from your taskbar or your desktop and easily access the websites you want.

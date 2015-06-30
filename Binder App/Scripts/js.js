@@ -9,6 +9,10 @@ var keyBindingCallback = function () {
 };
 var searchEngineImportExpanded = false;
 var searchWorker = null;
+var executedLoadFunctions = false;
+var registerTyping = true;
+var justTyped = false;
+var keyPresses = 0;
 
 function isset(dataToCheck) {
 	if (dataToCheck === undefined || dataToCheck === null) {
@@ -23,6 +27,9 @@ function updateSettings(key, data) {
 		if (typeof key === 'object') {
 			for (var objKey in key) {
 				if (key.hasOwnProperty(objKey)) {
+					if (objKey === 'colors' || objKey === 'superSearch' || objKey === 'theme') {
+						chrome.runtime.sendMessage({ 'cmd': 'updateVal', 'type': objKey, 'val': key[objKey] });
+					}
 					obj = {};
 					obj[objKey] = key[objKey];
 					storage.set(obj);
@@ -31,6 +38,9 @@ function updateSettings(key, data) {
 			}
 		}
 		else {
+			if (key === 'colors' || key === 'superSearch' || key === 'theme') {
+				chrome.runtime.sendMessage({ 'cmd': 'updateVal', 'type': key, 'val': data });
+			}
 			obj[key] = data;
 			storage.set(obj);
 			settings[key] = data;
@@ -113,7 +123,7 @@ function hideLoadingGif() {
 
 function showLoadingGif() {
 	hideLoadingGif();
-	$('<div class=\'loadingGif\'><img src=\'/Images/loading.png\'></div>')
+	$('<div class=\'loadingGif\'><img src=\'../Images/loading.png\'></div>')
 		.insertBefore($('body').children().first());
 }
 
@@ -719,7 +729,7 @@ function addRightInputToElement(parent, inputValues) {
 }
 
 function addShortcutButtonToElement(parent) {
-	return $('<paper-button class="shortcutSettings" raised><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content"><img height=\'20\' width=\'20\' class=\'keyboardImg\' src=\'Images/keyboard.png\'></div></paper-ripple><paper-shadow>\
+	return $('<paper-button class="shortcutSettings" raised><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content"><img height=\'20\' width=\'20\' class=\'keyboardImg\' src=\'../Images/keyboard.png\'></div></paper-ripple><paper-shadow>\
 	<div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>')
 		.appendTo(parent);
 }
@@ -800,6 +810,11 @@ function addInputField(sourceElement, firstInputVal, secondInputVal, smallerWidt
 	fixSpacingsOnInputs(removeButton, shortcutIndex, smallerWidth, rightInput);
 
 	bindstuff(input);
+}
+
+function updateInputs() {
+	$('.superSearchCheckbox').attr('on', (settings.superSearch ? 'true' : 'false'));
+	$('.closeBinderCheckbox').attr('on', (settings.closeBinder ? 'true' : 'false'));
 }
 
 function firstRun() {
@@ -916,7 +931,29 @@ function searchForBinding() {
 	}
 }
 
+function checkForNewKeyPress(previousKeys) {
+	setTimeout(function () {
+		if (keyPresses === previousKeys) {
+			justTyped = false;
+			keyPresses++;
+			if (registerTyping) {
+				registerTyping = false;
+				executeSettingsPageFunctions();
+			}
+		}
+	}, 200);
+}
+
+function registerKeyPress() {
+	if (registerTyping) {
+		justTyped = true;
+		keyPresses++;
+		checkForNewKeyPress(keyPresses);
+	}
+}
+
 function handleOnKeyPress(e) {
+	registerKeyPress();
 	if ((settings.superSearch && !searchMode) || e.keyCode === 13) {
 		searchForBinding();
 	}
@@ -929,13 +966,169 @@ function handleOnKeyDown(e) {
 	}
 }
 
+function updateInterfaceColors(colors) {
+	$('<style class="customColorBg" type="text/css">' +
+		'body, .bodyColor { ' +
+			'background-color: ' + colors.bg + ';' +
+		'}' +
+		'.fab { ' +
+			'fill: ' + colors.bg + ';' +
+		'}' +
+		'</style>')
+		.appendTo('head');
+	$('<style class="customColorTitle" type="text/css">' +
+		'.titleBarColor {' +
+			'background-color: ' + colors.title + ';' +
+		'}' +
+		'</style>')
+		.appendTo('head');
+
+	$('<style class="customColorTxt" type="text/css">' +
+			'body {' +
+				'color: ' + colors.text + ';' +
+				'fill: ' + colors.text + ';' +
+			'}' +
+			'paper-input-decorator .focused-underline, .fab {' +
+				'background-color:' + colors.text + ';' +
+			'}' +
+			'</style>')
+		.appendTo('head');
+	$('<style class="customColorShadow" type="text/css">' +
+			'paper-shadow .shadow-top, .fab, .theme {' +
+				'box-shadow: 0 1px 4px 0 ' + colors.shadow + ';' +
+			'}' +
+			'.inputAreaCont {' +
+				'box-shadow: 0 1px 15px 0 ' + colors.shadow.split('.')[0] + '.75);' +
+			'}' +
+			'</style>')
+		.appendTo('head');
+}
+
+function styleColorInput(input, color, opposite) {
+	input.css({
+		'backgroundColor': color,
+		'color': color,
+		'border': '2px solid ' + opposite
+	});
+}
+
+function initColorPicker(input, color, type) {
+	input
+		.ColorPicker({
+			color: color,
+			onChange: function (hsb, hex) {
+				updateSettings('theme', 'none');
+				$('.theme').css('border', '4px solid transparent');
+				setColors(type, hex);
+			},
+			onHide: function (hsb) {
+				var rgbColor = $(hsb)
+					.children('.colorpicker_new_color')
+					.css('background-color');
+				var finalColor;
+				if (type === 'shadow') {
+					finalColor = 'rgba(' + rgbColor.split('rgb(')[1].split(')')[0] + ', 0.37)';
+				}
+				else {
+					finalColor = rgbToHex(
+						rgbColor.split(', ')[0].split('(')[1],
+						rgbColor.split(', ')[1],
+						rgbColor.split(', ')[2]
+					);
+				}
+				saveColors(type, finalColor);
+			}
+		});
+}
+
+function hexToRgb(color) {
+	var bgColorsSplit = color.split('#')[1];
+	var bgR = parseInt(bgColorsSplit.slice(0, 1), 16) * 16 + parseInt(bgColorsSplit.slice(1, 2), 16);
+	var bgG = parseInt(bgColorsSplit.slice(2, 3), 16) * 16 + parseInt(bgColorsSplit.slice(3, 4), 16);
+	var bgB = parseInt(bgColorsSplit.slice(4, 5), 16) * 16 + parseInt(bgColorsSplit.slice(5, 6), 16);
+	var rgbColors = {
+		'R': bgR,
+		'G': bgG,
+		'B': bgB
+	};
+	return rgbColors;
+}
+
+function getHexOpposite(color) {
+	var rgbColor = hexToRgb(color);
+	return 'rgb(' + (255 - rgbColor.R) + ', ' + (255 - rgbColor.G) + ', ' + (255 - rgbColor.B) + ')';
+}
+
+function getRgbaOpposite(colors) {
+	var bgColorsSplit = colors.split('(')[1].split(',');
+	var bgR = parseInt(bgColorsSplit[0], 10);
+	var bgG = parseInt(bgColorsSplit[1], 10);
+	var bgB = parseInt(bgColorsSplit[2], 10);
+	return 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
+}
+
+function updateColorInputs(colors) {
+	var bgOpposite = getHexOpposite(colors.bg);
+	var titleBarOpposite = getHexOpposite(colors.title);
+	var textOpposite = getHexOpposite(colors.text);
+	var shadowOpposite = getRgbaOpposite(colors.shadow);
+
+	var bgColorInput = $('.bgColor');
+	var titleColorInput = $('.titleColor');
+	var textColorInput = $('.textColor');
+	var shadowColorInput = $('.shadowColor');
+
+	var splitShadowColors = colors.shadow.split(',');
+	splitShadowColors.splice(3, 1);
+	splitShadowColors.push('1)');
+	var shadowColors = splitShadowColors.join(',');
+
+	styleColorInput(bgColorInput, colors.bg, bgOpposite);
+	styleColorInput(titleColorInput, colors.title, titleBarOpposite);
+	styleColorInput(textColorInput, colors.text, textOpposite);
+	styleColorInput(shadowColorInput, shadowColors, shadowOpposite);
+
+	initColorPicker(bgColorInput, colors.bg, 'bg');
+	initColorPicker(titleColorInput, colors.title, 'title');
+	initColorPicker(textColorInput, colors.text, 'text');
+	initColorPicker(shadowColorInput, colors.shadow, 'shadow');
+}
+
+function updateColors(defaultColors) {
+	$('.customColorBg, .customColorTitle, .customColorText').remove();
+	if (settings.colors !== undefined) {
+		updateInterfaceColors(settings.colors);
+		updateColorInputs(settings.colors);
+	}
+	else {
+		updateInterfaceColors(defaultColors);
+		updateColorInputs(defaultColors);
+	}
+}
+
+function executeSettingsPageFunctions() {
+	if (!executedLoadFunctions) {
+		updateInputs();
+		setTimeout(function () {
+			updateColorInputs(settings.colors);
+			setTimeout(function () {
+				bindstuff();
+				setTimeout(function () {
+					loadBindings();
+					executedLoadFunctions = true;
+				}, 50);
+			}, 50);
+		},50);
+	}
+}
+
 function showSettings() {
 	$('.hideSettings').css('display', 'inline-block');
 	$('.draggablearea').css('width', '628px');
 	highlightCorrectTheme();
 	app.resizeTo(700, 755);
 	if ($('.bindingsContainer').html() === '') {
-		loadBindings();
+		executedLoadFunctions();
 	}
 }
 
@@ -960,22 +1153,12 @@ function toggleSettings(show) {
 
 function setColors(change, color) {
 	color = '#' + color;
-	var bgColorsSplit;
-	var bgR;
-	var bgG;
-	var bgB;
-	var bgOpposite;
+	var selector;
 	switch (change) {
 		case 'bg':
-			bgColorsSplit = color.split('#')[1];
-			bgR = parseInt(bgColorsSplit.slice(0, 1), 16) * 16 + parseInt(bgColorsSplit.slice(1, 2), 16);
-			bgG = parseInt(bgColorsSplit.slice(2, 3), 16) * 16 + parseInt(bgColorsSplit.slice(3, 4), 16);
-			bgB = parseInt(bgColorsSplit.slice(4, 5), 16) * 16 + parseInt(bgColorsSplit.slice(5, 6), 16);
-			bgOpposite = 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
-			$('.bgColor')
-				.css('border', '2px solid ' + bgOpposite)
-				.css('background-color', color)
-				.css('color', color);
+			bgOpposite = getHexOpposite(color);
+			selector = $('.bgColor');
+			styleColorInput(selector, color, bgOpposite);
 			$('.customColorBg').remove();
 			$('<style class="customColorBg" type="text/css">\
 body, .bodyColor { ' +
@@ -986,30 +1169,18 @@ body, .bodyColor { ' +
 				.appendTo('head');
 			break;
 		case 'title':
-			bgColorsSplit = color.split('#')[1];
-			bgR = parseInt(bgColorsSplit.slice(0, 1), 16) * 16 + parseInt(bgColorsSplit.slice(1, 2), 16);
-			bgG = parseInt(bgColorsSplit.slice(2, 3), 16) * 16 + parseInt(bgColorsSplit.slice(3, 4), 16);
-			bgB = parseInt(bgColorsSplit.slice(4, 5), 16) * 16 + parseInt(bgColorsSplit.slice(5, 6), 16);
-			bgOpposite = 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
-			$('.titleColor')
-				.css('border', '2px solid ' + bgOpposite)
-				.css('background-color', color)
-				.css('color', color);
+			bgOpposite = getHexOpposite(color);
+			selector = $('.titleColor');
+			styleColorInput(selector, color, bgOpposite);
 			$('.customColorTitle').remove();
 			$('<style class="customColorTitle" type="text/css">\
 .titleBarColor { background-color: ' + color + '; }</style>')
 				.appendTo('head');
 			break;
 		case 'text':
-			bgColorsSplit = color.split('#')[1];
-			bgR = parseInt(bgColorsSplit.slice(0, 1), 16) * 16 + parseInt(bgColorsSplit.slice(1, 2), 16);
-			bgG = parseInt(bgColorsSplit.slice(2, 3), 16) * 16 + parseInt(bgColorsSplit.slice(3, 4), 16);
-			bgB = parseInt(bgColorsSplit.slice(4, 5), 16) * 16 + parseInt(bgColorsSplit.slice(5, 6), 16);
-			bgOpposite = 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
-			$('.textColor')
-				.css('border', '2px solid ' + bgOpposite)
-				.css('background-color', color)
-				.css('color', color);
+			bgOpposite = getHexOpposite(color);
+			selector = $('.textColor');
+			styleColorInput(selector, color, bgOpposite);
 			$('.customColorTxt').remove();
 			$('<style class="customColorTxt" type="text/css">' +
 'body { color: ' + color + '; fill: ' + color + '; }' + 
@@ -1017,15 +1188,14 @@ body, .bodyColor { ' +
 				.appendTo('head');
 			break;
 		case 'shadow':
-			bgColorsSplit = color.split('#')[1];
-			bgR = parseInt(bgColorsSplit.slice(0, 1), 16) * 16 + parseInt(bgColorsSplit.slice(1, 2), 16);
-			bgG = parseInt(bgColorsSplit.slice(2, 3), 16) * 16 + parseInt(bgColorsSplit.slice(3, 4), 16);
-			bgB = parseInt(bgColorsSplit.slice(4, 5), 16) * 16 + parseInt(bgColorsSplit.slice(5, 6), 16);
+			var bgColorsSplit = color.split('#')[1].split('(')[1].split(',');
+			var bgR = parseInt(bgColorsSplit[0], 10);
+			var bgG = parseInt(bgColorsSplit[1], 10);
+			var bgB = parseInt(bgColorsSplit[2], 10);
 			bgOpposite = 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
-			$('.shadowColor')
-				.css('border', '2px solid ' + bgOpposite)
-				.css('background-color', color)
-				.css('color', color);
+			selector = $('.shadowColor');
+			styleColorInput(selector, color, bgOpposite);
+			
 			$('.customColorShadow').remove();
 			$('<style class="customColorShadow" type="text/css">' +
 					'paper-shadow .shadow-top, .fab, .theme { box-shadow: 0 1px 4px 0 rgba(' + bgR + ', ' + bgG + ', ' + bgB + ', 0.37); }' + 
@@ -1063,6 +1233,7 @@ function showGoButton() {
 }
 
 function hideGoButton() {
+	$('.input').attr('size', '56');
 	$('.goButton').css('display', 'none');
 	$('.mainInputCont').css('width', '442px');
 	$('.mainInputCont .unfocused-underline').css('width', '442px');
@@ -1237,6 +1408,7 @@ function checkAndUploadSettings(obj, alwaysSave) {
 		if (changes || alwaysSave !== undefined) {
 			settings = obj;
 			storage.set(obj);
+			chrome.runtime.sendMessage({ 'cmd': 'updateValFromStorage' });
 		}
 	}
 }
@@ -1325,6 +1497,7 @@ function importBindings() {
 				});
 			}, 2000);
 			loadBindings();
+			updateColors();
 			updateInputs();
 		} catch (e) {
 			importError(false);
@@ -1337,246 +1510,6 @@ function exportBindings() {
 	var settingsJson = JSON.stringify(settings);
 	textArea.html(settingsJson);
 	textArea.select();
-}
-
-function updateInputs() {
-	$('.customColorBg, .customColorTitle, .customColorText').remove();
-	if (settings.colors !== undefined) {
-		//Calculate opposites
-		var opposites = [];
-		var bgR, bgG, bgB, bgColorsSplit;
-		var colors = [settings.colors.bg, settings.colors.title, settings.colors.text];
-		for (var i = 0; i < 3; i++) {
-			bgColorsSplit = colors[i].split('#')[1];
-			bgR = parseInt(bgColorsSplit.slice(0, 1), 16) * 16 + parseInt(bgColorsSplit.slice(1, 2), 16);
-			bgG = parseInt(bgColorsSplit.slice(2, 3), 16) * 16 + parseInt(bgColorsSplit.slice(3, 4), 16);
-			bgB = parseInt(bgColorsSplit.slice(4, 5), 16) * 16 + parseInt(bgColorsSplit.slice(5, 6), 16);
-			opposites[i] = 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
-		}
-
-		var bgOpposite = opposites[0];
-		var titleBarOpposite = opposites[1];
-		var textOpposite = opposites[2];
-
-		var shadowOpposite;
-		bgColorsSplit = settings.colors.shadow.split('(')[1];
-		bgR = parseInt(bgColorsSplit.split(',')[0], 10);
-		bgG = parseInt(bgColorsSplit.split(',')[1], 10);
-		bgB = parseInt(bgColorsSplit.split(',')[2], 10);
-		shadowOpposite = 'rgb(' + (255 - bgR) + ', ' + (255 - bgG) + ', ' + (255 - bgB) + ')';
-
-		$('.bgColor')
-			.css('background-color', settings.colors.bg)
-			.css('color', settings.colors.bg)
-			.css('border', '2px solid ' + bgOpposite)
-			.ColorPicker({
-				color: settings.colors.bg,
-				onChange: function (hsb, hex) {
-					updateSettings('theme', 'custom');
-					$('.theme').css('border', '4px solid transparent');
-					setColors('bg', hex);
-				},
-				onHide: function(hsb) {
-					var rgbColor = $(hsb)
-						.children('.colorpicker_new_color')
-						.css('background-color');
-					var hexColor = rgbToHex(
-						rgbColor.split(', ')[0].split('(')[1],
-						rgbColor.split(', ')[1],
-						rgbColor.split(', ')[2]
-					);
-					saveColors('bg', hexColor);
-				}
-			});
-		$('<style class="customColorBg" type="text/css">\
-body, .bodyColor { ' +
-				'background-color: ' + settings.colors.bg + ';' +
-				'}' +
-				'.fab { fill: ' + settings.colors.bg + ';}' +
-				'</style>')
-			.appendTo('head');
-		$('.titleColor')
-			.css('background-color', settings.colors.title)
-			.css('color', settings.colors.title)
-			.css('border', '2px solid ' + titleBarOpposite)
-			.ColorPicker({
-				color: settings.colors.title,
-				onChange: function (hsb, hex) {
-					updateSettings('theme', 'custom');
-					$('.theme').css('border', '4px solid transparent');
-					setColors('title', hex);
-				},
-				onHide: function(hsb) {
-					var rgbColor = $(hsb)
-						.children('.colorpicker_new_color')
-						.css('background-color');
-					var hexColor = rgbToHex(
-						rgbColor.split(', ')[0].split('(')[1],
-						rgbColor.split(', ')[1],
-						rgbColor.split(', ')[2]
-					);
-					saveColors('title', hexColor);
-				}
-			});
-		$('<style class="customColorTitle" type="text/css">\
-.titleBarColor { background-color: ' + settings.colors.title + '; }</style>')
-			.appendTo('head');
-		$('.textColor')
-			.css('background-color', settings.colors.text)
-			.css('color', settings.colors.text)
-			.css('border', '2px solid ' + textOpposite)
-			.ColorPicker({
-				color: settings.colors.text,
-				onChange: function (hsb, hex) {
-					updateSettings('theme', 'custom');
-					$('.theme').css('border', '4px solid transparent');
-					setColors('text', hex);
-				},
-				onHide: function(hsb) {
-					var rgbColor = $(hsb)
-						.children('.colorpicker_new_color')
-						.css('background-color');
-					var hexColor = rgbToHex(
-						rgbColor.split(', ')[0].split('(')[1],
-						rgbColor.split(', ')[1],
-						rgbColor.split(', ')[2]
-					);
-					saveColors('text', hexColor);
-				}
-			});
-		$('<style class="customColorTxt" type="text/css">' +
-				'body { color: ' + settings.colors.text + '; fill: ' + settings.colors.text + '; }' +
-				'paper-input-decorator .focused-underline, .fab { background-color:' + settings.colors.text + '; }</style>')
-			.appendTo('head');
-		var shadowBg = settings.colors.shadow.split('.')[0] + '.99)';
-		$('.shadowColor')
-			.css('background-color', shadowBg)
-			.css('color', shadowBg)
-			.css('border', '2px solid ' + shadowOpposite)
-			.ColorPicker({
-				color: settings.colors.shadow,
-				onChange: function (hsb, hex) {
-					updateSettings('theme', 'custom');
-					$('.theme').css('border', '4px solid transparent');
-					setColors('shadow', hex);
-				},
-				onHide: function(hsb) {
-					var rgbColor = $(hsb)
-						.children('.colorpicker_new_color')
-						.css('background-color');
-					var rgbaColor = 'rgba(' + rgbColor.split('rgb(')[1].split(')')[0] + ', 0.37)';
-					saveColors('shadow', rgbaColor);
-				}
-			});
-		$('<style class="customColorShadow" type="text/css">' +
-				'paper-shadow .shadow-top, .fab, .theme { box-shadow: 0 1px 4px 0 ' + settings.colors.shadow + '; } .inputAreaCont { box-shadow: 0 1px 15px 0 ' + settings.colors.shadow.split('.')[0] + '.75); }</style>')
-			.appendTo('head');
-	}
-	else {
-		$('.bgColor')
-			.css('background-color', '#3C92FF')
-			.css('color', '#3C92FF')
-			.css('border', '2px solid #FFAB3D')
-			.ColorPicker({
-				color: '#3C92FF',
-				onChange: function (hsb, hex) {
-					updateSettings('theme', 'custom');
-					$('.theme').css('border', '4px solid transparent');
-					setColors('bg', hex);
-				},
-				onHide: function(hsb) {
-					var rgbColor = $(hsb)
-						.children('.colorpicker_new_color')
-						.css('background-color');
-					var hexColor = rgbToHex(
-						rgbColor.split(', ')[0].split('(')[1],
-						rgbColor.split(', ')[1],
-						rgbColor.split(', ')[2]
-					);
-					saveColors('bg', hexColor);
-				}
-			});
-		$('<style class="customColorBg" type="text/css">\
-body, .bodyColor { background-color: #3C92FF; } .fab { fill: #3C92FF }</style>')
-			.appendTo('head');
-		$('.titleColor')
-			.css('background-color', '#FFFFFF')
-			.css('color', '#FFFFFF')
-			.css('border', '2px solid #000000')
-			.ColorPicker({
-				color: '#FFFFFF',
-				onChange: function (hsb, hex) {
-					updateSettings('theme', 'custom');
-					$('.theme').css('border', '4px solid transparent');
-					setColors('text', hex);
-				},
-				onHide: function(hsb) {
-					var rgbColor = $(hsb)
-						.children('.colorpicker_new_color')
-						.css('background-color');
-					var hexColor = rgbToHex(
-						rgbColor.split(', ')[0].split('(')[1],
-						rgbColor.split(', ')[1],
-						rgbColor.split(', ')[2]
-					);
-					saveColors('text', hexColor);
-				}
-			});
-		$('<style class="customColorTitle" type="text/css">\
-.titleBarColor { background-color: #FFFFFF; fill: #FFFFFF; }</style>')
-			.appendTo('head');
-		$('.textColor')
-			.css('background-color', '#FFFFFF')
-			.css('color', '#FFFFFF')
-			.css('border', '2px solid #000000')
-			.ColorPicker({
-				color: '#FFFFFF',
-				onChange: function (hsb, hex) {
-					updateSettings('theme', 'custom');
-					$('.theme').css('border', '4px solid transparent');
-					setColors('text', hex);
-				},
-				onHide: function(hsb) {
-					var rgbColor = $(hsb)
-						.children('.colorpicker_new_color')
-						.css('background-color');
-					var hexColor = rgbToHex(
-						rgbColor.split(', ')[0].split('(')[1],
-						rgbColor.split(', ')[1],
-						rgbColor.split(', ')[2]
-					);
-					saveColors('text', hexColor);
-				}
-			});
-		$('<style class="customColorTxt" type="text/css">' +
-				'body { color: #FFFFFF; fil: #FFFFFF; }' +
-				'paper-input-decorator .focused-underline, .fab { background-color:#FFFFFF; }</style>')
-			.appendTo('head');
-		$('.shadowColor')
-			.css('background-color', '#FFFFFF')
-			.css('color', '#FFFFFF')
-			.css('border', '2px solid #FFFFFF')
-			.ColorPicker({
-				color: settings.colors.shadow,
-				onChange: function (hsb, hex) {
-					updateSettings('theme', 'custom');
-					$('.theme').css('border', '4px solid transparent');
-					setColors('shadow', hex);
-				},
-				onHide: function (hsb) {
-					var rgbColor = $(hsb)
-						.children('.colorpicker_new_color')
-						.css('background-color');
-					var rgbaColor = 'rgba(' + rgbColor.split('rgb(')[1].split(')')[0] + ', 0.37)';
-					saveColors('shadow', rgbaColor);
-				}
-			});
-		$('<style class="customColorShadow" type="text/css">' +
-				'paper-shadow .shadow-top, .fab, .theme { box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37); } .inputAreaCont { box-shadow: 0 1px 15px 0 rgba(0,0,0,0.75); }</style>')
-			.appendTo('head');
-	}
-	$('.superSearchCheckbox').attr('on', (settings.superSearch ? 'true' : 'false'));
-	$('.closeBinderCheckbox').attr('on', (settings.closeBinder ? 'true' : 'false'));
 }
 
 function createSearchEngine(name, url, sourceButton) {
@@ -2055,42 +1988,44 @@ function upgradeBinderVersion() {
 }
 
 function main() {
-	if (settings.superSearch) {
-		$('.input').attr('size', '56');
-		$('.submitButton').css('display', 'none');
-		hideGoButton();
-	}
-	else {
+	var defaultColors = {
+		"bg": '#3C92FF',
+		"title": '#FFFFFF',
+		"text": '#FFFFFF',
+		"shadow": 'rgba(0,0,0,0.37)'
+	};
+
+	var repaintColors = false;	
+
+	//Now bind any things that are going to be used very quickly
+	if (!settings.superSearch) {
 		bindstuff($('.submitButton'));
 	}
 	bindstuff($('.input'));
+
+	//Focus
 	app.focus();
 	$('.input').focus().click();
-	var repaintInputs = false;
+
+	if (app.getBounds().width !== 500 || app.getBounds().height !== 100) {
+		app.resizeTo(500, 100);
+	}
 	setTimeout(function () {
-		try {
-			updateInputs();
-		} catch (e) {
-			repaintInputs = true;
-		}
-		if (app.getBounds().width !== 500 || app.getBounds().height !== 100) {
-			app.resizeTo(500, 100);
-		}
-	}, 0);
-	setTimeout(function () {
-		bindstuff();
 		checkAndUploadSettings(settings);
-		if (repaintInputs) {
-			settings.colors = {
-				"bg": '#3C92FF',
-				"title": '#FFFFFF',
-				"text": '#FFFFFF',
-				"shadow": 'rgba(0,0,0,0.37)'
-			};
-			storage.set(settings);
-			updateInputs();
-		}
 	}, 100);
+	setTimeout(function () {
+		if (!justTyped) {
+			executeSettingsPageFunctions();
+		}
+		else {
+			registerTyping = true;
+		}
+	}, 1000);
+	bindListeners();
+}
+
+if (theme === 'blue' || theme === 'none') {
+	updateInterfaceColors(interfaceColors);
 }
 
 storage.get(function (items) {
@@ -2102,4 +2037,3 @@ storage.get(function (items) {
 		main();
 	}
 });
-bindListeners();

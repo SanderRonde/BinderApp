@@ -1,4 +1,4 @@
-﻿module.exports= function(grunt) {
+﻿module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		minified: {
@@ -42,7 +42,7 @@
 					{ expand: true, src: ['Images/*'], dest: 'build/' },
 					{ expand: true, src: ['Colorpicker/**'], dest: 'build/' },
 					{ expand: true, src: ['LICENSE.txt', 'manifest.json'], dest: 'build/' },
-					{ expand: true, src: ['css.css','icon-large.png', 'icon-small.png', 'icon-supersmall.png', 'manifest.json', 'Segoe_UI.ttf'], dest: 'build/' }
+					{ expand: true, src: ['css.css', 'icon-large.png', 'icon-small.png', 'icon-supersmall.png', 'manifest.json', 'Segoe_UI.ttf'], dest: 'build/' }
 				]
 			}
 		},
@@ -79,9 +79,17 @@
 					'build/html/withoutSuperSearch.html': ['html/window.html']
 				}
 			},
+			blue: {
+				options: {
+					strip: true
+				},
+				files: [
+					{ expand: true, src: ['build/html/withoutSuperSearch.html', 'build/html/withSuperSearch.html'], filter: 'isFile', ext: '.blue.html' }
+				]
+			},
 			black: {
 				options: {
-					strip: true,
+					strip: true
 				},
 				files: [
 					{ expand: true, src: ['build/html/withoutSuperSearch.html', 'build/html/withSuperSearch.html'], filter: 'isFile', ext: '.black.html' }
@@ -89,7 +97,7 @@
 			},
 			red: {
 				options: {
-					strip: true,
+					strip: true
 				},
 				files: [
 					{ expand: true, src: ['build/html/withoutSuperSearch.html', 'build/html/withSuperSearch.html'], filter: 'isFile', ext: '.red.html' }
@@ -97,7 +105,7 @@
 			},
 			white: {
 				options: {
-					strip: true,
+					strip: true
 				},
 				files: [
 					{ expand: true, src: ['build/html/withoutSuperSearch.html', 'build/html/withSuperSearch.html'], filter: 'isFile', ext: '.white.html' }
@@ -119,7 +127,7 @@
 		zip: {
 			'using-cwd': {
 				cwd: 'build/',
-				src: ['build/**'],
+				src: ['build/**', '!build/Binder App.zip'],
 				dest: 'build/Binder App.zip'
 			}
 		},
@@ -134,5 +142,5 @@
 	grunt.loadNpmTasks('grunt-processhtml');
 
 	grunt.registerTask('build', ['minified', 'cssmin', 'copy:main', 'processhtml', 'usebanner', 'htmlmin', 'zip']);
-	grunt.registerTask('dev', ['copy:dev', 'processhtml', 'htmlmin']);
+	grunt.registerTask('dev', ['copy:dev', 'processhtml']);
 }

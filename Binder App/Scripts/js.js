@@ -838,6 +838,7 @@ function firstRun() {
 	var fa = window.chrome.app.window.current();
 	fa.resizeTo(700, 755);
 	$('.draggablearea').css('width', '628px');
+	highlightCorrectTheme();
 	$('.firstTimeContainer').css('display', 'block');
 	$('.hideSettings').css('display', 'none');
 	$('.toSettingsFromFirstTime').click(function () {
@@ -2032,7 +2033,7 @@ if (theme === 'blue' || theme === 'none' || !theme) {
 			'text': '#FFFFFF',
 			'shadow': 'rgba(0,0,0,0.37)'
 		};
-		theme = 'none';
+		theme = 'blue';
 	}
 	updateInterfaceColors(interfaceColors);
 }

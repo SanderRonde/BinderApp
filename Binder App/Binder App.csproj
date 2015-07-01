@@ -45,6 +45,7 @@
   <ItemGroup>
     <Content Include="LICENSE.txt" />
     <Content Include="themes\blackTheme.css" />
+    <Content Include="themes\blueTheme.css" />
     <Content Include="themes\redTheme.css" />
     <Content Include="themes\whiteTheme.css" />
     <Content Include="Scripts\background.js" />

@@ -46,25 +46,25 @@ function checkColor(color, type) {
 chrome.storage.sync.get(function(items) {
 	pageLoadSettings.superSearch = items.superSearch || false;
 	
-	pageLoadSettings.theme = items.theme || 'none';
+	var defaultColors = {
+		'bg': '#3C92FF',
+		'title': '#FFFFFF',
+		'text': '#FFFFFF',
+		'shadow': 'rgba(0,0,0,0.37)'
+	};
 
-	//Check the theme string
-	if (items.theme !== 'none' && items.theme !== 'blue' && items.theme !== 'black' && items.theme !== 'white' && items.theme !== 'red') {
-		pageLoadSettings.theme = 'none';
+	if (items.theme) {
+		pageLoadSettings.theme = items.theme;
 	}
 	else {
-		pageLoadSettings.theme = items.theme;
+		pageLoadSettings.theme = 'blue';
+		items.colors = defaultColors;
 	}
 
 	if (!items.colors) {
-		items.colors = {
-			'bg': '#3C92FF',
-			'title': '#FFFFFF',
-			'text': '#FFFFFF',
-			'shadow': 'rgba(0,0,0,0.37)'
-		}
+		items.colors = defaultColors;
 	}
-	else {
+	else if (items.color !== defaultColors) {
 		//Check the colors object
 		items.colors.bg = checkColor(items.colors.bg, 'bg');
 		items.colors.title = checkColor(items.colors.title, 'title');
@@ -85,7 +85,7 @@ chrome.storage.sync.get(function(items) {
 function launchBinder() {
 	var urlToLoad = (pageLoadSettings.superSearch ? 'html/withSuperSearch' : 'html/withoutSuperSearch');
 	if (pageLoadSettings.theme) {
-		if (pageLoadSettings.theme !== 'none' && pageLoadSettings.theme !== 'blue') {
+		if (pageLoadSettings.theme !== 'none') {
 			urlToLoad += '.' + pageLoadSettings.theme;
 		}
 	}
@@ -105,7 +105,6 @@ function launchBinder() {
 		frame: 'none',
 		resizable: false
 	}, function (createdWindow) {
-		console.log(pageLoadSettings.colors);
 		createdWindow.contentWindow.interfaceColors = pageLoadSettings.colors;
 		createdWindow.contentWindow.superSearch = pageLoadSettings.superSearch;
 		createdWindow.contentWindow.theme = pageLoadSettings.theme;
@@ -139,7 +138,6 @@ chrome.commands.onCommand.addListener(function (command) {
 });
 
 chrome.runtime.onMessage.addListener(function (message) {
-	console.log(message);
 	switch (message.cmd) {
 		case 'getKeyBindings':
 			chrome.commands.getAll(function (commands) {
@@ -149,7 +147,6 @@ chrome.runtime.onMessage.addListener(function (message) {
 			});
 			break;
 		case 'updateVal':
-			console.log('updating');
 			pageLoadSettings[message.type] = message.val;
 			break;
 		case 'updateValFromStorage':

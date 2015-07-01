@@ -2024,7 +2024,16 @@ function main() {
 	bindListeners();
 }
 
-if (theme === 'blue' || theme === 'none') {
+if (theme === 'blue' || theme === 'none' || !theme) {
+	if (!updateInterfaceColors || !theme) {
+		updateInterfaceColors = {
+			'bg': '#3C92FF',
+			'title': '#FFFFFF',
+			'text': '#FFFFFF',
+			'shadow': 'rgba(0,0,0,0.37)'
+		};
+		theme = 'none';
+	}
 	updateInterfaceColors(interfaceColors);
 }
 

@@ -46,6 +46,8 @@ function checkColor(color, type) {
 chrome.storage.sync.get(function(items) {
 	pageLoadSettings.superSearch = items.superSearch || false;
 	
+	pageLoadSettings.theme = items.theme || 'none';
+
 	//Check the theme string
 	if (items.theme !== 'none' && items.theme !== 'blue' && items.theme !== 'black' && items.theme !== 'white' && items.theme !== 'red') {
 		pageLoadSettings.theme = 'none';
@@ -54,24 +56,40 @@ chrome.storage.sync.get(function(items) {
 		pageLoadSettings.theme = items.theme;
 	}
 
-	//Check the colors object
-	items.colors.bg = checkColor(items.colors.bg, 'bg');
-	items.colors.title = checkColor(items.colors.title, 'title');
-	items.colors.text = checkColor(items.colors.text, 'text');
-	console.log(items.colors.shadow);
-	items.colors.shadow = checkColor(items.colors.shadow, 'shadow');
-	console.log(items.colors.shadow);
+	if (!items.colors) {
+		items.colors = {
+			'bg': '#3C92FF',
+			'title': '#FFFFFF',
+			'text': '#FFFFFF',
+			'shadow': 'rgba(0,0,0,0.37)'
+		}
+	}
+	else {
+		//Check the colors object
+		items.colors.bg = checkColor(items.colors.bg, 'bg');
+		items.colors.title = checkColor(items.colors.title, 'title');
+		items.colors.text = checkColor(items.colors.text, 'text');
+		items.colors.shadow = checkColor(items.colors.shadow, 'shadow');
+	}
 
 	pageLoadSettings.colors = items.colors;
+
+	//Save settings again
+	chrome.storage.sync.set({
+			'colors': pageLoadSettings.colors,
+			'theme': pageLoadSettings.theme,
+			'superSearch': pageLoadSettings.superSearch
+		});
 });
 
 function launchBinder() {
 	var urlToLoad = (pageLoadSettings.superSearch ? 'html/withSuperSearch' : 'html/withoutSuperSearch');
-	if (pageLoadSettings.theme !== 'none' && pageLoadSettings.theme !== 'blue') {
-		urlToLoad += '.' + pageLoadSettings.theme;
+	if (pageLoadSettings.theme) {
+		if (pageLoadSettings.theme !== 'none' && pageLoadSettings.theme !== 'blue') {
+			urlToLoad += '.' + pageLoadSettings.theme;
+		}
 	}
 	urlToLoad += '.html';
-	console.log(urlToLoad);
 	chrome.app.window.create(urlToLoad, {
 		bounds: {
 			width: 500,

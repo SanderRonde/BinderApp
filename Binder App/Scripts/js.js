@@ -1129,7 +1129,7 @@ function showSettings() {
 	highlightCorrectTheme();
 	app.resizeTo(700, 755);
 	if ($('.bindingsContainer').html() === '') {
-		executedLoadFunctions();
+		executeSettingsPageFunctions();
 	}
 }
 
@@ -1155,6 +1155,7 @@ function toggleSettings(show) {
 function setColors(change, color) {
 	color = '#' + color;
 	var selector;
+	var bgOpposite;
 	switch (change) {
 		case 'bg':
 			bgOpposite = getHexOpposite(color);
@@ -1989,15 +1990,6 @@ function upgradeBinderVersion() {
 }
 
 function main() {
-	var defaultColors = {
-		"bg": '#3C92FF',
-		"title": '#FFFFFF',
-		"text": '#FFFFFF',
-		"shadow": 'rgba(0,0,0,0.37)'
-	};
-
-	var repaintColors = false;	
-
 	//Now bind any things that are going to be used very quickly
 	if (!settings.superSearch) {
 		bindstuff($('.submitButton'));

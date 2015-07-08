@@ -42,7 +42,12 @@
 					{ expand: true, src: ['Images/*'], dest: 'build/' },
 					{ expand: true, src: ['Colorpicker/**'], dest: 'build/' },
 					{ expand: true, src: ['LICENSE.txt', 'manifest.json'], dest: 'build/' },
-					{ expand: true, src: ['css.css', 'icon-large.png', 'icon-small.png', 'icon-supersmall.png', 'manifest.json', 'Segoe_UI.ttf'], dest: 'build/' }
+					{ expand: true, src: ['css.css', 'polymer.css', 'icon-large.png', 'icon-small.png', 'icon-supersmall.png', 'manifest.json', 'Segoe_UI.ttf'], dest: 'build/' }
+				]
+			},
+			js: {
+				files: [
+					{ expand: true, src: ['Scripts/js.js'], dest: 'build/' }
 				]
 			}
 		},
@@ -142,5 +147,6 @@
 	grunt.loadNpmTasks('grunt-processhtml');
 
 	grunt.registerTask('build', ['minified', 'cssmin', 'copy:main', 'processhtml', 'usebanner', 'htmlmin', 'zip']);
-	grunt.registerTask('dev', ['copy:dev', 'processhtml']);
+	grunt.registerTask('dev', ['copy:dev', 'processhtml', 'htmlmin']);
+	grunt.registerTask('updateJs', ['copy:js']);
 }

@@ -48,9 +48,10 @@
 					<paper-button raised class="hideSettings"><paper-ripple><div class="bg"></div><div class="waves"></div><div class="button-content">Hide Binder Settings</div></paper-ripple><paper-shadow> <div class="shadow-bot"></div><div class="shadow-top"></div> </paper-shadow></paper-button>
 				</div>
 			</div>
-			<!-- /build -->
+		<!-- /build -->
 
-			<div class="firstTimeContainer">
+			<!---->
+		<div class="firstTimeContainer">
 				<div class="firstTimeTitle">
 					Welcome to Binder
 				</div>
@@ -521,623 +522,643 @@
 				<div class="bindingsContainer"></div>
 				<br />
 				<hr />
-				<div class="keyboardShortcut">
+				<div class="launchProgram">
 					<div class="bigTxt">
-						Keyboard Shortcut
+						Launch a program
 					</div>
-					You can create a keyboard shortcut to Binder to launch it a lot faster, here are two methods:
 					<br />
-					<br />
-					Method 1 goes through chrome, so this only works while chrome is running, keep that in mind
-					<ol type="1">
-						<li>Click chrome's settings button on the top-right</li>
-						<li>Go to "More Tools"</li>
-						<li>Go to "Extensions"</li>
-						<li>Scroll to the bottom of the page and click "Keyboard Shortcuts"</li>
-						<li>Find "Binder App" in this list and click the input box next to "Launch the Binder App"</li>
-						<li>Press the buttons you want to trigger Binder (check out <a href="http://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts" target="_blank">List of keyboard shortcuts</a> to see if it is not already taken) and make sure you select "global" in the menu on the right AFTER you entered the keyboard command</li>
-					</ol>
-					<br />
-					Method 2 goes through Windows, so this will always work (on Windows that is)
-					<ol type="1">
-						<li>Go to chrome://apps (simply type this into the address-bar)</li>
-						<li>Right-click Binder, click "Create Shortcuts", make sure "Desktop" is checked and press "Create" (you do not have to check the taskbar checkbox as well)</li>
-						<li>Go to the shortcut on your desktop and right-click it, then go to properties</li>
-						<li>Click the "Shortcut" field and press the keys you want to trigger Binder (check out <a href="http://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts" target="_blank">List of keyboard shortcuts</a> to see if it is not already taken)</li>
-						<li>Hit OK and you are done, be sure not to delete the shortcut or the keyboard shortcut will also go away</li>
-					</ol>
-					<br />
-					<div class="bigTxt">
-						Binding Shortcuts
-					</div>
-					You can also link keyboard shortcuts to Bindings, here's how to do it:
-					<ol type="1">
-						<li>Click chrome's settings button on the top-right</li>
-						<li>Go to "More Tools"</li>
-						<li>Go to "Extensions"</li>
-						<li>Scroll to the bottom of the page and click "Keyboard Shortcuts"</li>
-						<li>Find "Launch Binding X" where X is any number</li>
-						<li>Input a key binding and be sure to select "Global" in the menu on the right AFTER you inputted a key binding</li>
-						<li>Go back to Binder App, hit the "Reload Bindings" button and do as the window tells you</li>
-					</ol>
+					You can also launch a program on your computer when you install Binder for Windows (<!--TODO:Linkje neermikken-->, Mac and Linux version not yet made), when you have done this, add a link to the program in the Bindings by going to the '.exe'-file's location and taking it's path plus it's name (for example C:\Program Files (x86)\Google\Chrome\Application\chrome.exe<br/>
+					If you have a shortcut to the program you can right-click it, go to properties and paste what's in the "target" box without quotes.
 				</div>
+				<br /><br />
 				<hr />
-				<div class="searchBindings">
-					<div class="bigTxt">
-						Search Bindings
-					</div>
-					<br />
-					Search Bindings will allow you to, after you trigger them, search the given website.<br />
-					This works by you giving a URL with <code>%s</code> in it, the <code>%s</code> is then replaced by the text you give afterwards, if you placed the <code>%s</code> correctly, this will then search the given website (or any other function the website may have). For example, you can search Google by giving this URL:<br />
-					http://www.google.com/search?q=%s
-					<br /><br />
-					To add your own search Bindings, you can choose one of these three methods:
-					<br /><br />
-					Method 1:
-					<ol type="1">
-						<li>
-							First simply visit the site and search something to store it into chrome's memory. Then right-click the omnibar and click "Manage Search Engines".
-						</li>
-						<li>
-							Find the website you just visited in the lists (it will most likely be in the bottom list).<br />
-							If you can not find the website in the list, try method 3
-						</li>
-						<li>
-							Click the website's URL in te right-most box and copy the URL
-						</li>
-						<li>
-							You are done, simply paste this URL as a URL for a Binding and it will work
-						</li>
-					</ol>
-					<br />
-					<paper-button class="searchEngineImport" raised>
+			<div class="keyboardShortcut">
+				<div class="bigTxt">
+					Keyboard Shortcut
+				</div>
+				You can create a keyboard shortcut to Binder to launch it a lot faster, here are two methods:
+				<br />
+				<br />
+				Method 1 goes through chrome, so this only works while chrome is running, keep that in mind
+				<ol type="1">
+					<li>Click chrome's settings button on the top-right</li>
+					<li>Go to "More Tools"</li>
+					<li>Go to "Extensions"</li>
+					<li>Scroll to the bottom of the page and click "Keyboard Shortcuts"</li>
+					<li>Find "Binder App" in this list and click the input box next to "Launch the Binder App"</li>
+					<li>Press the buttons you want to trigger Binder (check out <a href="http://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts" target="_blank">List of keyboard shortcuts</a> to see if it is not already taken) and make sure you select "global" in the menu on the right AFTER you entered the keyboard command</li>
+				</ol>
+				<br />
+				Method 2 goes through Windows, so this will always work (on Windows that is)
+				<ol type="1">
+					<li>Go to chrome://apps (simply type this into the address-bar)</li>
+					<li>Right-click Binder, click "Create Shortcuts", make sure "Desktop" is checked and press "Create" (you do not have to check the taskbar checkbox as well)</li>
+					<li>Go to the shortcut on your desktop and right-click it, then go to properties</li>
+					<li>Click the "Shortcut" field and press the keys you want to trigger Binder (check out <a href="http://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts" target="_blank">List of keyboard shortcuts</a> to see if it is not already taken)</li>
+					<li>Hit OK and you are done, be sure not to delete the shortcut or the keyboard shortcut will also go away</li>
+				</ol>
+				<br />
+				<div class="bigTxt">
+					Binding Shortcuts
+				</div>
+				You can also link keyboard shortcuts to Bindings, here's how to do it:
+				<ol type="1">
+					<li>Click chrome's settings button on the top-right</li>
+					<li>Go to "More Tools"</li>
+					<li>Go to "Extensions"</li>
+					<li>Scroll to the bottom of the page and click "Keyboard Shortcuts"</li>
+					<li>Find "Launch Binding X" where X is any number</li>
+					<li>Input a key binding and be sure to select "Global" in the menu on the right AFTER you inputted a key binding</li>
+					<li>Go back to Binder App, hit the "Reload Bindings" button and do as the window tells you</li>
+				</ol>
+			</div>
+			<hr />
+			<div class="searchBindings">
+				<div class="bigTxt">
+					Search Bindings
+				</div>
+				<br />
+				Search Bindings will allow you to, after you trigger them, search the given website.<br />
+				This works by you giving a URL with <code>%s</code> in it, the <code>%s</code> is then replaced by the text you give afterwards, if you placed the <code>%s</code> correctly, this will then search the given website (or any other function the website may have). For example, you can search Google by giving this URL:<br />
+				http://www.google.com/search?q=%s
+				<br /><br />
+				To add your own search Bindings, you can choose one of these three methods:
+				<br /><br />
+				Method 1:
+				<ol type="1">
+					<li>
+						First simply visit the site and search something to store it into chrome's memory. Then right-click the omnibar and click "Manage Search Engines".
+					</li>
+					<li>
+						Find the website you just visited in the lists (it will most likely be in the bottom list).<br />
+						If you can not find the website in the list, try method 3
+					</li>
+					<li>
+						Click the website's URL in te right-most box and copy the URL
+					</li>
+					<li>
+						You are done, simply paste this URL as a URL for a Binding and it will work
+					</li>
+				</ol>
+				<br />
+				<paper-button class="searchEngineImport" raised>
+					<paper-ripple>
+						<div class="bg"></div>
+						<div class="waves"></div>
+						<div class="button-content">Method 2 (choose from a list)</div>
+					</paper-ripple><paper-shadow>
+						<div class="shadow-bot"></div>
+						<div class="shadow-top"></div>
+					</paper-shadow>
+				</paper-button>
+				<br /><br />
+				Method 3:
+				<ol type="1">
+					<li>
+						Go to the website you want to search
+					</li>
+					<li>
+						Type %s into the search bar and hit enter
+					</li>
+					<li>
+						Copy the URL and create a Binding with it
+					</li>
+				</ol>
+			</div>
+			<br />
+			<hr />
+			<div class="firstTimeDefaultsCont">
+				<div class="bigTxt">
+					Starting Bindings
+				</div>
+				<br />
+				Here are some Bindings to get you started:
+				<table>
+					<tbody>
+						<tr>
+							<td>
+								<paper-input class="addDefaultInput inputCont">
+									<paper-input-decorator>
+										<input value="google" class="actualinput defaultsInput" placeholder="Binding" />
+										<div class="underline">
+											<div class="unfocused-underline"></div>
+											<div class="focusedUnderline focused-underline"></div>
+										</div>
+									</paper-input-decorator>
+								</paper-input>
+							</td>
+							<td>
+								<div class="defaultWebsiteCont">
+									http://www.google.com
+								</div>
+							</td>
+							<td>
+								<paper-button class="addDefaults" raised>
+									<paper-ripple>
+										<div class="bg"></div>
+										<div class="waves"></div>
+										<div class="button-content">Add</div>
+									</paper-ripple><paper-shadow>
+										<div class="shadow-bot"></div>
+										<div class="shadow-top"></div>
+									</paper-shadow>
+								</paper-button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<paper-input class="addDefaultInput inputCont">
+									<paper-input-decorator>
+										<input value="facebook" class="actualinput defaultsInput" placeholder="Binding" />
+										<div class="underline">
+											<div class="unfocused-underline"></div>
+											<div class="focusedUnderline focused-underline"></div>
+										</div>
+									</paper-input-decorator>
+								</paper-input>
+							</td>
+							<td>
+								<div class="defaultWebsiteCont">
+									http://www.facebook.com
+								</div>
+							</td>
+							<td>
+								<paper-button class="addDefaults" raised>
+									<paper-ripple>
+										<div class="bg"></div>
+										<div class="waves"></div>
+										<div class="button-content">Add</div>
+									</paper-ripple><paper-shadow>
+										<div class="shadow-bot"></div>
+										<div class="shadow-top"></div>
+									</paper-shadow>
+								</paper-button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<paper-input class="addDefaultInput inputCont">
+									<paper-input-decorator>
+										<input value="twitter" class="actualinput defaultsInput" placeholder="Binding" />
+										<div class="underline">
+											<div class="unfocused-underline"></div>
+											<div class="focusedUnderline focused-underline"></div>
+										</div>
+									</paper-input-decorator>
+								</paper-input>
+							</td>
+							<td>
+								<div class="defaultWebsiteCont">
+									http://www.twitter.com
+								</div>
+							</td>
+							<td>
+								<paper-button class="addDefaults" raised>
+									<paper-ripple>
+										<div class="bg"></div>
+										<div class="waves"></div>
+										<div class="button-content">Add</div>
+									</paper-ripple><paper-shadow>
+										<div class="shadow-bot"></div>
+										<div class="shadow-top"></div>
+									</paper-shadow>
+								</paper-button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<paper-input class="addDefaultInput inputCont">
+									<paper-input-decorator>
+										<input value="reddit" class="actualinput defaultsInput" placeholder="Binding" />
+										<div class="underline">
+											<div class="unfocused-underline"></div>
+											<div class="focusedUnderline focused-underline"></div>
+										</div>
+									</paper-input-decorator>
+								</paper-input>
+							</td>
+							<td>
+								<div class="defaultWebsiteCont">
+									http://www.reddit.com
+								</div>
+							</td>
+							<td>
+								<paper-button class="addDefaults" raised>
+									<paper-ripple>
+										<div class="bg"></div>
+										<div class="waves"></div>
+										<div class="button-content">Add</div>
+									</paper-ripple><paper-shadow>
+										<div class="shadow-bot"></div>
+										<div class="shadow-top"></div>
+									</paper-shadow>
+								</paper-button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<paper-input class="addDefaultInput inputCont">
+									<paper-input-decorator>
+										<input value="amazon" class="actualinput defaultsInput" placeholder="Binding" />
+										<div class="underline">
+											<div class="unfocused-underline"></div>
+											<div class="focusedUnderline focused-underline"></div>
+										</div>
+									</paper-input-decorator>
+								</paper-input>
+							</td>
+							<td>
+								<div class="defaultWebsiteCont">
+									http://www.amazon.com
+								</div>
+							</td>
+							<td>
+								<paper-button class="addDefaults" raised>
+									<paper-ripple>
+										<div class="bg"></div>
+										<div class="waves"></div>
+										<div class="button-content">Add</div>
+									</paper-ripple><paper-shadow>
+										<div class="shadow-bot"></div>
+										<div class="shadow-top"></div>
+									</paper-shadow>
+								</paper-button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<br /><br />
+				<hr />
+				<div class="bigTxt">
+					Here are some search bindings
+				</div>
+				<table>
+					<tbody>
+						<tr>
+							<td>
+								<paper-input class="addDefaultInput inputCont">
+									<paper-input-decorator>
+										<input value="google" class="actualinput defaultsInput" placeholder="Binding" />
+										<div class="underline">
+											<div class="unfocused-underline"></div>
+											<div class="focusedUnderline focused-underline"></div>
+										</div>
+									</paper-input-decorator>
+								</paper-input>
+							</td>
+							<td>
+								<div class="defaultWebsiteCont">
+									http://www.google.com/search?q=%s
+								</div>
+							</td>
+							<td>
+								<paper-button class="addDefaults" raised>
+									<paper-ripple>
+										<div class="bg"></div>
+										<div class="waves"></div>
+										<div class="button-content">Add</div>
+									</paper-ripple><paper-shadow>
+										<div class="shadow-bot"></div>
+										<div class="shadow-top"></div>
+									</paper-shadow>
+								</paper-button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<paper-input class="addDefaultInput inputCont">
+									<paper-input-decorator>
+										<input value="wikipedia" class="actualinput defaultsInput" placeholder="Binding" />
+										<div class="underline">
+											<div class="unfocused-underline"></div>
+											<div class="focusedUnderline focused-underline"></div>
+										</div>
+									</paper-input-decorator>
+								</paper-input>
+							</td>
+							<td>
+								<div class="defaultWebsiteCont">
+									http://en.wikipedia.org/wiki/%s
+								</div>
+							</td>
+							<td>
+								<paper-button class="addDefaults" raised>
+									<paper-ripple>
+										<div class="bg"></div>
+										<div class="waves"></div>
+										<div class="button-content">Add</div>
+									</paper-ripple><paper-shadow>
+										<div class="shadow-bot"></div>
+										<div class="shadow-top"></div>
+									</paper-shadow>
+								</paper-button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<paper-input class="addDefaultInput inputCont">
+									<paper-input-decorator>
+										<input value="youtube" class="actualinput defaultsInput" placeholder="Binding" />
+										<div class="underline">
+											<div class="unfocused-underline"></div>
+											<div class="focusedUnderline focused-underline"></div>
+										</div>
+									</paper-input-decorator>
+								</paper-input>
+							</td>
+							<td>
+								<div class="defaultWebsiteCont">
+									http://www.youtube.com/results?search_query=%s
+								</div>
+							</td>
+							<td>
+								<paper-button class="addDefaults" raised>
+									<paper-ripple>
+										<div class="bg"></div>
+										<div class="waves"></div>
+										<div class="button-content">Add</div>
+									</paper-ripple><paper-shadow>
+										<div class="shadow-bot"></div>
+										<div class="shadow-top"></div>
+									</paper-shadow>
+								</paper-button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<br /><br />
+			<hr />
+			<div class="exportCont">
+				<div class="bigTxt">
+					Export
+				</div>
+				<br />
+				Click the export button to export all your data into the text-field, copy this data into an import text field on Binder on a different computer to import your bindings.
+				<br /><br />
+				<multiline-paper-input>
+					<paper-input-decorator>
+						<textarea spellcheck="false" rows="10" class="paper-textarea"></textarea>
+						<div class="underline">
+							<div class="unfocused-underline"></div>
+							<div class="focusedUnderline focused-underline"></div>
+						</div>
+					</paper-input-decorator>
+				</multiline-paper-input>
+				<br />
+				<div class="exportButtonsCont">
+					<paper-button class="exportClear" raised>
 						<paper-ripple>
 							<div class="bg"></div>
 							<div class="waves"></div>
-							<div class="button-content">Method 2 (choose from a list)</div>
+							<div class="button-content">Clear</div>
 						</paper-ripple><paper-shadow>
 							<div class="shadow-bot"></div>
 							<div class="shadow-top"></div>
 						</paper-shadow>
 					</paper-button>
-					<br /><br />
-					Method 3:
-					<ol type="1">
-						<li>
-							Go to the website you want to search
-						</li>
-						<li>
-							Type %s into the search bar and hit enter
-						</li>
-						<li>
-							Copy the URL and create a Binding with it
-						</li>
-					</ol>
+					<paper-button class="exportExport" raised>
+						<paper-ripple>
+							<div class="bg"></div>
+							<div class="waves"></div>
+							<div class="button-content">Export</div>
+						</paper-ripple><paper-shadow>
+							<div class="shadow-bot"></div>
+							<div class="shadow-top"></div>
+						</paper-shadow>
+					</paper-button>
+				</div>
+			</div>
+			<br /><br />
+			<hr />
+			<div class="importCont">
+				<div class="bigTxt">
+					Import
 				</div>
 				<br />
-				<hr />
-				<div class="firstTimeDefaultsCont">
-					<div class="bigTxt">
-						Starting Bindings
-					</div>
-					<br />
-					Here are some Bindings to get you started:
-					<table>
-						<tbody>
-							<tr>
-								<td>
-									<paper-input class="addDefaultInput inputCont">
-										<paper-input-decorator>
-											<input value="google" class="actualinput defaultsInput" placeholder="Binding" />
-											<div class="underline">
-												<div class="unfocused-underline"></div>
-												<div class="focusedUnderline focused-underline"></div>
-											</div>
-										</paper-input-decorator>
-									</paper-input>
-								</td>
-								<td>
-									<div class="defaultWebsiteCont">
-										http://www.google.com
-									</div>
-								</td>
-								<td>
-									<paper-button class="addDefaults" raised>
-										<paper-ripple>
-											<div class="bg"></div>
-											<div class="waves"></div>
-											<div class="button-content">Add</div>
-										</paper-ripple><paper-shadow>
-											<div class="shadow-bot"></div>
-											<div class="shadow-top"></div>
-										</paper-shadow>
-									</paper-button>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<paper-input class="addDefaultInput inputCont">
-										<paper-input-decorator>
-											<input value="facebook" class="actualinput defaultsInput" placeholder="Binding" />
-											<div class="underline">
-												<div class="unfocused-underline"></div>
-												<div class="focusedUnderline focused-underline"></div>
-											</div>
-										</paper-input-decorator>
-									</paper-input>
-								</td>
-								<td>
-									<div class="defaultWebsiteCont">
-										http://www.facebook.com
-									</div>
-								</td>
-								<td>
-									<paper-button class="addDefaults" raised>
-										<paper-ripple>
-											<div class="bg"></div>
-											<div class="waves"></div>
-											<div class="button-content">Add</div>
-										</paper-ripple><paper-shadow>
-											<div class="shadow-bot"></div>
-											<div class="shadow-top"></div>
-										</paper-shadow>
-									</paper-button>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<paper-input class="addDefaultInput inputCont">
-										<paper-input-decorator>
-											<input value="twitter" class="actualinput defaultsInput" placeholder="Binding" />
-											<div class="underline">
-												<div class="unfocused-underline"></div>
-												<div class="focusedUnderline focused-underline"></div>
-											</div>
-										</paper-input-decorator>
-									</paper-input>
-								</td>
-								<td>
-									<div class="defaultWebsiteCont">
-										http://www.twitter.com
-									</div>
-								</td>
-								<td>
-									<paper-button class="addDefaults" raised>
-										<paper-ripple>
-											<div class="bg"></div>
-											<div class="waves"></div>
-											<div class="button-content">Add</div>
-										</paper-ripple><paper-shadow>
-											<div class="shadow-bot"></div>
-											<div class="shadow-top"></div>
-										</paper-shadow>
-									</paper-button>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<paper-input class="addDefaultInput inputCont">
-										<paper-input-decorator>
-											<input value="reddit" class="actualinput defaultsInput" placeholder="Binding" />
-											<div class="underline">
-												<div class="unfocused-underline"></div>
-												<div class="focusedUnderline focused-underline"></div>
-											</div>
-										</paper-input-decorator>
-									</paper-input>
-								</td>
-								<td>
-									<div class="defaultWebsiteCont">
-										http://www.reddit.com
-									</div>
-								</td>
-								<td>
-									<paper-button class="addDefaults" raised>
-										<paper-ripple>
-											<div class="bg"></div>
-											<div class="waves"></div>
-											<div class="button-content">Add</div>
-										</paper-ripple><paper-shadow>
-											<div class="shadow-bot"></div>
-											<div class="shadow-top"></div>
-										</paper-shadow>
-									</paper-button>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<paper-input class="addDefaultInput inputCont">
-										<paper-input-decorator>
-											<input value="amazon" class="actualinput defaultsInput" placeholder="Binding" />
-											<div class="underline">
-												<div class="unfocused-underline"></div>
-												<div class="focusedUnderline focused-underline"></div>
-											</div>
-										</paper-input-decorator>
-									</paper-input>
-								</td>
-								<td>
-									<div class="defaultWebsiteCont">
-										http://www.amazon.com
-									</div>
-								</td>
-								<td>
-									<paper-button class="addDefaults" raised>
-										<paper-ripple>
-											<div class="bg"></div>
-											<div class="waves"></div>
-											<div class="button-content">Add</div>
-										</paper-ripple><paper-shadow>
-											<div class="shadow-bot"></div>
-											<div class="shadow-top"></div>
-										</paper-shadow>
-									</paper-button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<br /><br />
-					<hr />
-					<div class="bigTxt">
-						Here are some search bindings
-					</div>
-					<table>
-						<tbody>
-							<tr>
-								<td>
-									<paper-input class="addDefaultInput inputCont">
-										<paper-input-decorator>
-											<input value="google" class="actualinput defaultsInput" placeholder="Binding" />
-											<div class="underline">
-												<div class="unfocused-underline"></div>
-												<div class="focusedUnderline focused-underline"></div>
-											</div>
-										</paper-input-decorator>
-									</paper-input>
-								</td>
-								<td>
-									<div class="defaultWebsiteCont">
-										http://www.google.com/search?q=%s
-									</div>
-								</td>
-								<td>
-									<paper-button class="addDefaults" raised>
-										<paper-ripple>
-											<div class="bg"></div>
-											<div class="waves"></div>
-											<div class="button-content">Add</div>
-										</paper-ripple><paper-shadow>
-											<div class="shadow-bot"></div>
-											<div class="shadow-top"></div>
-										</paper-shadow>
-									</paper-button>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<paper-input class="addDefaultInput inputCont">
-										<paper-input-decorator>
-											<input value="wikipedia" class="actualinput defaultsInput" placeholder="Binding" />
-											<div class="underline">
-												<div class="unfocused-underline"></div>
-												<div class="focusedUnderline focused-underline"></div>
-											</div>
-										</paper-input-decorator>
-									</paper-input>
-								</td>
-								<td>
-									<div class="defaultWebsiteCont">
-										http://en.wikipedia.org/wiki/%s
-									</div>
-								</td>
-								<td>
-									<paper-button class="addDefaults" raised>
-										<paper-ripple>
-											<div class="bg"></div>
-											<div class="waves"></div>
-											<div class="button-content">Add</div>
-										</paper-ripple><paper-shadow>
-											<div class="shadow-bot"></div>
-											<div class="shadow-top"></div>
-										</paper-shadow>
-									</paper-button>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<paper-input class="addDefaultInput inputCont">
-										<paper-input-decorator>
-											<input value="youtube" class="actualinput defaultsInput" placeholder="Binding" />
-											<div class="underline">
-												<div class="unfocused-underline"></div>
-												<div class="focusedUnderline focused-underline"></div>
-											</div>
-										</paper-input-decorator>
-									</paper-input>
-								</td>
-								<td>
-									<div class="defaultWebsiteCont">
-										http://www.youtube.com/results?search_query=%s
-									</div>
-								</td>
-								<td>
-									<paper-button class="addDefaults" raised>
-										<paper-ripple>
-											<div class="bg"></div>
-											<div class="waves"></div>
-											<div class="button-content">Add</div>
-										</paper-ripple><paper-shadow>
-											<div class="shadow-bot"></div>
-											<div class="shadow-top"></div>
-										</paper-shadow>
-									</paper-button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+				Click the import button to import all your data from a string of text into your settings.
 				<br /><br />
-				<hr />
-				<div class="exportCont">
-					<div class="bigTxt">
-						Export
-					</div>
-					<br />
-					Click the export button to export all your data into the text-field, copy this data into an import text field on Binder on a different computer to import your bindings.
-					<br /><br />
-					<multiline-paper-input>
-						<paper-input-decorator>
-							<textarea spellcheck="false" rows="10" class="paper-textarea"></textarea>
-							<div class="underline">
-								<div class="unfocused-underline"></div>
-								<div class="focusedUnderline focused-underline"></div>
-							</div>
-						</paper-input-decorator>
-					</multiline-paper-input>
-					<br />
-					<div class="exportButtonsCont">
-						<paper-button class="exportClear" raised>
-							<paper-ripple>
-								<div class="bg"></div>
-								<div class="waves"></div>
-								<div class="button-content">Clear</div>
-							</paper-ripple><paper-shadow>
-								<div class="shadow-bot"></div>
-								<div class="shadow-top"></div>
-							</paper-shadow>
-						</paper-button>
-						<paper-button class="exportExport" raised>
-							<paper-ripple>
-								<div class="bg"></div>
-								<div class="waves"></div>
-								<div class="button-content">Export</div>
-							</paper-ripple><paper-shadow>
-								<div class="shadow-bot"></div>
-								<div class="shadow-top"></div>
-							</paper-shadow>
-						</paper-button>
-					</div>
-				</div>
-				<br /><br />
-				<hr />
-				<div class="importCont">
-					<div class="bigTxt">
-						Import
-					</div>
-					<br />
-					Click the import button to import all your data from a string of text into your settings.
-					<br /><br />
-					<multiline-paper-input>
-						<paper-input-decorator>
-							<textarea spellcheck="false" rows="10" class="paper-textarea"></textarea>
-							<div class="underline">
-								<div class="unfocused-underline"></div>
-								<div class="focusedUnderline focused-underline"></div>
-							</div>
-						</paper-input-decorator>
-					</multiline-paper-input>
-					<br />
-					<div class="importingFromPrevBinder">
-						<checkbox-text>
-							<paper-checkbox class="importFromBinderExtension" on="false">
-								<div class="checkboxcontainer">
-									<paper-ripple class="cirle recenteringTouch">
-										<div class="bg"></div>
-										<div class="waves"></div>
-									</paper-ripple>
-									<div class="checkbox">
-										<div class="checkmark"></div>
-									</div>
+				<multiline-paper-input>
+					<paper-input-decorator>
+						<textarea spellcheck="false" rows="10" class="paper-textarea"></textarea>
+						<div class="underline">
+							<div class="unfocused-underline"></div>
+							<div class="focusedUnderline focused-underline"></div>
+						</div>
+					</paper-input-decorator>
+				</multiline-paper-input>
+				<br />
+				<div class="importingFromPrevBinder">
+					<checkbox-text>
+						<paper-checkbox class="importFromBinderExtension" on="false">
+							<div class="checkboxcontainer">
+								<paper-ripple class="cirle recenteringTouch">
+									<div class="bg"></div>
+									<div class="waves"></div>
+								</paper-ripple>
+								<div class="checkbox">
+									<div class="checkmark"></div>
 								</div>
-							</paper-checkbox>
-							<div class="checkboxtext">
-								Check this if you're importing from the Binder extension
 							</div>
-						</checkbox-text>
-					</div>
-					<div class="importButtonsCont">
-						<paper-button class="importClear" raised>
-							<paper-ripple>
-								<div class="bg"></div>
-								<div class="waves"></div>
-								<div class="button-content">Clear</div>
-							</paper-ripple><paper-shadow>
-								<div class="shadow-bot"></div>
-								<div class="shadow-top"></div>
-							</paper-shadow>
-						</paper-button>
-						<paper-button class="importImport" raised>
-							<paper-ripple>
-								<div class="bg"></div>
-								<div class="waves"></div>
-								<div class="button-content">Import</div>
-							</paper-ripple><paper-shadow>
-								<div class="shadow-bot"></div>
-								<div class="shadow-top"></div>
-							</paper-shadow>
-						</paper-button>
-					</div>
+						</paper-checkbox>
+						<div class="checkboxtext">
+							Check this if you're importing from the Binder extension
+						</div>
+					</checkbox-text>
 				</div>
-				<br /><br />
-				<hr />
-				<div class="changeLog">
-					<div class="bigTxt">Changelog</div>
-					This is the changelog. Starting at version 2.0 since the previous changes are not really relevant anymore after this change (full rewrite)
-					<br />
-					2.1.2
-					<ul>
-						<li>
-							Fixed a bug that caused new users' Binder to crash and some old users' apps as well, should be all good now.
-						</li>
-						<li>
-							Put in lots of safeguards when it comes to checking storage, it should be way harder to break it now, if it still crashes please contact me <a href="mailto:awsdfgvhbjn@gmail.com" target="_blank">here</a>.
-						</li>
-						<li>
-							Fixed a bug that caused the themes to not be highlighted on first run, may or may not have fixed a bug that made the first-time container always show when supersearch was not active.
-						</li>
-						<li>
-							Made the blue theme also be extra-fast.
-						</li>
-						<li>
-							Reduced the extension's size by a huge amount.
-						</li>
-					</ul>
-					<br />
-					2.1.1
-					<ul>
-						<li>
-							The go button being hidden if superSearch is on will be instant now, no more flashing.
-						</li>
-						<li>
-							If you are using any of the default themes, the application of these themes will be instant as well, any modification of them will make the application NOT instant (i.e. a short blue flash).
-						</li>
-						<li>
-							Increase in loading speed of differently colored interface in general.
-						</li>
-						<li>
-							App should start up and be ready for use a tiny bit faster now.
-						</li>
-						<li>
-							Made the loading for the options page happen asynchronously, meaning that you will neither get a load impact at the launch of the app nor when you click the options button nor when you are typing, but some time after that.
-						</li>
-					</ul>
-					<br />
-					2.1
-					<ul>
-						<li>
-							Huge performance increase when loading the options page. Also huge performance increase on any inputs/buttons altogether, you will actually see the animation now.
-						</li>
-						<li>
-							The bindings will no longer be loaded unnessecarily when re-opening the options page after closing it.
-						</li>
-						<li>
-							Performance increase when importing search bindings and searching through them.
-						</li>
-						<li>
-							Changed the text a bit, took out useless sentences.
-						</li>
-						<li>
-							Added a theme option with some preset themes.
-						</li>
-						<li>
-							Changed the horizontal line seperating the options from the input at the top to shadow.
-						</li>
-						<li>
-							Changed the floating action button's color scheme, background-color is equal to the text-color of the page and the + is the color of the page's background.
-						</li>
-						<li>
-							Added bitcoin address.
-						</li>
-						<li>
-							Pressing escape now exits the application (only if you have the primary input in focus).
-						</li>
-						<li>
-							Added the possibilty to change the app's shadow's color.
-						</li>
-						<li>
-							Fixed a bug where pressing the cogwheel when already on the settings page only reloaded the page and did not toggle the settings page (hide it).
-						</li>
-						<li>
-							Every color chooser now has a border to show you where it is instead of only the background one.
-						</li>
-						<li>
-							Made any functions executed before the settings object is checked for errors run in a try catch function to prevent the app from breaking. If they fail they are re-run after the settings are validated.
-						</li>
-					</ul>
-					Thanks to <a href="https://github.com/JaspervanRiet" target="_blank">Jasper van Riet</a> for the help with the interface changes for this update.
-					<br /><br />
-					<br />
-					2.0.5
-					<ul>
-						<li>
-							Fixed the "this item can be found at github-....." at the top of the app
-						</li>
-					</ul>
-					<br />
-					2.0.4
-					<ul>
-						<li>
-							Fixed a bug that caused the assign new key binding screen to overflow. The elements were set to position:absolute which made them not care about the scrollable nature of the container. URL containers are now a bit bigger there as well.
-						</li>
-						<li>
-							Minified a few more files and changed structure
-						</li>
-					</ul>
-					<br />
-					2.0.3
-					<ul>
-						<li>
-							Fixed a bug that made all inputs in the application change value on doing a search binding
-						</li>
-					</ul>
-					<br />
-					2.0.2
-					<ul>
-						<li>
-							Fixed a bug that caused URL's without http:// in front of them to be invalid and them not being opened
-						</li>
-					</ul>
-					<br />
-					2.0.1
-					<ul>
-						<li>
-							Added a section about the github repo
-						</li>
-						<li>
-							Fixed the input width on adding a new input field with the "Add Input" button
-						</li>
-					</ul>
-					<br />
-					2.0
-					<ul>
-						<li>
-							Did a complete rewrite off the app
-						</li>
-						<li>
-							Added a floating button (the one on the bottom right) that lets you add a binding from anywhere easily
-						</li>
-						<li>
-							Hugely improved search harvesting functions
-						</li>
-						<li>
-							Changed way of storing things, this should be a bit more efficient, this should sync your settings across all browsers if you're logged in to your google account
-						</li>
-					</ul>
+				<div class="importButtonsCont">
+					<paper-button class="importClear" raised>
+						<paper-ripple>
+							<div class="bg"></div>
+							<div class="waves"></div>
+							<div class="button-content">Clear</div>
+						</paper-ripple><paper-shadow>
+							<div class="shadow-bot"></div>
+							<div class="shadow-top"></div>
+						</paper-shadow>
+					</paper-button>
+					<paper-button class="importImport" raised>
+						<paper-ripple>
+							<div class="bg"></div>
+							<div class="waves"></div>
+							<div class="button-content">Import</div>
+						</paper-ripple><paper-shadow>
+							<div class="shadow-bot"></div>
+							<div class="shadow-top"></div>
+						</paper-shadow>
+					</paper-button>
 				</div>
-				<br /><br />
-				<hr />
-				<div class="aboutDev">
-					<div class="bigTxt">Contact</div>
-					<div class="aboutDevTxt">
-						If you find any bugs or just want to talk to me about something please email me at <a href="mailto:awsdfgvhbjn@gmail.com" target="_blank">awsdfgvhbjn@gmail.com</a>.<br>
-						You can also place the issues on GitHub or simply check out the repo at <a target="_blank" href="https://github.com/BarryBamibal/BinderApp">https://github.com/BarryBamibal/BinderApp</a>.<br />
-						If you want to donate to me via paypal, you can do so to the e-mail sander
-						.ronde@hotmail.com or with bitcoin to 15cApSXHyiVTXVHzj3VZMk95Nropk8ijnB
-					</div>
-				</div>
-				<br /><br />
 			</div>
+			<br /><br />
+			<hr />
+			<div class="changeLog">
+				<div class="bigTxt">Changelog</div>
+				This is the changelog. Starting at version 2.0 since the previous changes are not really relevant anymore after this change (full rewrite)
+				<br/>
+				2.1.3
+				<ul>
+					<li>
+						Fixed a bug that caused content not to be loaded if you went to options very quickly.
+					</li>
+					<li>
+						Removed useless code
+					</li>
+				</ul>
+				<br/>
+				2.1.2
+				<ul>
+					<li>
+						Fixed a bug that caused new users' Binder to crash and some old users' apps as well, should be all good now.
+					</li>
+					<li>
+						Put in lots of safeguards when it comes to checking storage, it should be way harder to break it now, if it still crashes please contact me <a href="mailto:awsdfgvhbjn@gmail.com" target="_blank">here</a>.
+					</li>
+					<li>
+						Fixed a bug that caused the themes to not be highlighted on first run, may or may not have fixed a bug that made the first-time container always show when supersearch was not active.
+					</li>
+					<li>
+						Made the blue theme also be extra-fast.
+					</li>
+					<li>
+						Reduced the extension's size by a huge amount.
+					</li>
+				</ul>
+				<br />
+				2.1.1
+				<ul>
+					<li>
+						The go button being hidden if superSearch is on will be instant now, no more flashing.
+					</li>
+					<li>
+						If you are using any of the default themes, the application of these themes will be instant as well, any modification of them will make the application NOT instant (i.e. a short blue flash).
+					</li>
+					<li>
+						Increase in loading speed of differently colored interface in general.
+					</li>
+					<li>
+						App should start up and be ready for use a tiny bit faster now.
+					</li>
+					<li>
+						Made the loading for the options page happen asynchronously, meaning that you will neither get a load impact at the launch of the app nor when you click the options button nor when you are typing, but some time after that.
+					</li>
+				</ul>
+				<br />
+				2.1
+				<ul>
+					<li>
+						Huge performance increase when loading the options page. Also huge performance increase on any inputs/buttons altogether, you will actually see the animation now.
+					</li>
+					<li>
+						The bindings will no longer be loaded unnessecarily when re-opening the options page after closing it.
+					</li>
+					<li>
+						Performance increase when importing search bindings and searching through them.
+					</li>
+					<li>
+						Changed the text a bit, took out useless sentences.
+					</li>
+					<li>
+						Added a theme option with some preset themes.
+					</li>
+					<li>
+						Changed the horizontal line seperating the options from the input at the top to shadow.
+					</li>
+					<li>
+						Changed the floating action button's color scheme, background-color is equal to the text-color of the page and the + is the color of the page's background.
+					</li>
+					<li>
+						Added bitcoin address.
+					</li>
+					<li>
+						Pressing escape now exits the application (only if you have the primary input in focus).
+					</li>
+					<li>
+						Added the possibilty to change the app's shadow's color.
+					</li>
+					<li>
+						Fixed a bug where pressing the cogwheel when already on the settings page only reloaded the page and did not toggle the settings page (hide it).
+					</li>
+					<li>
+						Every color chooser now has a border to show you where it is instead of only the background one.
+					</li>
+					<li>
+						Made any functions executed before the settings object is checked for errors run in a try catch function to prevent the app from breaking. If they fail they are re-run after the settings are validated.
+					</li>
+				</ul>
+				Thanks to <a href="https://github.com/JaspervanRiet" target="_blank">Jasper van Riet</a> for the help with the interface changes for this update.
+				<br /><br />
+				<br />
+				2.0.5
+				<ul>
+					<li>
+						Fixed the "this item can be found at github-....." at the top of the app
+					</li>
+				</ul>
+				<br />
+				2.0.4
+				<ul>
+					<li>
+						Fixed a bug that caused the assign new key binding screen to overflow. The elements were set to position:absolute which made them not care about the scrollable nature of the container. URL containers are now a bit bigger there as well.
+					</li>
+					<li>
+						Minified a few more files and changed structure
+					</li>
+				</ul>
+				<br />
+				2.0.3
+				<ul>
+					<li>
+						Fixed a bug that made all inputs in the application change value on doing a search binding
+					</li>
+				</ul>
+				<br />
+				2.0.2
+				<ul>
+					<li>
+						Fixed a bug that caused URL's without http:// in front of them to be invalid and them not being opened
+					</li>
+				</ul>
+				<br />
+				2.0.1
+				<ul>
+					<li>
+						Added a section about the github repo
+					</li>
+					<li>
+						Fixed the input width on adding a new input field with the "Add Input" button
+					</li>
+				</ul>
+				<br />
+				2.0
+				<ul>
+					<li>
+						Did a complete rewrite off the app
+					</li>
+					<li>
+						Added a floating button (the one on the bottom right) that lets you add a binding from anywhere easily
+					</li>
+					<li>
+						Hugely improved search harvesting functions
+					</li>
+					<li>
+						Changed way of storing things, this should be a bit more efficient, this should sync your settings across all browsers if you're logged in to your google account
+					</li>
+				</ul>
+			</div>
+			<br /><br />
+			<hr />
+			<div class="aboutDev">
+				<div class="bigTxt">Contact</div>
+				<div class="aboutDevTxt">
+					If you find any bugs or just want to talk to me about something please email me at <a href="mailto:awsdfgvhbjn@gmail.com" target="_blank">awsdfgvhbjn@gmail.com</a>.<br>
+					You can also place the issues on GitHub or simply check out the repo at <a target="_blank" href="https://github.com/BarryBamibal/BinderApp">https://github.com/BarryBamibal/BinderApp</a>.<br />
+					If you want to donate to me via paypal, you can do so to the e-mail sander
+					.ronde@hotmail.com or with bitcoin to 15cApSXHyiVTXVHzj3VZMk95Nropk8ijnB
+				</div>
+			</div>
+			<br /><br />
 		</div>
+	</div>
 	</div>
 	<script src="../Scripts/jquery-2.0.3.min.js"></script>
 	<script src="../Scripts/jquery.color-2.1.2.min.js"></script>

@@ -905,7 +905,7 @@ function handleSearchBinding() {
 	setTimeout(function () {
 		var input = $('.input').val();
 		for (var i = 0; i < searchWebsites.length; i++) {
-			openWebsites(searchWebsites[i].replace('%s', input));
+			openWebsites(searchWebsites[i].replace('%s', encodeURIComponent(input)));
 		}
 	}, 0);
 }

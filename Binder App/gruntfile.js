@@ -55,7 +55,7 @@
 			jsCssBanner: {
 				options: {
 					position: 'top',
-					banner: '/* Original can be found at https://github.com/BarryBamibal/BinderApp \n * This code may only be used under the MIT style license found at in the LICENSE.txt file \n**/',
+					banner: '/* Original can be found at https://github.com/SanderRonde/BinderApp \n * This code may only be used under the MIT style license found at in the LICENSE.txt file \n**/',
 					linebreak: true
 				},
 				files: {
@@ -65,7 +65,7 @@
 			htmlBanner: {
 				options: {
 					position: 'top',
-					banner: '<!--Original can be found at https://github.com/BarryBamibal/BinderApp\nThis code may only be used under the MIT style license found at in the LICENSE.txt file-->\n',
+					banner: '<!--Original can be found at https://github.com/SanderRonde/BinderApp\nThis code may only be used under the MIT style license found at in the LICENSE.txt file-->\n',
 					linebreak: true
 				},
 				files: {

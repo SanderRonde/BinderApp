@@ -28,7 +28,7 @@ function updateSettings(key, data) {
 			for (var objKey in key) {
 				if (key.hasOwnProperty(objKey)) {
 					if (objKey === 'colors' || objKey === 'superSearch' || objKey === 'theme') {
-						chrome.runtime.sendMessage({ 'cmd': 'updateVal', 'type': objKey, 'val': key[objKey] });
+						window.chrome.runtime.sendMessage({ 'cmd': 'updateVal', 'type': objKey, 'val': key[objKey] });
 					}
 					obj = {};
 					obj[objKey] = key[objKey];
@@ -39,7 +39,7 @@ function updateSettings(key, data) {
 		}
 		else {
 			if (key === 'colors' || key === 'superSearch' || key === 'theme') {
-				chrome.runtime.sendMessage({ 'cmd': 'updateVal', 'type': key, 'val': data });
+				window.chrome.runtime.sendMessage({ 'cmd': 'updateVal', 'type': key, 'val': data });
 			}
 			obj[key] = data;
 			storage.set(obj);
@@ -1410,7 +1410,7 @@ function checkAndUploadSettings(obj, alwaysSave) {
 		if (changes || alwaysSave !== undefined) {
 			settings = obj;
 			storage.set(obj);
-			chrome.runtime.sendMessage({ 'cmd': 'updateValFromStorage' });
+			window.chrome.runtime.sendMessage({ 'cmd': 'updateValFromStorage' });
 		}
 	}
 }

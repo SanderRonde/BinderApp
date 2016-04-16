@@ -2,8 +2,20 @@
 	"name": "BinderApp",
 	"version": "2.1.4",
 	"description": "Open web pages quickly from your desktop",
-	"repository": {"url": "https://github.com/BarryBamibal/BinderApp"},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/SanderRonde/BinderApp.git" 
+	},
 	"license": "MIT",
+	"author": {
+		"name": "Sander Ronde",
+		"email": "awsdfgvhbjn@gmail.com",
+		"url": "https://github.com/SanderRonde"
+	},
+	"bugs": {
+		"url": "https://github.com/SanderRonde/BinderApp/issues",
+		"email": "awsdfgvhbjn@gmail.com"
+	},
 	"devDependencies": {
 		"grunt": "~0.4.5",
 		"grunt-banner": "^0.4.0",

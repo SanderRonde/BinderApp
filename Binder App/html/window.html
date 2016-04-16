@@ -522,16 +522,6 @@
 				<div class="bindingsContainer"></div>
 				<br />
 				<hr />
-				<div class="launchProgram">
-					<div class="bigTxt">
-						Launch a program
-					</div>
-					<br />
-					You can also launch a program on your computer when you install Binder for Windows (<!--TODO:Linkje neermikken-->, Mac and Linux version not yet made), when you have done this, add a link to the program in the Bindings by going to the '.exe'-file's location and taking it's path plus it's name (for example C:\Program Files (x86)\Google\Chrome\Application\chrome.exe<br/>
-					If you have a shortcut to the program you can right-click it, go to properties and paste what's in the "target" box without quotes.
-				</div>
-				<br /><br />
-				<hr />
 			<div class="keyboardShortcut">
 				<div class="bigTxt">
 					Keyboard Shortcut
@@ -546,7 +536,7 @@
 					<li>Go to "Extensions"</li>
 					<li>Scroll to the bottom of the page and click "Keyboard Shortcuts"</li>
 					<li>Find "Binder App" in this list and click the input box next to "Launch the Binder App"</li>
-					<li>Press the buttons you want to trigger Binder (check out <a href="http://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts" target="_blank">List of keyboard shortcuts</a> to see if it is not already taken) and make sure you select "global" in the menu on the right AFTER you entered the keyboard command</li>
+					<li>Press the buttons you want to trigger Binder (check out <a class="hyperLink" href="http://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts" target="_blank">List of keyboard shortcuts</a> to see if it is not already taken) and make sure you select "global" in the menu on the right AFTER you entered the keyboard command</li>
 				</ol>
 				<br />
 				Method 2 goes through Windows, so this will always work (on Windows that is)
@@ -554,7 +544,7 @@
 					<li>Go to chrome://apps (simply type this into the address-bar)</li>
 					<li>Right-click Binder, click "Create Shortcuts", make sure "Desktop" is checked and press "Create" (you do not have to check the taskbar checkbox as well)</li>
 					<li>Go to the shortcut on your desktop and right-click it, then go to properties</li>
-					<li>Click the "Shortcut" field and press the keys you want to trigger Binder (check out <a href="http://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts" target="_blank">List of keyboard shortcuts</a> to see if it is not already taken)</li>
+					<li>Click the "Shortcut" field and press the keys you want to trigger Binder (check out <a class="hyperLink" href="http://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts" target="_blank">List of keyboard shortcuts</a> to see if it is not already taken)</li>
 					<li>Hit OK and you are done, be sure not to delete the shortcut or the keyboard shortcut will also go away</li>
 				</ol>
 				<br />
@@ -995,6 +985,13 @@
 				<div class="bigTxt">Changelog</div>
 				This is the changelog. Starting at version 2.0 since the previous changes are not really relevant anymore after this change (full rewrite)
 				<br/>
+				2.1.5
+				<ul>
+					<li>Updated github account name</li>
+					<li>Added a nice on-click animation for links</li>
+					<li>Added mandatory privacy policy</li>
+				</ul>
+				<br/>
 				2.1.4
 				<ul>
 					<li>
@@ -1018,7 +1015,7 @@
 						Fixed a bug that caused new users' Binder to crash and some old users' apps as well, should be all good now.
 					</li>
 					<li>
-						Put in lots of safeguards when it comes to checking storage, it should be way harder to break it now, if it still crashes please contact me <a href="mailto:awsdfgvhbjn@gmail.com" target="_blank">here</a>.
+						Put in lots of safeguards when it comes to checking storage, it should be way harder to break it now, if it still crashes please contact me <a class="hyperLink" href="mailto:awsdfgvhbjn@gmail.com" target="_blank">here</a>.
 					</li>
 					<li>
 						Fixed a bug that caused the themes to not be highlighted on first run, may or may not have fixed a bug that made the first-time container always show when supersearch was not active.
@@ -1030,7 +1027,7 @@
 						Reduced the extension's size by a huge amount.
 					</li>
 				</ul>
-				<br />
+				<br/>
 				2.1.1
 				<ul>
 					<li>
@@ -1049,7 +1046,7 @@
 						Made the loading for the options page happen asynchronously, meaning that you will neither get a load impact at the launch of the app nor when you click the options button nor when you are typing, but some time after that.
 					</li>
 				</ul>
-				<br />
+				<br/>
 				2.1
 				<ul>
 					<li>
@@ -1092,16 +1089,16 @@
 						Made any functions executed before the settings object is checked for errors run in a try catch function to prevent the app from breaking. If they fail they are re-run after the settings are validated.
 					</li>
 				</ul>
-				Thanks to <a href="https://github.com/JaspervanRiet" target="_blank">Jasper van Riet</a> for the help with the interface changes for this update.
-				<br /><br />
-				<br />
+				Thanks to <a class="hyperLink" href="https://github.com/JaspervanRiet" target="_blank">Jasper van Riet</a> for the help with the interface changes for this update.
+				<br/><br/>
+				<br/>
 				2.0.5
 				<ul>
 					<li>
 						Fixed the "this item can be found at github-....." at the top of the app
 					</li>
 				</ul>
-				<br />
+				<br/>
 				2.0.4
 				<ul>
 					<li>
@@ -1111,21 +1108,21 @@
 						Minified a few more files and changed structure
 					</li>
 				</ul>
-				<br />
+				<br/>
 				2.0.3
 				<ul>
 					<li>
 						Fixed a bug that made all inputs in the application change value on doing a search binding
 					</li>
 				</ul>
-				<br />
+				<br/>
 				2.0.2
 				<ul>
 					<li>
 						Fixed a bug that caused URL's without http:// in front of them to be invalid and them not being opened
 					</li>
 				</ul>
-				<br />
+				<br/>
 				2.0.1
 				<ul>
 					<li>
@@ -1135,7 +1132,7 @@
 						Fixed the input width on adding a new input field with the "Add Input" button
 					</li>
 				</ul>
-				<br />
+				<br/>
 				2.0
 				<ul>
 					<li>
@@ -1152,13 +1149,24 @@
 					</li>
 				</ul>
 			</div>
+			<br/><br/>
+			<hr/>
+			<div class="privacyPolicy">
+				<div class="bigTxt">Privacy Policy</div>
+				<div class="privacyPolicyTxt">
+					This app does not store any personally identifiable information. It also doesn't send the data to any
+					external servers. The only data stored in this extension are your bindings. These bindings are synced
+					to other instances of your account through <a class="hyperLink" href="https://developer.chrome.com/extensions/storage" target="_blank">chrome.storage.sync</a>, a cloud storage platform hosted by google, to sync your data.
+					This data is only accessible by you (and possibly google if you haven't encrypted it with a password).
+				</div>
+			</div>
 			<br /><br />
 			<hr />
 			<div class="aboutDev">
 				<div class="bigTxt">Contact</div>
 				<div class="aboutDevTxt">
-					If you find any bugs or just want to talk to me about something please email me at <a href="mailto:awsdfgvhbjn@gmail.com" target="_blank">awsdfgvhbjn@gmail.com</a>.<br>
-					You can also place the issues on GitHub or simply check out the repo at <a target="_blank" href="https://github.com/BarryBamibal/BinderApp">https://github.com/BarryBamibal/BinderApp</a>.<br />
+					If you find any bugs or just want to talk to me about something please email me at <a class="hyperLink" href="mailto:awsdfgvhbjn@gmail.com" target="_blank">awsdfgvhbjn@gmail.com</a>.<br>
+					You can also place the issues on GitHub or simply check out the repo at <a class="hyperLink" target="_blank" href="https://github.com/BarryBamibal/BinderApp">https://github.com/BarryBamibal/BinderApp</a>.<br />
 					If you want to donate to me via paypal, you can do so to the e-mail sander
 					.ronde@hotmail.com or with bitcoin to 15cApSXHyiVTXVHzj3VZMk95Nropk8ijnB
 				</div>

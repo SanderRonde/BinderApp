@@ -768,3 +768,20 @@ paper-input.SEISUrl {
 .redTheme .themeTxt {
 	color: white;
 }
+
+.hyperLink:focus {
+	outline: none;
+}
+
+.hyperLink:focus::before {
+	background-color: rgba(0,0,0,.1);
+	border-radius: 2px;
+	bottom: -4px;
+	content: ' ';
+	left: -4px;
+	margin: auto;
+	padding: 4px;
+	position: absolute;
+	right: -4px;
+	top: -4px;
+}
